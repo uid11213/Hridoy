@@ -3,119 +3,116 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guitar vs Tech - 3D Store</title>
+    <title>M.r Xyro Profile</title>
     <style>
-        body, html {
-            margin: 0;
-            padding: 0;
-            height: 100%;
+        /* Background ebong Body set-up */
+        body {
+            background-color: #000;
+            color: #fff;
             font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            background: #111;
-        }
-
-        .container {
             display: flex;
-            height: 100vh;
-            perspective: 1000px; /* 3D depth er jonno */
-        }
-
-        .side {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
             justify-content: center;
-            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-            cursor: pointer;
-            position: relative;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 400px;
+            border: 3px solid #f1c40f; /* Holud border */
+            border-radius: 20px;
+            padding: 30px 20px;
             text-align: center;
-            color: white;
+        }
+
+        /* Profile Section */
+        .profile-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .tiktok-id {
+            color: #ccc;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .profile-img-container {
+            margin: 0 auto 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #f1c40f;
+            overflow: hidden;
+            box-shadow: 0 0 15px #f1c40f;
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.4;
+            color: #eee;
+            margin-bottom: 30px;
+        }
+
+        /* Social Media Buttons */
+        .social-title {
+            color: #f1c40f;
+            font-weight: bold;
+            font-size: 14px;
+            margin-bottom: 15px;
             text-transform: uppercase;
         }
 
-        /* Guitar Side Style */
-        .guitar-side {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1510915363646-e9295240c793?auto=format&fit=crop&w=1000&q=80');
-            background-size: cover;
-            transform: rotateY(15deg); /* Initial 3D Tilt */
-            transform-origin: right;
-            border-right: 5px solid #ffcc00;
-        }
-
-        /* Computer Side Style */
-        .computer-side {
-            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
-                        url('https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1000&q=80');
-            background-size: cover;
-            transform: rotateY(-15deg); /* Initial 3D Tilt */
-            transform-origin: left;
-        }
-
-        /* Hover Effect: Mouse anle palla bhari hobe */
-        .side:hover {
-            flex: 1.5;
-            transform: rotateY(0deg);
-            z-index: 10;
-            box-shadow: 0 0 50px rgba(255,255,255,0.2);
-        }
-
-        .side h1 {
-            font-size: 3rem;
-            margin-bottom: 20px;
-            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
-        }
-
         .btn {
-            padding: 15px 30px;
-            border: 2px solid white;
-            background: transparent;
-            color: white;
-            font-weight: bold;
+            display: block;
             text-decoration: none;
-            transition: 0.3s;
-            border-radius: 5px;
+            color: white;
+            padding: 12px;
+            margin-bottom: 12px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: transform 0.2s;
         }
 
         .btn:hover {
-            background: white;
-            color: black;
+            transform: scale(1.03);
         }
 
-        /* Center Divider line */
-        .divider {
-            position: absolute;
-            left: 50%;
-            top: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 100;
-            font-weight: bold;
-            color: gold;
-            background: #000;
-            padding: 10px;
-            border-radius: 50%;
-            border: 2px solid gold;
-        }
+        .telegram { background-color: #2980b9; }
+        .youtube { background-color: #c0392b; }
+        .facebook { background-color: #2980b9; }
 
     </style>
 </head>
 <body>
 
-    <div class="divider">VS</div>
-
     <div class="container">
-        <div class="side guitar-side">
-            <h1>Guitar Shop</h1>
-            <p>Feel the Music</p>
-            <a href="#" class="btn">Enter Shop</a>
+        <div class="profile-title">M.r Xyro</div>
+        <div class="tiktok-id">TikTok: @ozxu738</div>
+
+        <div class="profile-img-container">
+            <img src="https://via.placeholder.com/150" alt="Profile Picture">
         </div>
 
-        <div class="side computer-side">
-            <h1>Tech Core</h1>
-            <p>Power Your Future</p>
-            <a href="#" class="btn">Enter Tech Shop</a>
-        </div>
+        <p class="description">
+            Hi, I am Xyro. I provide FF Proxy Server, Mobile Panel, Mod Menu, Glitch File Etc.
+        </p>
+
+        <div class="social-title">Follow My Other Social Media</div>
+
+        <a href="#" class="btn telegram">✈ Join Now Telegram</a>
+        <a href="#" class="btn youtube">▶ Subscribe Now YouTube</a>
+        <a href="#" class="btn facebook">f Follow Now Facebook</a>
     </div>
 
 </body>
