@@ -1,87 +1,122 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guitar vs Tech - 3D Store</title>
+    <style>
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            background: #111;
+        }
 
-<style>
+        .container {
+            display: flex;
+            height: 100vh;
+            perspective: 1000px; /* 3D depth er jonno */
+        }
 
-body{
-height:100vh;
-display:flex;
-justify-content:center;
-align-items:center;
-background:#e0e5ec;
-font-family:Arial;
-}
+        .side {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            cursor: pointer;
+            position: relative;
+            text-align: center;
+            color: white;
+            text-transform: uppercase;
+        }
 
-.box{
-width:300px;
-padding:40px;
-border-radius:20px;
-background:#e0e5ec;
-box-shadow:10px 10px 20px #a3b1c6,
-           -10px -10px 20px #ffffff;
-text-align:center;
-}
+        /* Guitar Side Style */
+        .guitar-side {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1510915363646-e9295240c793?auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            transform: rotateY(15deg); /* Initial 3D Tilt */
+            transform-origin: right;
+            border-right: 5px solid #ffcc00;
+        }
 
-input{
-width:100%;
-padding:15px;
-margin:15px 0;
-border:none;
-outline:none;
-border-radius:25px;
-background:#e0e5ec;
-box-shadow: inset 5px 5px 10px #a3b1c6,
-            inset -5px -5px 10px #ffffff;
-}
+        /* Computer Side Style */
+        .computer-side {
+            background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), 
+                        url('https://images.unsplash.com/photo-1547082299-de196ea013d6?auto=format&fit=crop&w=1000&q=80');
+            background-size: cover;
+            transform: rotateY(-15deg); /* Initial 3D Tilt */
+            transform-origin: left;
+        }
 
-button{
-padding:12px 30px;
-border:none;
-border-radius:25px;
-background:#e0e5ec;
-cursor:pointer;
-box-shadow:5px 5px 10px #a3b1c6,
-          -5px -5px 10px #ffffff;
-font-weight:bold;
-}
+        /* Hover Effect: Mouse anle palla bhari hobe */
+        .side:hover {
+            flex: 1.5;
+            transform: rotateY(0deg);
+            z-index: 10;
+            box-shadow: 0 0 50px rgba(255,255,255,0.2);
+        }
 
-</style>
+        .side h1 {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 10px rgba(0,0,0,0.8);
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: 2px solid white;
+            background: transparent;
+            color: white;
+            font-weight: bold;
+            text-decoration: none;
+            transition: 0.3s;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Center Divider line */
+        .divider {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 100;
+            font-weight: bold;
+            color: gold;
+            background: #000;
+            padding: 10px;
+            border-radius: 50%;
+            border: 2px solid gold;
+        }
+
+    </style>
 </head>
-
 <body>
 
-<div class="box">
+    <div class="divider">VS</div>
 
-<h2>Login</h2>
+    <div class="container">
+        <div class="side guitar-side">
+            <h1>Guitar Shop</h1>
+            <p>Feel the Music</p>
+            <a href="#" class="btn">Enter Shop</a>
+        </div>
 
-<input type="password" id="pass" placeholder="Enter Password">
-
-<button onclick="login()">Sign In</button>
-
-</div>
-
-<script>
-
-function login(){
-
-var password = document.getElementById("pass").value;
-
-if(password === "12345"){
-
-window.location="home.html";
-
-}else{
-
-alert("Wrong Password");
-
-}
-
-}
-
-</script>
+        <div class="side computer-side">
+            <h1>Tech Core</h1>
+            <p>Power Your Future</p>
+            <a href="#" class="btn">Enter Tech Shop</a>
+        </div>
+    </div>
 
 </body>
 </html>
