@@ -1,94 +1,144 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Voice Chat</title>
-<style>
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    background: #1e1e1e;
-    color: white;
-    font-family: Arial, sans-serif;
-    margin: 0;
-}
-.container {
-    text-align: center;
-}
-.logo {
-    width: 150px;
-    margin-bottom: 20px;
-}
-#mic-btn {
-    font-size: 50px;
-    padding: 20px;
-    border-radius: 50%;
-    border: none;
-    cursor: pointer;
-    background-color: #ff4b5c;
-    color: white;
-    transition: 0.2s;
-}
-#mic-btn.listening {
-    background-color: #4caf50;
-}
-#ai-response {
-    margin-top: 30px;
-    font-size: 20px;
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hridoy Profile</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        /* Background & Layout */
+        body {
+            background-color: #000;
+            color: #fff;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        /* Main Container */
+        .container {
+            width: 90%;
+            max-width: 400px;
+            border: 3px solid #f1c40f; 
+            border-radius: 20px;
+            padding: 30px 20px;
+            text-align: center;
+            box-shadow: 0 0 25px rgba(241, 196, 15, 0.3);
+        }
+
+        /* Profile Details */
+        .profile-title {
+            font-size: 26px;
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #fff;
+        }
+
+        .tiktok-id-text {
+            color: #bbb;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .profile-img-container {
+            margin: 0 auto 20px;
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid #f1c40f;
+            overflow: hidden;
+            box-shadow: 0 0 15px #f1c40f;
+        }
+
+        .profile-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .description {
+            font-size: 14px;
+            line-height: 1.5;
+            color: #ddd;
+            margin-bottom: 30px;
+        }
+
+        /* Social Media Section */
+        .social-title {
+            color: #f1c40f;
+            font-weight: bold;
+            font-size: 13px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .btn {
+            display: flex;
+            align-items: center;
+            justify-content: center; /* This centers the text and icon */
+            text-decoration: none;
+            color: white;
+            padding: 14px;
+            margin-bottom: 15px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            filter: brightness(1.1);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
+        }
+
+        .btn i {
+            font-size: 22px;
+            margin-right: 12px; /* Small gap between icon and center-aligned text */
+        }
+
+        /* Brand Colors */
+        .youtube { background-color: #ff0000; }
+        .facebook { background-color: #1877f2; }
+        .whatsapp { background-color: #25D366; }
+
+    </style>
 </head>
 <body>
-<div class="container">
-    <img src="https://i.imgur.com/8Km9tLL.png" alt="AI Logo" class="logo">
-    <button id="mic-btn">🎤</button>
-    <p id="ai-response"></p>
-</div>
 
-<script>
-const micBtn = document.getElementById('mic-btn');
-const aiResponse = document.getElementById('ai-response');
+    <div class="container">
+        <div class="profile-title">ᶠᵒᵛㅤHʀɪᴅᴏʏ︕</div>
+        <div class="tiktok-id-text">TikTok: @017x09</div>
 
-if (!('webkitSpeechRecognition' in window)) {
-    alert('Your browser does not support voice recognition!');
-} else {
-    const recognition = new webkitSpeechRecognition();
-    recognition.continuous = false;
-    recognition.interimResults = false;
-    recognition.lang = 'en-US';
+        <div class="profile-img-container">
+            <img src="https://i.ibb.co.com/ns52T2ZL/image.png" alt="Hridoy Profile">
+        </div>
 
-    recognition.onstart = function() {
-        micBtn.textContent = "🎙️ Listening...";
-        micBtn.classList.add('listening');
-    };
+        <p class="description">
+            Hi, I am Hridoy. I provide FF Proxy Server, Mobile Panel, Mod Menu, Glitch File Etc.
+        </p>
 
-    recognition.onend = function() {
-        micBtn.textContent = "🎤";
-        micBtn.classList.remove('listening');
-    };
+        <div class="social-title">Follow My Other Social Media</div>
 
-    recognition.onresult = function(event) {
-        const text = event.results[0][0].transcript;
-        console.log("User said:", text);
-        getAIResponse(text);
-    };
+        <a href="https://www.youtube.com/@redbot_xtr?sub_confirmation=1" target="_blank" class="btn youtube">
+            <i class="fab fa-youtube"></i> Subscribe Now YouTube
+        </a>
+        
+        <a href="#" class="btn facebook">
+            <i class="fab fa-facebook-f"></i> Follow Now Facebook
+        </a>
 
-    micBtn.onclick = () => {
-        recognition.start();
-    };
-}
+        <a href="https://wa.me/8801511091109" target="_blank" class="btn whatsapp">
+            <i class="fab fa-whatsapp"></i> Message on WhatsApp
+        </a>
+    </div>
 
-// Simple AI demo response (replace with real AI API later)
-function getAIResponse(userText) {
-    let response = "You said: " + userText;
-    aiResponse.textContent = response;
-
-    const utterance = new SpeechSynthesisUtterance(response);
-    speechSynthesis.speak(utterance);
-}
-</script>
 </body>
 </html>
