@@ -1,13 +1,78 @@
-‹div class="neumorphic neumorphic-card"›
-<h1 >Login‹/h1>
-<input type="text"
-class="neumorphic neumorphic-input"
-placeholder="Username"> <input type="password"
-class="neumorphic neumorphic-input"
-placeholder="Password">
-‹button class="neumorphic neumorphic-button"›Sign In</ button>
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+
+body{
+margin:0;
+height:100vh;
+display:flex;
+justify-content:center;
+align-items:center;
+background:#e0e5ec;
+font-family:Arial;
+}
+
+.container{
+width:300px;
+padding:40px;
+border-radius:20px;
+background:#e0e5ec;
+box-shadow: 10px 10px 20px #a3b1c6,
+            -10px -10px 20px #ffffff;
+text-align:center;
+}
+
+h2{
+margin-bottom:30px;
+}
+
+input{
+width:100%;
+padding:15px;
+margin:10px 0;
+border:none;
+outline:none;
+border-radius:25px;
+background:#e0e5ec;
+box-shadow: inset 5px 5px 10px #a3b1c6,
+            inset -5px -5px 10px #ffffff;
+}
+
+button{
+margin-top:20px;
+padding:12px 30px;
+border:none;
+border-radius:25px;
+background:#e0e5ec;
+cursor:pointer;
+box-shadow: 5px 5px 10px #a3b1c6,
+            -5px -5px 10px #ffffff;
+font-weight:bold;
+}
+
+button:active{
+box-shadow: inset 5px 5px 10px #a3b1c6,
+            inset -5px -5px 10px #ffffff;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>Login</h2>
+
+<input type="text" placeholder="Username">
+<input type="password" placeholder="Password">
+
+<button>Sign In</button>
+
 </div>
-196
-Dislike
-CSS
-• neumorphic
+
+</body>
+</html>
