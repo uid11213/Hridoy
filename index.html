@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Hridoy Profile</title>
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
     <style>
         /* Background & Layout */
         body {
@@ -65,7 +68,7 @@
             margin-bottom: 30px;
         }
 
-        /* Social Media Buttons */
+        /* Social Media Section */
         .social-title {
             color: #f1c40f;
             font-weight: bold;
@@ -76,7 +79,9 @@
         }
 
         .btn {
-            display: block;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start; /* Icon and text left-aligned */
             text-decoration: none;
             color: white;
             padding: 14px;
@@ -87,21 +92,31 @@
             transition: 0.3s;
         }
 
+        /* Hover animation for entire button */
         .btn:hover {
             transform: translateY(-3px);
             filter: brightness(1.2);
         }
 
-        .telegram { background-color: #2980b9; }
-        .youtube { background-color: #c0392b; }
-        .facebook { background-color: #1877f2; }
+        /* Styling the real-world icons */
+        .btn i {
+            font-size: 20px;
+            margin-right: 15px; /* Spacing between icon and text */
+            width: 25px; /* Ensures consistent alignment */
+            text-align: center;
+        }
+
+        /* Official brand colors */
+        .telegram { background-color: #0088cc; } /* Telegram Official Blue */
+        .youtube { background-color: #ff0000; }  /* YouTube Official Red */
+        .facebook { background-color: #1877f2; } /* Facebook Official Blue */
 
     </style>
 </head>
 <body>
 
     <div class="container">
-        <div class="profile-title">ᶠᵒᵛ Hʀɪᴅᴏʏ︕</div>
+        <div class="profile-title">ᶠᵒᵛㅤHʀɪᴅᴏʏ︕</div>
         <div class="tiktok-id">TikTok: @017x09</div>
 
         <div class="profile-img-container">
@@ -109,18 +124,22 @@
         </div>
 
         <p class="description">
-            
-            
-            
+            Hi, I am Hridoy. I provide FF Proxy Server, Mobile Panel, Mod Menu, Glitch File Etc.
         </p>
 
         <div class="social-title">Follow My Other Social Media</div>
 
-        <a href="#" class="btn telegram">✈ Join Now Telegram</a>
+        <a href="#" class="btn telegram">
+            <i class="fab fa-telegram"></i> Join Now Telegram
+        </a>
         
-        <a href="https://youtube.com/@redbot_xtr?si=ooR_W28pLlvDQsDE" target="_blank" class="btn youtube">▶ Subscribe Now YouTube</a>
+        <a href="https://youtube.com/@redbot_xtr?si=ooR_W28pLlvDQsDE" target="_blank" class="btn youtube">
+            <i class="fab fa-youtube"></i> Subscribe Now YouTube
+        </a>
         
-        <a href="#" class="btn facebook">f Follow Now Facebook</a>
+        <a href="#" class="btn facebook">
+            <i class="fab fa-facebook-f"></i> Follow Now Facebook
+        </a>
     </div>
 
 </body>
