@@ -1,144 +1,81 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Hridoy Profile</title>
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
+    <title>Image Messenger to Telegram</title>
     <style>
-        /* Background & Layout */
-        body {
-            background-color: #000;
-            color: #fff;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            margin: 0;
-            padding: 20px 0;
-        }
-
-        /* Main Container */
-        .container {
-            width: 90%;
-            max-width: 400px;
-            border: 3px solid #f1c40f; 
-            border-radius: 20px;
-            padding: 30px 20px;
-            text-align: center;
-            box-shadow: 0 0 25px rgba(241, 196, 15, 0.3);
-        }
-
-        /* Profile Details */
-        .profile-title {
-            font-size: 26px;
-            font-weight: bold;
-            margin-bottom: 5px;
-            color: #fff;
-        }
-
-        .tiktok-id-text {
-            color: #bbb;
-            font-size: 14px;
-            margin-bottom: 20px;
-        }
-
-        .profile-img-container {
-            margin: 0 auto 20px;
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            border: 3px solid #f1c40f;
-            overflow: hidden;
-            box-shadow: 0 0 15px #f1c40f;
-        }
-
-        .profile-img-container img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .description {
-            font-size: 14px;
-            line-height: 1.5;
-            color: #ddd;
-            margin-bottom: 30px;
-        }
-
-        /* Social Media Section */
-        .social-title {
-            color: #f1c40f;
-            font-weight: bold;
-            font-size: 13px;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-        }
-
-        .btn {
-            display: flex;
-            align-items: center;
-            justify-content: center; /* This centers the text and icon */
-            text-decoration: none;
-            color: white;
-            padding: 14px;
-            margin-bottom: 15px;
-            border-radius: 12px;
-            font-weight: bold;
-            font-size: 16px;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            filter: brightness(1.1);
-            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.1);
-        }
-
-        .btn i {
-            font-size: 22px;
-            margin-right: 12px; /* Small gap between icon and center-aligned text */
-        }
-
-        /* Brand Colors */
-        .youtube { background-color: #ff0000; }
-        .facebook { background-color: #1877f2; }
-        .whatsapp { background-color: #25D366; }
-
+        body { font-family: 'Arial', sans-serif; background: #f4f7f6; display: flex; justify-content: center; align-items: center; height: 100vh; margin: 0; }
+        .card { background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); width: 350px; }
+        h2 { text-align: center; color: #333; font-size: 20px; }
+        input, button { width: 100%; padding: 12px; margin: 10px 0; border: 1px solid #ddd; border-radius: 6px; box-sizing: border-box; }
+        button { background: #0088cc; color: white; border: none; cursor: pointer; font-weight: bold; transition: 0.3s; }
+        button:hover { background: #006699; }
+        #preview { width: 100%; height: auto; border-radius: 6px; display: none; margin-bottom: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="profile-title">ᶠᵒᵛㅤHʀɪᴅᴏʏ︕</div>
-        <div class="tiktok-id-text">TikTok: @017x09</div>
+<div class="card">
+    <h2>ছবি ও তথ্য পাঠান</h2>
+    
+    <img id="preview" src="#" alt="Image Preview">
+    
+    <input type="file" id="photoInput" accept="image/*" onchange="previewImage(event)">
+    <input type="text" id="phone" placeholder="ফোন নম্বর লিখুন">
+    <input type="number" id="total" placeholder="টোটাল (টাকা)">
+    
+    <button onclick="sendToTelegram()">সেন্ড করুন</button>
+</div>
 
-        <div class="profile-img-container">
-            <img src="https://i.ibb.co.com/ns52T2ZL/image.png" alt="Hridoy Profile">
-        </div>
+<script>
+    // আপনার বটের তথ্য এখানে দিন
+    const BOT_TOKEN = 'আপনার_বট_টোকেন_এখানে_দিন'; 
+    const CHAT_ID = 'আপনার_চ্যাট_আইডি_এখানে_দিন';
 
-        <p class="description">
-            Hi, I am Hridoy. I provide FF Proxy Server, Mobile Panel, Mod Menu, Glitch File Etc.
-        </p>
+    function previewImage(event) {
+        const reader = new FileReader();
+        reader.onload = function() {
+            const output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        }
+        reader.readAsDataURL(event.target.files[0]);
+    }
 
-        <div class="social-title">Follow My Other Social Media</div>
+    async function sendToTelegram() {
+        const photoFile = document.getElementById('photoInput').files[0];
+        const phone = document.getElementById('phone').value;
+        const total = document.getElementById('total').value;
 
-        <a href="https://www.youtube.com/@redbot_xtr?sub_confirmation=1" target="_blank" class="btn youtube">
-            <i class="fab fa-youtube"></i> Subscribe Now YouTube
-        </a>
-        
-        <a href="#" class="btn facebook">
-            <i class="fab fa-facebook-f"></i> Follow Now Facebook
-        </a>
+        if (!photoFile || !phone || !total) {
+            alert("সবগুলো ঘর পূরণ করুন!");
+            return;
+        }
 
-        <a href="https://wa.me/8801XXXXXXXXX" target="_blank" class="btn whatsapp">
-            <i class="fab fa-whatsapp"></i> Message on WhatsApp
-        </a>
-    </div>
+        const formData = new FormData();
+        formData.append('chat_id', CHAT_ID);
+        formData.append('photo', photoFile);
+        formData.append('caption', `নতুন ডাটা এসেছে:\n\n📱 ফোন: ${phone}\n💰 টোটাল: ${total}`);
+
+        try {
+            const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (response.ok) {
+                alert("সফলভাবে পাঠানো হয়েছে!");
+                location.reload(); // ফর্ম রিসেট করার জন্য
+            } else {
+                alert("পাঠানো যায়নি। টোকেন বা আইডি চেক করুন।");
+            }
+        } catch (error) {
+            console.error("Error:", error);
+            alert("ইন্টারনেট কানেকশন চেক করুন।");
+        }
+    }
+</script>
 
 </body>
 </html>
