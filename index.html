@@ -5,19 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Proof Submission</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #e9ecef; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
-        .card { background: white; padding: 30px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); width: 380px; box-sizing: border-box; }
-        h2 { text-align: center; color: #2c3e50; font-size: 22px; margin-top: 0; margin-bottom: 20px; }
-        label { font-weight: bold; color: #555; display: block; margin-bottom: 5px; margin-top: 15px; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #e9ecef; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 10px; }
+        .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 8px 20px rgba(0,0,0,0.15); width: 100%; max-width: 380px; box-sizing: border-box; }
+        h2 { text-align: center; color: #2c3e50; font-size: 20px; margin-top: 0; margin-bottom: 20px; border-bottom: 2px solid #0088cc; padding-bottom: 10px; }
+        label { font-weight: bold; color: #555; display: block; margin-bottom: 5px; margin-top: 15px; font-size: 14px; }
         input[type="text"], input[type="file"], button { width: 100%; padding: 12px; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
         input[type="text"] { border: 2px solid #ddd; transition: 0.3s; }
         input[type="text"]:focus { border-color: #0088cc; outline: none; }
         input[type="file"] { background: #f8f9fa; border: 1px dashed #aaa; cursor: pointer; }
-        button { background: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 25px; transition: background 0.3s; }
-        button:hover { background: #218838; }
+        button { background: #0088cc; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 25px; transition: background 0.3s; }
+        button:hover { background: #006699; }
         button:disabled { background: #6c757d; cursor: not-allowed; }
         #preview { width: 100%; height: auto; border-radius: 8px; display: none; margin-bottom: 15px; border: 1px solid #ddd; }
-        .status-msg { text-align: center; margin-top: 15px; font-weight: bold; display: none; }
+        .status-msg { text-align: center; margin-top: 15px; font-size: 14px; font-weight: bold; display: none; padding: 10px; border-radius: 5px; }
     </style>
 </head>
 <body>
@@ -27,23 +27,23 @@
     
     <img id="preview" src="#" alt="Image Preview">
     
-    <label for="photoInput">লেনদেনের স্ক্রিনশট (File)</label>
+    <label for="photoInput">লেনদেনের স্ক্রিনশট (অরিজিনাল ফাইল)</label>
     <input type="file" id="photoInput" accept="image/*" onchange="previewImage(event)">
 
     <label for="whatsapp">WhatsApp নম্বর</label>
     <input type="text" id="whatsapp" placeholder="উদা: 017xxxxxxxx">
 
-    <label for="paymentDesc">পেমেন্ট বিবরণ (টাকা এবং লাস্ট ৪ ডিজিট)</label>
+    <label for="paymentDesc">পেমেন্ট বিবরণ (টাকা ও লাস্ট ৪ ডিজিট)</label>
     <input type="text" id="paymentDesc" placeholder="উদা: ৫০০ টাকা, লাস্ট ৪ ডিজিট ১২৩৪">
     
-    <button id="sendBtn" onclick="sendToTelegram()">জমা দিন (Document রূপে)</button>
+    <button id="sendBtn" onclick="sendToTelegram()">সেন্ড করুন (Document)</button>
     <div id="statusMsg" class="status-msg"></div>
 </div>
 
 <script>
-    // আপনার বটের তথ্য এখানে দিন (অবশ্যই পরিবর্তন করবেন)
-    const BOT_TOKEN = 'YOUR_BOT_TOKEN_HERE'; 
-    const CHAT_ID = 'YOUR_CHAT_ID_HERE';
+    // আপনার দেওয়া সঠিক তথ্য এখানে বসানো হয়েছে
+    const BOT_TOKEN = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY'; 
+    const CHAT_ID = '8535841928';
 
     function previewImage(event) {
         const file = event.target.files[0];
@@ -65,51 +65,49 @@
         const btn = document.getElementById('sendBtn');
         const status = document.getElementById('statusMsg');
 
-        // ভ্যালিডেশন
         if (!photoFile || !whatsapp || !paymentDesc) {
-            alert("দয়া করে সব তথ্য পূরণ করুন এবং ছবিটি সিলেক্ট করুন।");
+            alert("সবগুলো তথ্য সঠিকভাবে পূরণ করুন।");
             return;
         }
 
         btn.disabled = true;
         btn.innerText = "পাঠানো হচ্ছে...";
         status.style.display = "block";
-        status.innerText = "প্রসেস হচ্ছে...";
-        status.style.color = "orange";
+        status.innerText = "ফাইল আপলোড হচ্ছে, দয়া করে অপেক্ষা করুন...";
+        status.style.color = "#856404";
+        status.style.backgroundColor = "#fff3cd";
 
         const formData = new FormData();
         formData.append('chat_id', CHAT_ID);
-        // ছবির ফাইলটি 'document' হিসেবে পাঠানো হচ্ছে যাতে কোয়ালিটি ঠিক থাকে
+        // ছবির কোয়ালিটি বজায় রাখতে sendDocument ব্যবহার করা হয়েছে
         formData.append('document', photoFile); 
-        formData.append('caption', `🔔 নতুন পেমেন্ট প্রুফ (Document)\n\n📱 WhatsApp: ${whatsapp}\n💰 বিবরণ: ${paymentDesc}`);
+        formData.append('caption', `🔔 নতুন পেমেন্ট সাবমিশন\n\n📱 WhatsApp: ${whatsapp}\n💰 বিবরণ: ${paymentDesc}`);
 
         try {
-            // API endpoint পরিবর্তন করে 'sendDocument' করা হয়েছে
             const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
                 method: 'POST',
                 body: formData
             });
 
             if (response.ok) {
-                status.innerText = "✅ সফলভাবে পাঠানো হয়েছে! আপনাকে ধন্যবাদ।";
-                status.style.color = "green";
-                btn.innerText = "জমা দিন (Document রূপে)";
+                status.innerText = "✅ সফলভাবে পাঠানো হয়েছে!";
+                status.style.color = "#155724";
+                status.style.backgroundColor = "#d4edda";
+                btn.innerText = "সেন্ড করুন (Document)";
                 btn.disabled = false;
+                
                 // ফর্ম রিসেট
                 document.getElementById('photoInput').value = '';
                 document.getElementById('whatsapp').value = '';
                 document.getElementById('paymentDesc').value = '';
                 document.getElementById('preview').style.display = 'none';
             } else {
-                status.innerText = "❌ পাঠানো যায়নি। বটের টোকেন বা চ্যাট আইডি ভুল।";
-                status.style.color = "red";
-                btn.disabled = false;
-                btn.innerText = "আবার চেষ্টা করুন";
+                throw new Error('Failed');
             }
         } catch (error) {
-            console.error("Error:", error);
-            status.innerText = "⚠️ ইন্টারনেট সংযোগ সমস্যা বা অন্য কোনো ভুল হয়েছে।";
-            status.style.color = "red";
+            status.innerText = "❌ পাঠানো যায়নি! টোকেন বা আইডি চেক করুন।";
+            status.style.color = "#721c24";
+            status.style.backgroundColor = "#f8d7da";
             btn.disabled = false;
             btn.innerText = "আবার চেষ্টা করুন";
         }
