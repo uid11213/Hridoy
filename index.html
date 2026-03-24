@@ -3,265 +3,279 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Editing Service | Liquid Glass submission</title>
+    <title>Premium Photo Edit Service</title>
     <style>
-        /* ফন্ট এবং বেসিক সেটিংস */
-        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
-        
-        body { 
-            margin: 0; 
-            padding: 0; 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-            min-height: 100vh; 
-            font-family: 'Poppins', sans-serif; 
-            /* ডায়নামিক ব্যাকগ্রাউন্ড (লিকুইড ৩ডি এফেক্ট দিতে) */
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%);
-            overflow-x: hidden;
-            position: relative;
+        @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&display=swap');
+
+        :root {
+            --glass: rgba(255, 255, 255, 0.12);
+            --border: rgba(255, 255, 255, 0.25);
+            --accent: #ff0055; /* বিকাশ/নগদ ব্র্যান্ড কালার মিক্স */
+            --primary: #00f2fe;
+            --secondary: #4facfe;
         }
 
-        /* পেছনের ৩ডি লিকুইড বডি */
-        body::before, body::after {
-            content: '';
-            position: absolute;
-            width: 400px;
-            height: 400px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.4);
-            filter: blur(50px);
-            z-index: 1;
-        }
-        body::before { top: -10%; left: -10%; background: #c2e9fb; }
-        body::after { bottom: -10%; right: -10%; background: #a1c4fd; }
-
-        /* গ্লাস কন্টেইনার */
-        .glass-card { 
-            position: relative;
-            width: 100%; 
-            max-width: 400px; 
-            background: rgba(255, 255, 255, 0.25); /* স্বচ্ছতা */
-            backdrop-filter: blur(15px); /* ব্লার এফেক্ট */
-            -webkit-backdrop-filter: blur(15px);
-            border-radius: 25px; 
-            padding: 40px; 
-            border: 1px solid rgba(255, 255, 255, 0.3); /* বর্ডার */
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2); /* শ্যাডো */
-            text-align: center;
-            color: #1a1a1a;
-            z-index: 2;
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Outfit', sans-serif;
+            background: #0a0a0c; /* ডিপ প্রিমিয়াম ব্যাকগ্রাউন্ড */
             overflow: hidden;
         }
-        
-        /* ৩ডি এফেক্ট - উপরে গ্লো */
-        .glass-card::before {
-            content: '';
+
+        /* ৩ডি এনিমেটেড ব্যাকগ্রাউন্ড লিকুইড */
+        .liquid-bg {
             position: absolute;
-            top: 0;
-            left: 0;
             width: 100%;
-            height: 5px;
-            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.8), transparent);
-            border-radius: 5px;
+            height: 100%;
+            background: linear-gradient(45deg, #0a0a0c, #1a1a2e);
+            z-index: -1;
         }
 
-        h2 { 
+        .blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: move 20s infinite alternate;
+        }
+
+        .blob2 {
+            position: absolute;
+            bottom: -100px;
+            right: -100px;
+            width: 400px;
+            height: 400px;
+            background: var(--accent);
+            filter: blur(80px);
+            border-radius: 50%;
+            z-index: -1;
+            animation: move 15s infinite alternate-reverse;
+        }
+
+        @keyframes move {
+            from { transform: translate(0, 0); }
+            to { transform: translate(100px, 100px); }
+        }
+
+        /* মেইন প্রিমিয়াম কার্ড */
+        .premium-card {
+            position: relative;
+            width: 90%;
+            max-width: 420px;
+            padding: 40px;
+            background: var(--glass);
+            backdrop-filter: blur(30px) saturate(180%);
+            -webkit-backdrop-filter: blur(30px) saturate(180%);
+            border: 1px solid var(--border);
+            border-radius: 35px;
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+            color: #fff;
+        }
+
+        h1 {
+            font-weight: 800;
+            font-size: 28px;
+            margin-bottom: 10px;
+            background: linear-gradient(to right, #fff, #a5a5a5);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        p { font-size: 14px; opacity: 0.7; margin-bottom: 30px; font-weight: 300; }
+
+        /* পেমেন্ট বক্স - স্মার্ট ডিজাইন */
+        .pay-box {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .price-tag { color: var(--accent); font-weight: 800; font-size: 18px; display: block; margin-bottom: 5px; }
+        .bkash-num { font-size: 24px; font-weight: 800; letter-spacing: 2px; display: block; margin-bottom: 15px; }
+
+        .copy-btn {
+            background: #fff;
+            color: #000;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 50px;
             font-weight: 700;
-            font-size: 24px;
-            margin-bottom: 30px; 
-            letter-spacing: -0.5px;
-            color: #004085;
+            font-size: 12px;
+            cursor: pointer;
+            transition: 0.4s;
+            text-transform: uppercase;
         }
+        .copy-btn:hover { transform: scale(1.1); box-shadow: 0 0 20px rgba(255,255,255,0.4); }
 
-        /* বিকাশ/নগদ কপি বক্স */
-        .bkash-container { 
-            background: rgba(255, 255, 255, 0.4); 
-            border: 1px dashed rgba(229, 9, 20, 0.5); 
-            border-radius: 15px; 
-            padding: 20px; 
-            margin-bottom: 25px; 
-            transition: 0.3s;
-        }
-        .bkash-container small { display: block; font-size: 12px; color: #555; margin-bottom: 8px; font-weight: 300; }
-        .number { display: block; font-size: 22px; font-weight: 700; color: #e50914; margin-bottom: 12px; letter-spacing: 1px; }
-        .copy-btn { 
-            background: rgba(229, 9, 20, 0.85); 
-            border: none; 
-            color: white; 
-            padding: 8px 20px; 
-            border-radius: 20px; 
-            font-weight: 600; 
-            font-size: 13px; 
-            cursor: pointer; 
-            transition: 0.2s; 
-            backdrop-filter: blur(5px);
-        }
-        .copy-btn:hover { background: #d00712; transform: scale(1.05); }
-
-        /* ইনপুট ফিল্ড এবং লেবেল */
-        label { display: block; font-weight: 600; font-size: 14px; text-align: left; margin-bottom: 5px; color: #004085; }
-        input { 
-            width: 100%; 
-            padding: 14px; 
-            margin-bottom: 20px; 
-            border: 1px solid rgba(255, 255, 255, 0.5); 
-            border-radius: 10px; 
-            background: rgba(255, 255, 255, 0.4); 
-            box-sizing: border-box; 
-            color: #333;
-            font-size: 15px;
-            backdrop-filter: blur(5px);
-            transition: 0.3s;
-        }
-        input:focus { 
-            outline: none; 
-            border-color: #a1c4fd; 
-            background: rgba(255, 255, 255, 0.6); 
-            box-shadow: 0 0 10px rgba(161, 196, 253, 0.5);
-        }
-        input[type="file"] { padding: 10px; font-size: 12px; cursor: pointer; color: #777; }
-
-        /* প্রিভিউ ইমেজ */
-        #preview { 
-            width: 120px; 
-            height: 120px; 
-            object-fit: cover; 
-            border-radius: 50%; 
-            border: 3px solid rgba(255, 255, 255, 0.8); 
-            margin-bottom: 20px; 
-            display: none; 
-            margin-left: auto; 
-            margin-right: auto; 
-            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-        }
-
-        /* সাবমিট বাটন */
-        #sendBtn { 
-            width: 100%; 
-            background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); 
-            color: #004085; 
-            border: 1px solid rgba(255,255,255,0.4); 
-            padding: 16px; 
-            border-radius: 12px; 
-            font-weight: 700; 
-            font-size: 16px; 
-            cursor: pointer; 
-            transition: 0.3s; 
-            backdrop-filter: blur(10px);
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-        #sendBtn:hover { 
-            transform: translateY(-3px); 
-            background: linear-gradient(135deg, #c2e9fb 0%, #a1c4fd 100%); 
-            box-shadow: 0 8px 30px rgba(0,0,0,0.2);
-        }
-        #sendBtn:disabled { background: #ccc; cursor: not-allowed; transform: none; box-shadow: none; color: #777; }
-
-        /* স্ট্যাটাস মেসেজ এবং টোস্ট */
-        #status { font-size: 12px; text-align: center; margin-top: 10px; display: none; padding: 10px; border-radius: 8px; color: white; backdrop-filter: blur(5px); }
-        .toast { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: rgba(0,0,0,0.7); color: white; padding: 10px 20px; border-radius: 20px; font-size: 13px; display: none; z-index: 1000; backdrop-filter: blur(5px); }
+        /* ইনপুট স্টাইল */
+        .input-group { text-align: left; margin-bottom: 20px; }
+        label { font-size: 12px; opacity: 0.6; margin-left: 10px; display: block; margin-bottom: 5px; }
         
-        /* রেসপন্সিভ সেটিংস */
-        @media (max-width: 480px) {
-            .glass-card { padding: 25px; max-width: 90%; }
-            h2 { font-size: 20px; margin-bottom: 20px; }
-            .number { font-size: 18px; }
-            input, #sendBtn { padding: 12px; font-size: 14px; }
+        input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px;
+            border-radius: 15px;
+            color: #fff;
+            font-size: 15px;
+            outline: none;
+            box-sizing: border-box;
+            transition: 0.3s;
         }
+        input:focus { border-color: var(--secondary); background: rgba(255,255,255,0.1); }
+
+        /* কাস্টম ফাইল আপলোড বাটন */
+        input[type="file"] { font-size: 12px; padding: 10px; cursor: pointer; }
+
+        /* প্রিভিউ ইমেজ - ৩ডি লুক */
+        #preview {
+            width: 100px; height: 100px; border-radius: 20px;
+            object-fit: cover; margin: 0 auto 20px; display: none;
+            border: 2px solid var(--secondary);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+        }
+
+        /* প্রিমিয়াম সাবমিট বাটন */
+        #sendBtn {
+            width: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            color: white;
+            padding: 18px;
+            border-radius: 20px;
+            border: none;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.5s;
+            box-shadow: 0 10px 25px rgba(79, 172, 254, 0.4);
+            margin-top: 10px;
+        }
+        #sendBtn:hover { transform: translateY(-5px); box-shadow: 0 15px 35px rgba(79, 172, 254, 0.6); }
+        #sendBtn:disabled { background: #444; cursor: not-allowed; box-shadow: none; transform: none; }
+
+        /* সাকসেস মেসেজ */
+        #status { margin-top: 15px; font-size: 12px; font-weight: 600; display: none; }
+
+        .toast {
+            position: fixed; bottom: 30px; background: #fff; color: #000;
+            padding: 12px 30px; border-radius: 50px; font-weight: 700;
+            display: none; animation: slideUp 0.5s forwards; z-index: 1000;
+        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
     </style>
 </head>
 <body>
-    
-    <div class="glass-card">
-        <h2>Submit Photo</h2>
-        
-        <div class="bkash-container">
-            <small>পেমেন্ট করুন (বিকাশ/নগদ)</small>
-            <span class="number" id="num">01701370709</span>
-            <button class="copy-btn" onclick="copyNum()">Copy Number</button>
+
+    <div class="liquid-bg">
+        <div class="blob"></div>
+        <div class="blob2"></div>
+    </div>
+
+    <div class="premium-card">
+        <h1>Photo Studio</h1>
+        <p>Ultra-Premium Editing Service</p>
+
+        <div class="pay-box">
+            <span class="price-tag">Advance Fee: 10 BDT</span>
+            <span class="bkash-num" id="bkashNum">01701370709</span>
+            <button class="copy-btn" onclick="copyText()">Copy Number</button>
         </div>
 
-        <img id="preview" src="#" alt="Preview">
-        
-        <label for="photo">আপনার অরিজিনাল ছবি দিন</label>
-        <input type="file" id="photo" accept="image/*" onchange="prevImg(event)">
-        
-        <label for="wa">WhatsApp নম্বর</label>
-        <input type="text" id="wa" placeholder="উদা: 017xxxxxxxx">
-        
-        <label for="pay">পেমেন্ট লাস্ট ৪ ডিজিট (১০ টাকা)</label>
-        <input type="text" id="pay" placeholder="উদা: 1234">
-        
-        <button id="sendBtn" onclick="sendToBot()">অর্ডার সাবমিট করুন</button>
+        <img id="preview" src="#">
+
+        <div class="input-group">
+            <label>Upload High-Res Photo</label>
+            <input type="file" id="photo" accept="image/*" onchange="showPreview(event)">
+        </div>
+
+        <div class="input-group">
+            <label>WhatsApp Number</label>
+            <input type="text" id="wa" placeholder="017xxxxxxxx">
+        </div>
+
+        <div class="input-group">
+            <label>Payment Last 4 Digits</label>
+            <input type="text" id="pay" placeholder="e.g. 5566">
+        </div>
+
+        <button id="sendBtn" onclick="submitOrder()">Place Order</button>
         <div id="status"></div>
     </div>
 
-    <div id="toast" class="toast">নম্বরটি কপি করা হয়েছে!</div>
+    <div id="toast" class="toast">Number Copied!</div>
 
     <script>
-        // আপনার দেওয়া বটের তথ্য বসানো হয়েছে
-        const T = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY', 
-              C = '8535841928';
+        const BOT_TOKEN = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY';
+        const CHAT_ID = '8535841928';
 
-        // কপি করার ফাংশন
-        function copyNum() {
-            navigator.clipboard.writeText('01701370709').then(() => {
-                const toast = document.getElementById('toast');
-                toast.style.display = 'block';
-                setTimeout(() => { toast.style.display = 'none'; }, 2000);
-            });
+        function copyText() {
+            navigator.clipboard.writeText('01701370709');
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2000);
         }
 
-        // ছবি প্রিভিউ এবং ৩ডি এফেক্ট
-        function prevImg(e) {
-            let r = new FileReader();
+        function showPreview(e) {
+            const r = new FileReader();
             r.onload = () => {
-                const p = document.getElementById('preview');
-                p.src = r.result;
-                p.style.display = 'block';
-            };
+                const img = document.getElementById('preview');
+                img.src = r.result;
+                img.style.display = 'block';
+            }
             r.readAsDataURL(e.target.files[0]);
         }
 
-        // টেলিগ্রামে ডকুমেন্ট হিসেবে পাঠানোর ফাংশন
-        async function sendToBot() {
-            const p = document.getElementById('photo').files[0], 
-                  w = document.getElementById('wa').value, 
-                  d = document.getElementById('pay').value, 
-                  b = document.getElementById('sendBtn'), 
-                  s = document.getElementById('status');
-            
-            if (!p || !w || !d) return alert('সব তথ্য পূরণ করুন।');
-            
-            b.disabled = true; 
-            b.innerText = 'সাবমিট হচ্ছে...'; 
-            s.style.display = 'block'; 
-            s.innerText = 'একটু অপেক্ষা করুন, ছবি আপলোড হচ্ছে...';
-            s.style.background = 'rgba(255, 193, 7, 0.5)';
-            
-            let f = new FormData(); 
-            f.append('chat_id', C); 
-            // হাই কোয়ালিটির জন্য ডকুমেন্ট হিসেবে যাবে
-            f.append('document', p); 
-            f.append('caption', `🆕 নতুন অর্ডার এসেছে\n\n📱 WhatsApp: ${w}\n💰 বিবরণ: ${d}`);
-            
+        async function submitOrder() {
+            const photo = document.getElementById('photo').files[0];
+            const wa = document.getElementById('wa').value;
+            const pay = document.getElementById('pay').value;
+            const btn = document.getElementById('sendBtn');
+            const status = document.getElementById('status');
+
+            if (!photo || !wa || !pay) {
+                alert("Please complete all fields.");
+                return;
+            }
+
+            btn.disabled = true;
+            btn.innerText = "Processing...";
+            status.style.display = "block";
+            status.style.color = "#00f2fe";
+            status.innerText = "🚀 Sending to Studio...";
+
+            const fd = new FormData();
+            fd.append('chat_id', CHAT_ID);
+            fd.append('document', photo);
+            fd.append('caption', `💎 NEW PREMIUM ORDER\n\n📱 WA: ${wa}\n💰 Last 4 Digits: ${pay}`);
+
             try {
-                let res = await fetch(`https://api.telegram.org/bot${T}/sendDocument`, {method: 'POST', body: f});
-                
-                if (res.ok) { 
-                    s.innerText = '✅ সফল হয়েছে! আমরা আপনার সাথে যোগাযোগ করব।';
-                    s.style.background = 'rgba(40, 167, 69, 0.5)';
-                    b.innerText = 'Done';
-                    setTimeout(() => location.reload(), 4000);
-                } else { 
-                    throw new Error('Failed'); 
-                }
-            } catch (err) { 
-                s.innerText = '❌ পাঠানো যায়নি! আবার চেষ্টা করুন।';
-                s.style.background = 'rgba(220, 53, 69, 0.5)';
-                b.disabled = false;
-                b.innerText = 'আবার চেষ্টা করুন'; 
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
+                    method: 'POST',
+                    body: fd
+                });
+                if (res.ok) {
+                    status.innerText = "✅ Order Placed Successfully!";
+                    status.style.color = "#00ff88";
+                    btn.innerText = "Success";
+                    setTimeout(() => location.reload(), 3000);
+                } else { throw new Error(); }
+            } catch (e) {
+                status.innerText = "❌ Error. Try Again.";
+                status.style.color = "#ff0055";
+                btn.disabled = false;
+                btn.innerText = "Retry";
             }
         }
     </script>
