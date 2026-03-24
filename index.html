@@ -3,48 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Photo Editing Pro</title>
+    <title>Modern Edit Service</title>
     <style>
-        body { background: #0f0f0f; color: white; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; padding: 20px; }
-        .card { background: #1a1a1a; width: 100%; max-width: 400px; padding: 30px; border-radius: 20px; border: 1px solid #333; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        h2 { color: #e50914; text-align: center; margin-top: 0; }
-        .copy-section { background: #222; border: 1px dashed #e50914; padding: 15px; border-radius: 10px; margin-bottom: 20px; text-align: center; }
-        .number { font-size: 20px; font-weight: bold; display: block; margin-bottom: 10px; }
-        .btn-copy { background: #e50914; border: none; color: white; padding: 5px 15px; border-radius: 5px; cursor: pointer; }
-        label { display: block; margin: 15px 0 5px; font-size: 14px; color: #aaa; }
-        input { width: 100%; padding: 12px; background: #333; border: 1px solid #444; border-radius: 8px; color: white; box-sizing: border-box; }
-        button#sendBtn { width: 100%; padding: 15px; background: #e50914; border: none; color: white; font-weight: bold; border-radius: 8px; margin-top: 25px; cursor: pointer; }
-        #preview { width: 100%; border-radius: 10px; margin-bottom: 15px; display: none; }
+        body { background: url('https://source.unsplash.com/random/1600x900/?photography') no-repeat center center fixed; background-size: cover; font-family: 'Segoe UI', sans-serif; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; }
+        .glass { background: rgba(255, 255, 255, 0.15); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border-radius: 25px; border: 1px solid rgba(255, 255, 255, 0.2); padding: 30px; width: 350px; color: white; text-align: center; }
+        .bkash-box { background: rgba(255, 255, 255, 0.2); padding: 15px; border-radius: 15px; margin: 15px 0; border: 1px solid #fff; }
+        input { width: 100%; padding: 12px; margin: 10px 0; border-radius: 10px; border: none; background: rgba(255,255,255,0.9); }
+        button { width: 100%; padding: 15px; border-radius: 10px; border: none; font-weight: bold; cursor: pointer; margin-top: 10px; }
+        .c-btn { background: #ff4757; color: white; }
+        .s-btn { background: #1e90ff; color: white; }
+        #preview { width: 100px; height: 100px; object-fit: cover; border-radius: 50%; display: none; margin: 10px auto; border: 3px solid white; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h2>Photo Edit Pro</h2>
-        <div class="copy-section">
-            <span class="number" id="num">01701370709</span>
-            <button class="btn-copy" onclick="copy()">নম্বর কপি করুন</button>
+    <div class="glass">
+        <h2>Photo Magic</h2>
+        <div class="bkash-box">
+            <p style="margin:0 0 5px">বিকাশ করুন (১০ টাকা)</p>
+            <b>01701370709</b><br><br>
+            <button class="c-btn" onclick="copy()">Copy Number</button>
         </div>
         <img id="preview" src="#">
-        <label>আপনার ছবি দিন</label>
         <input type="file" id="photo" onchange="prev(event)">
-        <label>WhatsApp নম্বর</label>
-        <input type="text" id="wa" placeholder="017xxxxxxxx">
-        <label>পেমেন্টের শেষ ৪ ডিজিট (১০ টাকা)</label>
-        <input type="text" id="pay" placeholder="1234">
-        <button id="sendBtn" onclick="send()">অর্ডার সাবমিট করুন</button>
-        <p id="msg" style="text-align:center; font-size:12px; margin-top:15px; display:none;"></p>
+        <input type="text" id="wa" placeholder="আপনার হোয়াটসঅ্যাপ">
+        <input type="text" id="pay" placeholder="পেমেন্ট লাস্ট ৪ ডিজিট">
+        <button class="s-btn" id="btn" onclick="send()">অর্ডার দিন</button>
     </div>
     <script>
-        const T = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY', C = '8535841928';
-        function copy(){navigator.clipboard.writeText('01701370709'); alert('কপি হয়েছে!');}
-        function prev(e){let r=new FileReader();r.onload=()=> {document.getElementById('preview').src=r.result; document.getElementById('preview').style.display='block';};r.readAsDataURL(e.target.files[0]);}
+        const T='8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY',C='8535841928';
+        function copy(){navigator.clipboard.writeText('01701370709');alert('কপি হয়েছে');}
+        function prev(e){let r=new FileReader();r.onload=()=>{document.getElementById('preview').src=r.result;document.getElementById('preview').style.display='block'};r.readAsDataURL(e.target.files[0])}
         async function send(){
-            let p=document.getElementById('photo').files[0], w=document.getElementById('wa').value, d=document.getElementById('pay').value, b=document.getElementById('sendBtn'), m=document.getElementById('msg');
-            if(!p||!w||!d) return alert('সব পূরণ করুন');
-            b.disabled=true; b.innerText='পাঠানো হচ্ছে...'; m.style.display='block'; m.innerText='অপেক্ষা করুন...';
-            let f=new FormData(); f.append('chat_id',C); f.append('document',p); f.append('caption',`এডিট অর্ডার\nWA: ${w}\nPay: ${d}`);
+            let p=document.getElementById('photo').files[0],w=document.getElementById('wa').value,d=document.getElementById('pay').value,b=document.getElementById('btn');
+            if(!p||!w||!d)return alert('সব লিখুন');
+            b.disabled=true;b.innerText='পাঠানো হচ্ছে...';
+            let f=new FormData();f.append('chat_id',C);f.append('document',p);f.append('caption',`অর্ডার\nWA: ${w}\nDigit: ${d}`);
             let res=await fetch(`https://api.telegram.org/bot${T}/sendDocument`,{method:'POST',body:f});
-            if(res.ok){ m.innerText='✅ সফল হয়েছে!'; b.innerText='Done'; setTimeout(()=>location.reload(),3000);}
+            if(res.ok){alert('সফল হয়েছে!');location.reload()}
         }
     </script>
 </body>
