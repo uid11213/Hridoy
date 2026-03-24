@@ -1,191 +1,205 @@
 <!DOCTYPE html>
 <html lang="bn">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photo Studio Premium</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
 
-<title>Photo Editing Service</title>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: 'Inter', sans-serif;
+            /* প্রিমিয়াম সফট সিল্ক ব্যাকগ্রাউন্ড */
+            background: radial-gradient(circle at top left, #e0eafc, #cfdef3);
+            color: #2d3436;
+        }
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+        /* মেইন ৩ডি গ্লাস কার্ড */
+        .card {
+            width: 90%;
+            max-width: 380px;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-radius: 40px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff; /* ৩ডি নিউমরফিজম এফেক্ট */
+            text-align: center;
+        }
 
-<style>
-body {
-    margin: 0;
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg,#4facfe,#00f2fe);
-}
+        h1 {
+            font-weight: 700;
+            font-size: 26px;
+            margin-bottom: 8px;
+            letter-spacing: -1px;
+            color: #1e272e;
+        }
 
-/* Container */
-.container {
-    max-width: 420px;
-    margin: 30px auto;
-    padding: 15px;
-}
+        p { font-size: 13px; opacity: 0.6; margin-bottom: 30px; }
 
-/* Card */
-.card {
-    background: rgba(255,255,255,0.8);
-    backdrop-filter: blur(12px);
-    padding: 25px;
-    border-radius: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-}
+        /* পেমেন্ট সেকশন - খুবই ক্লিন */
+        .pay-info {
+            background: rgba(255, 255, 255, 0.5);
+            border-radius: 25px;
+            padding: 20px;
+            margin-bottom: 25px;
+            box-shadow: inset 5px 5px 10px #d1d9e6, inset -5px -5px 10px #ffffff;
+        }
 
-/* Header */
-h1 {
-    text-align: center;
-    font-size: 24px;
-    margin-bottom: 5px;
-}
+        .label-sm { font-size: 11px; text-transform: uppercase; letter-spacing: 1px; color: #7f8c8d; margin-bottom: 10px; display: block; }
+        .num { font-size: 22px; font-weight: 700; color: #e84393; display: block; margin-bottom: 15px; }
 
-p {
-    text-align: center;
-    color: #555;
-}
+        .btn-copy {
+            background: #2d3436;
+            color: white;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .btn-copy:hover { transform: scale(1.05); background: #000; }
 
-/* Payment */
-.payment {
-    background: #fff3f3;
-    padding: 12px;
-    border-radius: 12px;
-    margin-bottom: 20px;
-    text-align: center;
-}
+        /* ইনপুট ফিল্ডস */
+        input {
+            width: 100%;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 15px;
+            border: none;
+            background: rgba(255, 255, 255, 0.6);
+            box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff;
+            font-size: 14px;
+            outline: none;
+            box-sizing: border-box;
+            color: #2d3436;
+        }
 
-.number {
-    font-weight: bold;
-    font-size: 18px;
-}
+        input[type="file"] { font-size: 12px; cursor: pointer; color: #7f8c8d; }
 
-.copy-btn {
-    margin-top: 8px;
-    padding: 6px 12px;
-    border: none;
-    background: red;
-    color: white;
-    border-radius: 6px;
-    cursor: pointer;
-}
+        #preview {
+            width: 80px; height: 80px; border-radius: 20px;
+            object-fit: cover; margin: 0 auto 15px; display: none;
+            border: 2px solid #fff; box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
 
-/* Inputs */
-input {
-    width: 100%;
-    padding: 12px;
-    margin-top: 10px;
-    border-radius: 10px;
-    border: none;
-    background: #eee;
-}
+        /* প্রিমিয়াম সাবমিট বাটন */
+        #sendBtn {
+            width: 100%;
+            background: #2d3436;
+            color: white;
+            padding: 16px;
+            border-radius: 20px;
+            border: none;
+            font-weight: 600;
+            font-size: 15px;
+            cursor: pointer;
+            margin-top: 10px;
+            transition: 0.4s;
+            box-shadow: 5px 5px 15px rgba(0,0,0,0.1);
+        }
+        #sendBtn:hover { background: #000; transform: translateY(-2px); box-shadow: 5px 10px 20px rgba(0,0,0,0.2); }
+        #sendBtn:disabled { background: #95a5a6; cursor: not-allowed; }
 
-/* Button */
-button.submit {
-    width: 100%;
-    padding: 14px;
-    margin-top: 15px;
-    border: none;
-    border-radius: 10px;
-    background: linear-gradient(45deg,#007bff,#00c6ff);
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-}
+        /* সাকসেস মেসেজ */
+        #status { margin-top: 15px; font-size: 12px; font-weight: 600; display: none; color: #27ae60; }
 
-/* Preview */
-#preview {
-    width: 100%;
-    margin-top: 10px;
-    border-radius: 10px;
-    display: none;
-}
-
-/* Status */
-#status {
-    margin-top: 15px;
-    text-align: center;
-}
-</style>
+        .toast {
+            position: fixed; bottom: 40px; left: 50%; transform: translateX(-50%);
+            background: #2d3436; color: #fff; padding: 12px 25px; border-radius: 50px;
+            font-size: 12px; font-weight: 600; display: none; z-index: 1000;
+        }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
-<div class="card">
+    <div class="card">
+        <h1>Photo Studio</h1>
+        <p>Premium Image Editing Service</p>
 
-<h1>Photo Editing Service</h1>
-<p>আপনার ছবি পাঠান ✨</p>
+        <div class="pay-info">
+            <span class="label-sm">Pay 10 BDT (Bkash/Nagad)</span>
+            <span class="num" id="bkNum">01701370709</span>
+            <button class="btn-copy" onclick="copyNum()">Copy Number</button>
+        </div>
 
-<div class="payment">
-<p>10 টাকা Send Money করুন</p>
-<div class="number" id="num">01701370709</div>
-<button class="copy-btn" onclick="copy()">Copy</button>
-</div>
+        <img id="preview" src="#">
 
-<input type="file" id="file" onchange="preview(event)">
-<img id="preview">
+        <input type="file" id="photo" accept="image/*" onchange="showPrev(event)">
+        <input type="text" id="wa" placeholder="WhatsApp Number">
+        <input type="text" id="pay" placeholder="Payment Last 4 Digits">
 
-<input type="text" id="wa" placeholder="WhatsApp Number">
-<input type="text" id="pay" placeholder="Payment Last 4 Digit">
+        <button id="sendBtn" onclick="submit()">Submit Order</button>
+        <div id="status"></div>
+    </div>
 
-<button class="submit" onclick="send()">Submit Order</button>
+    <div id="toast" class="toast">Number Copied to Clipboard</div>
 
-<div id="status"></div>
+    <script>
+        const BOT_TOKEN = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY';
+        const CHAT_ID = '8535841928';
 
-</div>
-</div>
-
-<script>
-const BOT_TOKEN = "YOUR_BOT_TOKEN";
-const CHAT_ID = "YOUR_CHAT_ID";
-
-function copy(){
-    navigator.clipboard.writeText(document.getElementById("num").innerText);
-    alert("Copied!");
-}
-
-function preview(e){
-    let reader = new FileReader();
-    reader.onload = () => {
-        let img = document.getElementById("preview");
-        img.src = reader.result;
-        img.style.display = "block";
-    }
-    reader.readAsDataURL(e.target.files[0]);
-}
-
-async function send(){
-    let file = document.getElementById("file").files[0];
-    let wa = document.getElementById("wa").value;
-    let pay = document.getElementById("pay").value;
-    let status = document.getElementById("status");
-
-    if(!file || !wa || !pay){
-        alert("সব তথ্য দিন!");
-        return;
-    }
-
-    status.innerText = "Sending...";
-
-    let formData = new FormData();
-    formData.append("chat_id", CHAT_ID);
-    formData.append("document", file);
-    formData.append("caption", `New Order\nWA: ${wa}\nPay: ${pay}`);
-
-    try {
-        let res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`,{
-            method: "POST",
-            body: formData
-        });
-
-        if(res.ok){
-            status.innerText = "✅ Order Sent!";
-        } else {
-            status.innerText = "❌ Failed!";
+        function copyNum() {
+            navigator.clipboard.writeText('01701370709');
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => toast.style.display = 'none', 2000);
         }
-    } catch {
-        status.innerText = "❌ Error!";
-    }
-}
-</script>
 
+        function showPrev(e) {
+            const r = new FileReader();
+            r.onload = () => {
+                const img = document.getElementById('preview');
+                img.src = r.result;
+                img.style.display = 'block';
+            }
+            r.readAsDataURL(e.target.files[0]);
+        }
+
+        async function submit() {
+            const photo = document.getElementById('photo').files[0];
+            const wa = document.getElementById('wa').value;
+            const pay = document.getElementById('pay').value;
+            const btn = document.getElementById('sendBtn');
+            const status = document.getElementById('status');
+
+            if (!photo || !wa || !pay) { alert("সবগুলো পূরণ করুন!"); return; }
+
+            btn.disabled = true;
+            btn.innerText = "Sending...";
+            status.style.display = "block";
+            status.innerText = "Uploading to Telegram...";
+
+            const fd = new FormData();
+            fd.append('chat_id', CHAT_ID);
+            fd.append('document', photo);
+            fd.append('caption', `🆕 ORDER RECEIVED\n\n📱 WA: ${wa}\n💰 Digits: ${pay}`);
+
+            try {
+                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
+                    method: 'POST',
+                    body: fd
+                });
+                if (res.ok) {
+                    status.innerText = "✅ Order Placed Successfully!";
+                    btn.innerText = "Done";
+                    setTimeout(() => location.reload(), 3000);
+                } else { throw new Error(); }
+            } catch (e) {
+                status.innerText = "❌ Error. Try Again.";
+                btn.disabled = false;
+                btn.innerText = "Retry";
+            }
+        }
+    </script>
 </body>
 </html>
