@@ -7,43 +7,68 @@
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background: #f0f2f5; display: flex; justify-content: center; align-items: center; min-height: 100vh; margin: 0; padding: 15px; }
         .card { background: white; padding: 25px; border-radius: 15px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); width: 100%; max-width: 400px; box-sizing: border-box; }
-        h2 { text-align: center; color: #1a73e8; font-size: 22px; margin-bottom: 20px; border-bottom: 2px solid #e8f0fe; padding-bottom: 10px; }
-        label { font-weight: 600; color: #444; display: block; margin-bottom: 8px; margin-top: 15px; font-size: 14px; line-height: 1.4; }
-        input[type="text"], input[type="file"], button { width: 100%; padding: 12px; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
+        h2 { text-align: center; color: #1a73e8; font-size: 20px; margin-bottom: 20px; border-bottom: 2px solid #e8f0fe; padding-bottom: 10px; }
+        
+        /* Copy Section Style */
+        .copy-box { background: #fff5f5; border: 2px dashed #d9534f; padding: 12px; border-radius: 10px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
+        .number-text { font-weight: bold; color: #d9534f; font-size: 18px; letter-spacing: 1px; }
+        .copy-btn { background: #d9534f; color: white; border: none; padding: 6px 12px; border-radius: 5px; cursor: pointer; font-size: 13px; font-weight: bold; transition: 0.2s; }
+        .copy-btn:active { transform: scale(0.95); }
+
+        label { font-weight: 600; color: #444; display: block; margin-bottom: 8px; margin-top: 15px; font-size: 14px; }
+        input[type="text"], input[type="file"], button#sendBtn { width: 100%; padding: 12px; border-radius: 8px; box-sizing: border-box; font-size: 15px; }
         input[type="text"] { border: 2px solid #ddd; transition: 0.3s; }
-        input[type="text"]:focus { border-color: #1a73e8; outline: none; box-shadow: 0 0 5px rgba(26,115,232,0.2); }
-        input[type="file"] { background: #fafafa; border: 1px dashed #bbb; cursor: pointer; }
-        button { background: #1a73e8; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 25px; transition: 0.3s; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
-        button:hover { background: #1557b0; transform: translateY(-1px); }
-        button:active { transform: translateY(0); }
-        button:disabled { background: #ccc; cursor: not-allowed; }
+        input[type="text"]:focus { border-color: #1a73e8; outline: none; }
+        
+        button#sendBtn { background: #1a73e8; color: white; border: none; cursor: pointer; font-weight: bold; font-size: 16px; margin-top: 20px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        button#sendBtn:hover { background: #1557b0; }
+        
         #preview { width: 100%; height: auto; border-radius: 8px; display: none; margin-bottom: 15px; border: 1px solid #ddd; }
-        .status-msg { text-align: center; margin-top: 15px; font-size: 14px; font-weight: bold; display: none; padding: 12px; border-radius: 8px; }
+        .status-msg { text-align: center; margin-top: 15px; font-size: 14px; font-weight: bold; display: none; padding: 10px; border-radius: 8px; }
+        .toast { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); background: #333; color: white; padding: 10px 20px; border-radius: 20px; font-size: 13px; display: none; z-index: 1000; }
     </style>
 </head>
 <body>
 
 <div class="card">
-    <h2>আপনার ছবি সহ পেমেন্ট করুন</h2>
+    <h2>ছবি সহ পেমেন্ট করুন</h2>
     
     <img id="preview" src="#" alt="Image Preview">
     
-    <label for="photoInput">এখানে আপনার ছবি </label>
+    <label>১০ টাকা সেন্ড মানি করুন (Bkash/Nagad)</label>
+    <div class="copy-box">
+        <span class="number-text" id="bkashNum">01701370709</span>
+        <button class="copy-btn" onclick="copyNumber()">COPY</button>
+    </div>
+
+    <label for="photoInput">লেনদেনের স্ক্রিনশট সিলেক্ট করুন</label>
     <input type="file" id="photoInput" accept="image/*" onchange="previewImage(event)">
 
     <label for="whatsapp">WhatsApp নম্বর</label>
-    <input type="text" id="whatsapp" placeholder="উদা: 017xxxxxxxx">
+    <input type="text" id="whatsapp" placeholder="আপনার হোয়াটসঅ্যাপ নম্বর">
 
-    <label for="paymentDesc">১০ টাকা সেন্ড মানি করুন <br><span style="color:#d9534f;">01701370709 (Bkash/Nagad)</span></label>
-    <input type="text" id="paymentDesc" placeholder="নাম্বার এর লাস্ট ৪ ডিজিট">
+    <label for="paymentDesc">পেমেন্ট বিবরণ</label>
+    <input type="text" id="paymentDesc" placeholder="ট্রানজেকশন লাস্ট ৪ ডিজিট">
     
     <button id="sendBtn" onclick="sendToTelegram()">সেন্ড করুন (Document)</button>
     <div id="statusMsg" class="status-msg"></div>
 </div>
 
+<div id="toast" class="toast">নম্বরটি কপি হয়েছে!</div>
+
 <script>
     const BOT_TOKEN = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY'; 
     const CHAT_ID = '8535841928';
+
+    // কপি করার ফাংশন
+    function copyNumber() {
+        const num = document.getElementById('bkashNum').innerText;
+        navigator.clipboard.writeText(num).then(() => {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => { toast.style.display = 'none'; }, 2000);
+        });
+    }
 
     function previewImage(event) {
         const file = event.target.files[0];
@@ -73,14 +98,14 @@
         btn.disabled = true;
         btn.innerText = "পাঠানো হচ্ছে...";
         status.style.display = "block";
-        status.innerText = "ফাইল আপলোড হচ্ছে, অপেক্ষা করুন...";
+        status.innerText = "ফাইল আপলোড হচ্ছে...";
         status.style.color = "#856404";
         status.style.backgroundColor = "#fff3cd";
 
         const formData = new FormData();
         formData.append('chat_id', CHAT_ID);
         formData.append('document', photoFile); 
-        formData.append('caption', `🔔 নতুন পেমেন্ট এসেছে\n\n📱 WhatsApp: ${whatsapp}\n💰 লাস্ট ৪ ডিজিট: ${paymentDesc}`);
+        formData.append('caption', `🔔 নতুন পেমেন্ট সাবমিশন\n\n📱 WhatsApp: ${whatsapp}\n💰 বিবরণ: ${paymentDesc}`);
 
         try {
             const response = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
@@ -89,13 +114,12 @@
             });
 
             if (response.ok) {
-                status.innerText = "✅ সফলভাবে পাঠানো হয়েছে!এডিট এর পর আপনার ওয়াটসআপ এ পাঠানো হবে।";
+                status.innerText = "✅ সফলভাবে পাঠানো হয়েছে!";
                 status.style.color = "#155724";
                 status.style.backgroundColor = "#d4edda";
                 btn.innerText = "সেন্ড করুন (Document)";
                 btn.disabled = false;
                 
-                // Reset form
                 document.getElementById('photoInput').value = '';
                 document.getElementById('whatsapp').value = '';
                 document.getElementById('paymentDesc').value = '';
@@ -104,11 +128,10 @@
                 throw new Error('Failed');
             }
         } catch (error) {
-            status.innerText = "❌ পাঠানো যায়নি! ইন্টারনেটে সমস্যা হতে পারে।";
+            status.innerText = "❌ পাঠানো যায়নি! আবার চেষ্টা করুন।";
             status.style.color = "#721c24";
             status.style.backgroundColor = "#f8d7da";
             btn.disabled = false;
-            btn.innerText = "আবার চেষ্টা করুন";
         }
     }
 </script>
