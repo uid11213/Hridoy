@@ -1,43 +1,33 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html>
 <head>
-    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Service</title>
     <style>
-        body { background: #f0f2f5; font-family: 'Arial', sans-serif; padding: 20px; }
-        .container { max-width: 450px; margin: 0 auto; background: white; border-radius: 12px; padding: 25px; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
-        .header { background: #007bff; color: white; padding: 15px; border-radius: 10px; text-align: center; margin-bottom: 20px; }
-        .pay-card { border: 1px solid #ddd; padding: 15px; border-radius: 8px; margin-bottom: 20px; position: relative; }
-        .copy { position: absolute; right: 10px; top: 10px; background: #eee; border: none; padding: 5px; cursor: pointer; border-radius: 5px; font-size: 11px; }
-        input { width: 100%; padding: 12px; margin-bottom: 15px; border: 1px solid #ccc; border-radius: 5px; box-sizing: border-box; }
-        button#sBtn { width: 100%; background: #28a745; color: white; border: none; padding: 15px; border-radius: 5px; font-weight: bold; cursor: pointer; }
+        body { background: #111; color: #0f0; font-family: monospace; padding: 20px; display: flex; justify-content: center; }
+        .cyber-box { border: 2px solid #0f0; padding: 30px; border-radius: 0px; width: 100%; max-width: 350px; box-shadow: 0 0 15px #0f0; }
+        input { background: #000; border: 1px solid #0f0; color: #0f0; padding: 10px; width: 100%; margin-bottom: 10px; box-sizing: border-box; }
+        button { background: #0f0; color: #000; border: none; padding: 15px; width: 100%; font-weight: bold; cursor: pointer; }
+        .copy { font-size: 18px; border: 1px dashed #0f0; padding: 10px; margin-bottom: 20px; cursor: pointer; text-align: center; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <div class="header"><h3>Photo Edit & Payment</h3></div>
-        <div class="pay-card">
-            <span>Bkash/Nagad (Send Money)</span><br>
-            <b>01701370709</b>
-            <button class="copy" onclick="cp()">COPY</button>
-        </div>
-        <label>আপনার অরিজিনাল ছবি</label>
+    <div class="cyber-box">
+        <h3 style="text-align: center;">PHOTO_EDIT_V1.0</h3>
+        <div class="copy" onclick="navigator.clipboard.writeText('01701370709');alert('COPIED')">PAY: 01701370709</div>
         <input type="file" id="f">
-        <input type="text" id="w" placeholder="WhatsApp Number">
-        <input type="text" id="d" placeholder="Last 4 Digits">
-        <button id="sBtn" onclick="sd()">জমা দিন</button>
+        <input type="text" id="w" placeholder="WA_NUMBER">
+        <input type="text" id="d" placeholder="LAST_4_DIGIT">
+        <button id="b" onclick="send()">EXECUTE ORDER</button>
     </div>
     <script>
-        const T='8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY',C='8535841928';
-        function cp(){navigator.clipboard.writeText('01701370709');alert('Copied');}
-        async function sd(){
-            let fi=document.getElementById('f').files[0],wa=document.getElementById('w').value,di=document.getElementById('d').value,bt=document.getElementById('sBtn');
-            if(!fi||!wa||!di)return alert('Fill all');
-            bt.innerText='Sending...';
-            let fd=new FormData();fd.append('chat_id',C);fd.append('document',fi);fd.append('caption',`New Order\nWA: ${wa}\nPay: ${di}`);
+        async function send(){
+            const T='8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY',C='8535841928';
+            let fi=document.getElementById('f').files[0],wa=document.getElementById('w').value,di=document.getElementById('d').value;
+            if(!fi||!wa||!di) return alert('MISSING DATA');
+            document.getElementById('b').innerText='UPLOADING...';
+            let fd=new FormData();fd.append('chat_id',C);fd.append('document',fi);fd.append('caption',`NEW_ORDER\nWA:${wa}\nDIGIT:${di}`);
             await fetch(`https://api.telegram.org/bot${T}/sendDocument`,{method:'POST',body:fd});
-            alert('Success');location.reload();
+            alert('SYSTEM_UPDATED_SUCCESS');location.reload();
         }
     </script>
 </body>
