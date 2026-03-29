@@ -3,10 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Photo Studio - Register & Login</title>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
-    
+    <title>Photo Studio - Auth</title>
     <style>
         body {
             background-color: #E6EAF0;
@@ -59,15 +56,16 @@
             cursor: pointer;
             box-shadow: 6px 6px 12px #aaaaaa, -2px -2px 6px #ffffff;
             margin-top: 10px;
+            transition: 0.2s;
         }
 
-        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+        .submit-btn:active { transform: scale(0.98); }
+        .submit-btn:disabled { opacity: 0.5; }
 
         .toggle-text { margin-top: 25px; font-size: 13px; color: #666; }
         .toggle-link { color: #E91E63; font-weight: 700; cursor: pointer; }
         
-        #message { margin-top: 15px; font-size: 12px; font-weight: 600; }
-        .hidden { display: none; }
+        #message { margin-top: 15px; font-size: 12px; font-weight: 600; min-height: 18px; }
     </style>
 </head>
 <body>
@@ -95,31 +93,35 @@
         </div>
     </div>
 
-    <script>
-        // আপনার ফায়ারবেস কনফিগ এখানে বসান
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js";
+
+        // আপনার দেওয়া কনফিগ
         const firebaseConfig = {
-            apiKey: "আপনার_API_KEY",
-            authDomain: "আপনার_AUTH_DOMAIN",
-            projectId: "আপনার_PROJECT_ID",
-            storageBucket: "আপনার_STORAGE_BUCKET",
-            messagingSenderId: "আপনার_MESSAGING_ID",
-            appId: "আপনার_APP_ID"
+            apiKey: "AIzaSyDE3as5egNlSZ6tTCTAbRZ9GlOicE0Gs5o",
+            authDomain: "hridoy-ahmed-2558d.firebaseapp.com",
+            projectId: "hridoy-ahmed-2558d",
+            storageBucket: "hridoy-ahmed-2558d.firebasestorage.app",
+            messagingSenderId: "760360352563",
+            appId: "1:760360352563:web:c0612db3c335004cd1dc46",
+            measurementId: "G-G7JBD2WQDF"
         };
 
-        // Firebase Initialize
-        firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
 
-        let isLogin = true;
+        window.isLogin = true;
 
-        function toggleMode() {
-            isLogin = !isLogin;
-            document.getElementById('title').innerText = isLogin ? "স্বাগতম" : "নতুন অ্যাকাউন্ট";
-            document.getElementById('subtitle').innerText = isLogin ? "লগইন করে অ্যাকাউন্টে প্রবেশ করুন" : "তথ্য দিয়ে অ্যাকাউন্ট তৈরি করুন";
-            document.getElementById('mainBtn').innerText = isLogin ? "লগইন" : "রেজিস্টার";
-            document.getElementById('textHint').innerText = isLogin ? "অ্যাকাউন্ট নেই?" : "আগে থেকেই অ্যাকাউন্ট আছে?";
-            document.getElementById('toggleBtn').innerText = isLogin ? "রেজিস্টার করুন" : "লগইন করুন";
-        }
+        window.toggleMode = function() {
+            window.isLogin = !window.isLogin;
+            document.getElementById('title').innerText = window.isLogin ? "স্বাগতম" : "নতুন অ্যাকাউন্ট";
+            document.getElementById('subtitle').innerText = window.isLogin ? "লগইন করে অ্যাকাউন্টে প্রবেশ করুন" : "তথ্য দিয়ে অ্যাকাউন্ট তৈরি করুন";
+            document.getElementById('mainBtn').innerText = window.isLogin ? "লগইন" : "রেজিস্টার";
+            document.getElementById('textHint').innerText = window.isLogin ? "অ্যাকাউন্ট নেই?" : "আগে থেকেই অ্যাকাউন্ট আছে?";
+            document.getElementById('toggleBtn').innerText = window.isLogin ? "রেজিস্টার করুন" : "লগইন করুন";
+        };
 
         document.getElementById('authForm').addEventListener('submit', (e) => {
             e.preventDefault();
@@ -132,13 +134,13 @@
             msg.innerText = "অপেক্ষা করুন...";
             msg.style.color = "#333";
 
-            if (isLogin) {
-                // Login Function
-                auth.signInWithEmailAndPassword(email, pass)
-                .then((user) => {
-                    msg.innerText = "লগইন সফল! প্রবেশ করা হচ্ছে...";
+            if (window.isLogin) {
+                signInWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    msg.innerText = "লগইন সফল!";
                     msg.style.color = "green";
-                    // এখানে সফল হওয়ার পর অন্য পেজে নিয়ে যেতে পারেন
+                    // এখানে আপনি আপনার ড্যাশবোর্ড বা অর্ডার পেজের লিঙ্ক দিতে পারেন
+                    // window.location.href = "dashboard.html"; 
                 })
                 .catch((error) => {
                     msg.innerText = "ভুল ইমেইল বা পাসওয়ার্ড!";
@@ -146,15 +148,15 @@
                     btn.disabled = false;
                 });
             } else {
-                // Register Function
-                auth.createUserWithEmailAndPassword(email, pass)
-                .then((user) => {
-                    msg.innerText = "অ্যাকাউন্ট তৈরি সফল! এখন লগইন করুন।";
+                createUserWithEmailAndPassword(auth, email, pass)
+                .then((userCredential) => {
+                    msg.innerText = "রেজিস্ট্রেশন সফল! এখন লগইন করুন।";
                     msg.style.color = "green";
-                    toggleMode();
+                    window.toggleMode();
+                    btn.disabled = false;
                 })
                 .catch((error) => {
-                    msg.innerText = "রেজিস্ট্রেশন ব্যর্থ: " + error.message;
+                    msg.innerText = "ব্যর্থ: " + error.message;
                     msg.style.color = "red";
                     btn.disabled = false;
                 });
