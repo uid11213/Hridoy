@@ -3,202 +3,163 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="format-detection" content="telephone=no"> 
-    <title>Photo Studio Premium</title>
+    <title>Photo Studio - Register & Login</title>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
-
-        html, body {
-            margin: 0;
-            padding: 0;
-            width: 100%;
-            height: 100%;
-            overflow: hidden; 
+        body {
+            background-color: #E6EAF0;
             display: flex;
-            justify-content: center;
             align-items: center;
-            font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at top left, #e0eafc, #cfdef3);
-            color: #2d3436;
-            -webkit-tap-highlight-color: transparent;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            overflow: hidden;
         }
 
-        .card {
+        .auth-card {
+            background-color: #E6EAF0;
+            border-radius: 40px;
             width: 90%;
-            max-width: 370px;
-            padding: 30px;
-            background: rgba(255, 255, 255, 0.45);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-radius: 35px;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 20px 20px 60px #bebebe, -20px -20px 60px #ffffff;
+            max-width: 380px;
+            padding: 40px 30px;
+            box-shadow: 20px 20px 60px #d1d9e6, -20px -20px 60px #ffffff;
             text-align: center;
-            box-sizing: border-box;
         }
 
-        h1 { font-weight: 700; font-size: 24px; margin: 0 0 5px 0; color: #1e272e; }
-        p { font-size: 12px; opacity: 0.6; margin: 0 0 25px 0; }
+        h2 { font-size: 28px; font-weight: 700; color: #333; margin-bottom: 5px; }
+        p.subtitle { font-size: 14px; color: #888; margin-bottom: 25px; }
 
-        .pay-info {
-            background: rgba(255, 255, 255, 0.5);
-            border-radius: 20px;
-            padding: 15px;
-            margin-bottom: 20px;
-            box-shadow: inset 4px 4px 8px #d1d9e6, inset -4px -4px 8px #ffffff;
-        }
-
-        .label-sm { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #7f8c8d; margin-bottom: 8px; display: block; }
-
-        /* নম্বর স্টাইল - আন্ডারলাইন পুরোপুরি রিমুভ করা হয়েছে */
-        .num { 
-            font-size: 20px; 
-            font-weight: 700; 
-            color: #e84393; 
-            display: block; 
-            margin-bottom: 12px;
-            text-decoration: none !important; /* আন্ডারলাইন বন্ধ */
-            border: none !important;
-        }
-
-        .btn-copy {
-            background: #2d3436;
-            color: white;
-            border: none;
-            padding: 7px 18px;
-            border-radius: 50px;
-            font-size: 10px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-        .btn-copy:active { transform: scale(0.95); }
+        .input-group { margin-bottom: 15px; text-align: left; }
 
         input {
             width: 100%;
-            padding: 14px;
-            margin-bottom: 12px;
-            border-radius: 15px;
             border: none;
-            background: rgba(255, 255, 255, 0.6);
-            box-shadow: inset 2px 2px 5px #babecc, inset -5px -5px 10px #ffffff;
-            font-size: 14px;
-            outline: none;
+            background-color: #E6EAF0;
+            border-radius: 15px;
+            padding: 15px 20px;
             box-sizing: border-box;
+            box-shadow: inset 6px 6px 12px #d1d9e6, inset -6px -6px 12px #ffffff;
+            font-size: 14px;
+            color: #333;
+            outline: none;
         }
 
-        input[type="file"] { font-size: 11px; cursor: pointer; color: #7f8c8d; }
-
-        #preview {
-            width: 70px; height: 70px; border-radius: 15px;
-            object-fit: cover; margin: 0 auto 15px; display: none;
-            border: 2px solid #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-        }
-
-        #sendBtn {
+        .submit-btn {
             width: 100%;
-            background: #2d3436;
+            border: none;
+            background-color: #1A1A1A;
             color: white;
             padding: 15px;
-            border-radius: 18px;
-            border: none;
+            border-radius: 15px;
+            font-size: 16px;
             font-weight: 600;
-            font-size: 15px;
             cursor: pointer;
-            margin-top: 5px;
-            transition: 0.3s;
+            box-shadow: 6px 6px 12px #aaaaaa, -2px -2px 6px #ffffff;
+            margin-top: 10px;
         }
-        #sendBtn:hover { background: #000; }
-        #sendBtn:disabled { background: #95a5a6; }
 
-        #status { margin-top: 10px; font-size: 11px; font-weight: 600; display: none; }
+        .submit-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .toast {
-            position: fixed; bottom: 30px; left: 50%; transform: translateX(-50%);
-            background: #2d3436; color: #fff; padding: 10px 20px; border-radius: 50px;
-            font-size: 11px; display: none; z-index: 1000;
-        }
+        .toggle-text { margin-top: 25px; font-size: 13px; color: #666; }
+        .toggle-link { color: #E91E63; font-weight: 700; cursor: pointer; }
+        
+        #message { margin-top: 15px; font-size: 12px; font-weight: 600; }
+        .hidden { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h1>Photo Studio</h1>
-        <p>Ultra-Clean Editing Service</p>
+    <div class="auth-card">
+        <h2 id="title">স্বাগতম</h2>
+        <p id="subtitle" class="subtitle">লগইন করে অ্যাকাউন্টে প্রবেশ করুন</p>
 
-        <div class="pay-info">
-            <span class="label-sm">Send Money 10 BDT (Bkash/Nagad)</span>
-            <span class="num" id="bkNum">01701370709</span>
-            <button class="btn-copy" onclick="copyNum()">Copy Number</button>
+        <form id="authForm">
+            <div class="input-group">
+                <input type="email" id="email" placeholder="ইমেইল ঠিকানা" required>
+            </div>
+            <div class="input-group">
+                <input type="password" id="password" placeholder="পাসওয়ার্ড" required>
+            </div>
+
+            <button type="submit" id="mainBtn" class="submit-btn">লগইন</button>
+        </form>
+
+        <div id="message"></div>
+
+        <div class="toggle-text">
+            <span id="textHint">অ্যাকাউন্ট নেই?</span> 
+            <span id="toggleBtn" class="toggle-link" onclick="toggleMode()">রেজিস্টার করুন</span>
         </div>
-
-        <img id="preview" src="#">
-
-        <input type="file" id="photo" accept="image/*" onchange="showPrev(event)">
-        <input type="text" id="wa" placeholder="WhatsApp Number">
-        <input type="text" id="pay" placeholder="Payment Last 4 Digits">
-
-        <button id="sendBtn" onclick="submit()">Submit Order</button>
-        <div id="status"></div>
     </div>
 
-    <div id="toast" class="toast">নম্বর কপি হয়েছে!</div>
-
     <script>
-        const BOT_TOKEN = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY';
-        const CHAT_ID = '8535841928';
+        // আপনার ফায়ারবেস কনফিগ এখানে বসান
+        const firebaseConfig = {
+            apiKey: "আপনার_API_KEY",
+            authDomain: "আপনার_AUTH_DOMAIN",
+            projectId: "আপনার_PROJECT_ID",
+            storageBucket: "আপনার_STORAGE_BUCKET",
+            messagingSenderId: "আপনার_MESSAGING_ID",
+            appId: "আপনার_APP_ID"
+        };
 
-        function copyNum() {
-            navigator.clipboard.writeText('01701370709');
-            const toast = document.getElementById('toast');
-            toast.style.display = 'block';
-            setTimeout(() => toast.style.display = 'none', 2000);
+        // Firebase Initialize
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        let isLogin = true;
+
+        function toggleMode() {
+            isLogin = !isLogin;
+            document.getElementById('title').innerText = isLogin ? "স্বাগতম" : "নতুন অ্যাকাউন্ট";
+            document.getElementById('subtitle').innerText = isLogin ? "লগইন করে অ্যাকাউন্টে প্রবেশ করুন" : "তথ্য দিয়ে অ্যাকাউন্ট তৈরি করুন";
+            document.getElementById('mainBtn').innerText = isLogin ? "লগইন" : "রেজিস্টার";
+            document.getElementById('textHint').innerText = isLogin ? "অ্যাকাউন্ট নেই?" : "আগে থেকেই অ্যাকাউন্ট আছে?";
+            document.getElementById('toggleBtn').innerText = isLogin ? "রেজিস্টার করুন" : "লগইন করুন";
         }
 
-        function showPrev(e) {
-            const r = new FileReader();
-            r.onload = () => {
-                document.getElementById('preview').src = r.result;
-                document.getElementById('preview').style.display = 'block';
-            }
-            r.readAsDataURL(e.target.files[0]);
-        }
-
-        async function submit() {
-            const photo = document.getElementById('photo').files[0];
-            const wa = document.getElementById('wa').value;
-            const pay = document.getElementById('pay').value;
-            const btn = document.getElementById('sendBtn');
-            const status = document.getElementById('status');
-
-            if (!photo || !wa || !pay) { alert("সবগুলো পূরণ করুন!"); return; }
+        document.getElementById('authForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+            const pass = document.getElementById('password').value;
+            const btn = document.getElementById('mainBtn');
+            const msg = document.getElementById('message');
 
             btn.disabled = true;
-            btn.innerText = "Sending...";
-            status.style.display = "block";
-            status.innerText = "বটে পাঠানো হচ্ছে...";
+            msg.innerText = "অপেক্ষা করুন...";
+            msg.style.color = "#333";
 
-            const fd = new FormData();
-            fd.append('chat_id', CHAT_ID);
-            fd.append('document', photo);
-            fd.append('caption', `🆕 NEW ORDER\n\n📱 WA: ${wa}\n💰 Digit: ${pay}`);
-
-            try {
-                const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, {
-                    method: 'POST',
-                    body: fd
+            if (isLogin) {
+                // Login Function
+                auth.signInWithEmailAndPassword(email, pass)
+                .then((user) => {
+                    msg.innerText = "লগইন সফল! প্রবেশ করা হচ্ছে...";
+                    msg.style.color = "green";
+                    // এখানে সফল হওয়ার পর অন্য পেজে নিয়ে যেতে পারেন
+                })
+                .catch((error) => {
+                    msg.innerText = "ভুল ইমেইল বা পাসওয়ার্ড!";
+                    msg.style.color = "red";
+                    btn.disabled = false;
                 });
-                if (res.ok) {
-                    status.innerText = "✅ সফল হয়েছে!";
-                    btn.innerText = "Done";
-                    setTimeout(() => location.reload(), 2000);
-                } else { throw new Error(); }
-            } catch (e) {
-                status.innerText = "❌ ভুল হয়েছে!";
-                btn.disabled = false;
-                btn.innerText = "Retry";
+            } else {
+                // Register Function
+                auth.createUserWithEmailAndPassword(email, pass)
+                .then((user) => {
+                    msg.innerText = "অ্যাকাউন্ট তৈরি সফল! এখন লগইন করুন।";
+                    msg.style.color = "green";
+                    toggleMode();
+                })
+                .catch((error) => {
+                    msg.innerText = "রেজিস্ট্রেশন ব্যর্থ: " + error.message;
+                    msg.style.color = "red";
+                    btn.disabled = false;
+                });
             }
-        }
+        });
     </script>
 </body>
 </html>
