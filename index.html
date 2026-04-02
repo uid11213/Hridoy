@@ -48,13 +48,29 @@
 
         /* --- Profile Header --- */
         .header-spacer { width: 100%; height: 50px; }
+        .profile-container { position: relative; text-align: center; }
+        
+        /* Best Music BD Lekha */
+        .best-music-text {
+            font-size: 14px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+        }
+        
+        /* Colouring B & D */
+        .col-green { color: #00ff88; }
+        .col-red { color: #ff3c3c; }
+
         .profile-pic { width: 125px; height: 125px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); object-fit: cover; }
         
         .home-info { text-align: center; margin-top: 20px; width: 100%; }
         .home-info h1 { font-size: 30px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
         .bio-text { color: #888; font-size: 13px; font-weight: 500; margin-top: 4px; }
 
-        /* --- Tiny Clickable Map Link --- */
+        /* --- Compact Map Button --- */
         .map-btn {
             display: inline-flex;
             align-items: center;
@@ -113,7 +129,12 @@
     <div class="content-wrapper">
         <section id="home" class="section active">
             <div class="header-spacer"></div>
-            <img id="userPic" src="" class="profile-pic" alt="Profile">
+            
+            <div class="profile-container">
+                <div class="best-music-text">BEST MUSIC <span class="col-green">B</span><span class="col-red">D</span></div>
+                <img id="userPic" src="" class="profile-pic" alt="Profile">
+            </div>
+
             <div class="home-info">
                 <h1 id="userName">Loading...</h1>
                 <p class="bio-text" id="userBio">...</p>
