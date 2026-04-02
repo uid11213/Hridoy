@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hridoy Music Store</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
@@ -35,12 +35,21 @@
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
         
-        body { background: #000; color: white; height: 100vh; display: flex; flex-direction: column; overflow: hidden; border: 8px solid #111; }
+        /* ২. CSS দিয়ে ডাবল ট্যাপ জুম এবং পিঞ্চ জুম বন্ধ করা */
+        html, body { 
+            touch-action: manipulation; 
+            -webkit-text-size-adjust: 100%; 
+            margin: 0; padding: 0; box-sizing: border-box; 
+            font-family: 'Inter', sans-serif; 
+            background: #000; color: white; 
+            height: 100vh; overflow: hidden; 
+            border: 8px solid #111;
+        }
+
+        * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         .content-wrapper { flex: 1; position: relative; width: 100%; overflow-y: auto; padding-bottom: 110px; scroll-behavior: smooth; }
-
         .section { display: none; flex-direction: column; align-items: center; width: 100%; }
         .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
         
@@ -59,7 +68,6 @@
         .item-card.out-of-stock { opacity: 0.5; filter: grayscale(1); pointer-events: none; }
         
         .item-img { width: 100%; height: 120px; border-radius: 18px; object-fit: cover; margin-bottom: 12px; background: #1a1a1a; }
-
         .status-badge { font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 8px; display: inline-block; }
         .status-available { background: rgba(0, 255, 136, 0.1); color: #00ff88; }
         .status-out { background: rgba(255, 60, 60, 0.1); color: #ff3c3c; }
@@ -79,36 +87,23 @@
         .nav-item span { display: none; font-weight: 700; }
         .nav-item.active span { display: inline; }
 
-        /* Order Modal & Inputs */
+        /* Modal & Input (Font-size 16px is CRITICAL to stop auto-zoom) */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; }
-        
-        /* Font-size 16px ensures no auto-zoom on mobile */
         input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; font-size: 16px !important; }
-        
         .confirm-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 14px; font-weight: 800; cursor: pointer; transition: 0.3s; }
 
         /* Success Message Overlay */
         .success-overlay {
             display: none;
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: #00ff88;
-            color: #000;
-            padding: 20px 40px;
-            border-radius: 20px;
-            font-weight: 800;
-            z-index: 3000;
-            box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4);
-            text-align: center;
-            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            top: 50%; left: 50%; transform: translate(-50%, -50%);
+            background: #00ff88; color: #000;
+            padding: 20px 40px; border-radius: 20px; font-weight: 800;
+            z-index: 3000; box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4);
+            text-align: center; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        @keyframes popIn {
-            from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
-            to { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-        }
+        @keyframes popIn { from { transform: translate(-50%, -50%) scale(0.5); opacity: 0; } to { transform: translate(-50%, -50%) scale(1); opacity: 1; } }
     </style>
 </head>
 <body>
@@ -166,7 +161,6 @@
     </div>
 
     <script>
-        // Initialize App Data
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
@@ -221,7 +215,6 @@
                 const successEl = document.getElementById('successMsg');
                 successEl.style.display = 'block';
                 
-                // Reset inputs
                 document.getElementById('orderName').value = "";
                 document.getElementById('orderAddress').value = "";
                 document.getElementById('orderWhatsapp').value = "";
