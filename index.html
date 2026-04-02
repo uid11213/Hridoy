@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hridoy Music Store</title>
+    <title>Hridoy Music Store | Premium Instruments</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <script>
@@ -12,12 +12,12 @@
         // ==========================================
         const MY_CONFIG = {
             name: "AHMED HRIDOY",                
-            bio: "ALL MUSICAL INSTUMENTS GUITAR UKULELE SHOP SIRAJGANJ", 
+            bio: "Your Trusted Partner for Premium Musical Instruments", 
+            address: "📍 Station Road, Sirajganj Sadar, Sirajganj",
             profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
 
             whatsappNum: "8801700000000",      
             displayPhone: "+880 1700-000000",  
-            facebookURL: "https://facebook.com/yourprofile", 
 
             botToken: "8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY",   
             chatID: "8535841928"        
@@ -52,98 +52,61 @@
         .content-wrapper { flex: 1; width: 100%; padding-bottom: 120px; }
 
         .section { display: none; flex-direction: column; align-items: center; width: 100%; padding: 0 15px; }
-        .section.active { display: flex; animation: fadeIn 0.3s ease-out; }
+        .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
         
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Profile & Shop Styles */
-        .header-spacer { width: 100%; height: 40px; }
-        .profile-pic { width: 125px; height: 125px; border-radius: 50%; border: 3px solid #00ff88; object-fit: cover; background: #222; box-shadow: 0 0 25px rgba(0, 255, 136, 0.15); }
-        .home-info { text-align: center; margin-top: 20px; }
-        .home-info h1 { font-size: 28px; font-weight: 800; color: #fff; }
-        .home-info p { color: #777; font-size: 15px; margin-top: 8px; line-height: 1.4; }
+        /* --- Premium Profile Section --- */
+        .header-spacer { width: 100%; height: 50px; }
+        .profile-pic { width: 130px; height: 130px; border-radius: 50%; border: 3px solid #00ff88; object-fit: cover; background: #222; box-shadow: 0 0 30px rgba(0, 255, 136, 0.2); }
+        
+        .home-info { text-align: center; margin-top: 20px; padding: 0 10px; }
+        .home-info h1 { font-size: 30px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .home-info .bio-text { color: #00ff88; font-size: 14px; font-weight: 600; margin-top: 5px; text-transform: uppercase; letter-spacing: 1px; }
+        .home-info .address-text { color: #888; font-size: 14px; margin-top: 10px; font-weight: 400; }
 
+        /* --- How to Order Card --- */
+        .order-guide {
+            background: #0f0f0f; border: 1px solid #1a1a1a; 
+            border-radius: 24px; padding: 20px; margin-top: 30px;
+            width: 100%; max-width: 400px; text-align: left;
+        }
+        .order-guide h3 { font-size: 16px; margin-bottom: 15px; color: #fff; display: flex; align-items: center; gap: 8px; }
+        .order-guide h3 i { color: #00ff88; }
+        .guide-step { display: flex; gap: 12px; margin-bottom: 12px; font-size: 14px; color: #bbb; line-height: 1.4; }
+        .step-num { color: #00ff88; font-weight: 800; }
+
+        /* --- Shop Grid --- */
         .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 500px; margin-top: 25px; }
-        .item-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 24px; padding: 15px; text-align: center; cursor: pointer; transition: transform 0.2s; }
-        .item-card:active { transform: scale(0.97); }
+        .item-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 24px; padding: 15px; text-align: center; cursor: pointer; transition: 0.3s; }
         .item-img { width: 100%; height: 120px; border-radius: 18px; object-fit: cover; margin-bottom: 12px; background: #1a1a1a; }
         .status-badge { font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; background: rgba(0, 255, 136, 0.1); color: #00ff88; }
         .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; }
 
-        /* Contact Section */
-        .contact-list { width: 100%; max-width: 400px; margin-top: 25px; }
-        .contact-btn { display: flex; align-items: center; justify-content: center; padding: 18px; border-radius: 22px; margin-bottom: 15px; text-decoration: none; font-weight: 700; gap: 12px; background: #25D366; color: white; transition: opacity 0.2s; }
-        .contact-btn:active { opacity: 0.8; }
-        .phone-highlight { background: #0f0f0f; border: 1px solid #222; padding: 25px; border-radius: 24px; text-align: center; }
-        .phone-number { display: block; font-size: 24px; font-weight: 800; margin-top: 8px; color: #fff; }
-
-        /* Navigation */
+        /* --- Navigation --- */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
-        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); padding: 8px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .nav-item { padding: 12px 22px; border-radius: 25px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
+        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); padding: 8px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 40px rgba(0,0,0,0.6); }
+        .nav-item { padding: 12px 22px; border-radius: 25px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
         .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
         .nav-item span { display: none; font-weight: 700; font-size: 14px; }
         .nav-item.active span { display: inline; }
 
-        /* Modal & Updated Instant Success Button */
+        /* --- Modal & Button Fix --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; overflow: hidden; animation: modalIn 0.3s ease-out; }
-        @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
-        input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; font-size: 16px !important; transition: border-color 0.2s; }
-        input:focus { border-color: #00ff88; }
+        .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; overflow: hidden; }
+        input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; font-size: 16px !important; }
         
         .confirm-btn { 
-            position: relative; 
-            width: 100%; 
-            height: 55px; 
-            background: #fff; 
-            color: #000; 
-            border: none; 
-            border-radius: 14px; 
-            font-weight: 800; 
-            cursor: pointer; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center;
-            overflow: hidden; 
-            transition: background-color 0.3s, color 0.3s; 
+            position: relative; width: 100%; height: 55px; background: #fff; color: #000; 
+            border: none; border-radius: 14px; font-weight: 800; cursor: pointer; 
+            display: flex; align-items: center; justify-content: center; overflow: hidden; 
         }
-
-        .btn-original-text { transition: opacity 0.2s; opacity: 1; }
-
-        .spinner {
-            display: none; 
-            width: 22px; 
-            height: 22px; 
-            border: 3px solid rgba(0,0,0,0.1);
-            border-top: 3px solid #000; 
-            border-radius: 50%;
-            animation: spin 0.6s linear infinite;
-            position: absolute;
-        }
+        .spinner { display: none; width: 22px; height: 22px; border: 3px solid rgba(0,0,0,0.1); border-top: 3px solid #000; border-radius: 50%; animation: spin 0.6s linear infinite; position: absolute; }
         @keyframes spin { 100% { transform: rotate(360deg); } }
-
-        /* Success State: No Slide, Instant Appear */
-        .success-text {
-            display: none; /* Default Hidden */
-            position: absolute; 
-            width: 100%; 
-            height: 100%;
-            left: 0; top: 0;
-            background: #00ff88; 
-            color: #000; 
-            align-items: center; 
-            justify-content: center; 
-            font-weight: 800;
-            /* Slide transition removed */
-        }
-
-        /* Button Active State Styles */
-        .btn-active .success-text { display: flex; animation: instantPop 0.2s ease-out; } /* Direct Display */
+        .success-text { display: none; position: absolute; width: 100%; height: 100%; left: 0; top: 0; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; }
+        .btn-active .success-text { display: flex; animation: instantPop 0.2s ease-out; }
         .btn-active .btn-original-text, .btn-active .spinner { display: none !important; }
-
         @keyframes instantPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
-
     </style>
 </head>
 <body>
@@ -154,20 +117,36 @@
             <img id="userPic" src="" class="profile-pic" alt="Profile">
             <div class="home-info">
                 <h1 id="userName">Loading...</h1>
-                <p id="userBio">...</p>
+                <p class="bio-text" id="userBio">...</p>
+                <p class="address-text" id="userAddress">...</p>
+            </div>
+
+            <div class="order-guide">
+                <h3><i class='bx bx-info-circle'></i> কিভাবে অর্ডার করবেন?</h3>
+                <div class="guide-step">
+                    <span class="step-num">01.</span>
+                    <span>নিচের <b>Shop</b> মেনু থেকে আপনার পছন্দের ইনস্ট্রুমেন্টটি বাছাই করুন।</span>
+                </div>
+                <div class="guide-step">
+                    <span class="step-num">02.</span>
+                    <span>আপনার নাম, ঠিকানা এবং সঠিক WhatsApp নম্বর দিয়ে অর্ডার কনফার্ম করুন।</span>
+                </div>
+                <div class="guide-step">
+                    <span class="step-num">03.</span>
+                    <span>অর্ডার করার পর আমরা আপনার সাথে সরাসরি যোগাযোগ করে ডেলিভারি কনফার্ম করবো।</span>
+                </div>
             </div>
         </section>
 
         <section id="buy" class="section">
             <h2 style="margin-top: 30px; font-weight: 800;">Musical Shop</h2>
-            <p style="color:#555; font-size: 13px; margin-bottom: 10px;">Select an instrument to order</p>
             <div class="shop-grid" id="itemGrid"></div>
         </section>
 
         <section id="chat" class="section">
             <h2 style="margin-top: 35px; font-weight: 800;">Contact Me</h2>
-            <div class="contact-list">
-                <a id="waBtn" href="#" class="contact-btn"><i class='bx bxl-whatsapp' style="font-size:24px"></i> WhatsApp Chat</a>
+            <div style="width: 100%; max-width: 400px; margin-top: 25px;">
+                <a id="waBtn" href="#" class="contact-btn" style="background: #25D366;"><i class='bx bxl-whatsapp' style="font-size:24px"></i> WhatsApp Chat</a>
                 <div class="phone-highlight">
                     <span style="color: #444; font-size: 11px; letter-spacing: 2px; font-weight: 800;">DIRECT CALL</span>
                     <span id="phoneDisplay" class="phone-number">000000000</span>
@@ -178,10 +157,10 @@
 
     <div id="orderModal" class="modal">
         <div class="modal-content">
-            <h3 id="itemTitle" style="text-align:center;">Order</h3>
+            <h3 id="itemTitle" style="text-align:center;">Order Now</h3>
             <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; margin-bottom:20px; font-weight:800; font-size:18px;"></p>
             <input type="text" id="orderName" placeholder="আপনার নাম">
-            <input type="text" id="orderAddress" placeholder="আপনার ঠিকানা">
+            <input type="text" id="orderAddress" placeholder="আপনার পূর্ণ ঠিকানা">
             <input type="text" id="orderWhatsapp" placeholder="WhatsApp নম্বর">
             
             <button class="confirm-btn" id="mainOrderBtn" onclick="sendOrder()">
@@ -190,7 +169,7 @@
                 <div class="success-text">✅ অর্ডার সফল হয়েছে!</div>
             </button>
             
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer; font-size: 14px;">Cancel</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">Cancel</button>
         </div>
     </div>
 
@@ -203,9 +182,10 @@
     </div>
 
     <script>
-        // Data Initialization
+        // Data Load
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
+        document.getElementById('userAddress').innerText = MY_CONFIG.address;
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
         document.getElementById('waBtn').href = `https://wa.me/${MY_CONFIG.whatsappNum}`;
         document.getElementById('phoneDisplay').innerText = MY_CONFIG.displayPhone;
@@ -219,7 +199,6 @@
             grid.appendChild(card);
         });
 
-        // Navigation Function
         function navTo(id, el) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -228,13 +207,10 @@
             window.scrollTo(0,0);
         }
 
-        // Modal Functions
         function openModal(name, price) {
             document.getElementById('itemTitle').innerText = name;
             document.getElementById('itemPriceDisplay').innerText = price + " ৳";
             document.getElementById('orderModal').style.display = 'flex';
-            
-            // Reset Button State
             const btn = document.getElementById('mainOrderBtn');
             btn.classList.remove('btn-active');
             btn.disabled = false;
@@ -244,7 +220,6 @@
 
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
-        // Send Order & Handle Animation
         function sendOrder() {
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddress').value;
@@ -253,11 +228,7 @@
             const spinner = document.getElementById('btnSpinner');
             const btnText = document.getElementById('btnText');
 
-            if(!n || !a || !w) {
-                btn.style.animation = "shake 0.4s";
-                setTimeout(() => btn.style.animation = "", 400);
-                return;
-            }
+            if(!n || !a || !w) return;
 
             btn.disabled = true;
             btnText.style.opacity = '0';
@@ -267,26 +238,16 @@
             
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
             .then(() => {
-                // Short loading period before instant success
                 setTimeout(() => {
                     spinner.style.display = 'none';
-                    btn.classList.add('btn-active'); // Instant Pop-up Success
-                    
-                    // Close modal after showing success
+                    btn.classList.add('btn-active'); 
                     setTimeout(() => {
                         closeModal();
                         document.getElementById('orderName').value = "";
                         document.getElementById('orderAddress').value = "";
                         document.getElementById('orderWhatsapp').value = "";
                     }, 2000);
-                }, 800); // 0.8s loading time
-            })
-            .catch(() => {
-                // Handle basic error
-                btn.disabled = false;
-                btnText.style.opacity = '1';
-                spinner.style.display = 'none';
-                alert("Error! Try again.");
+                }, 800); 
             });
         }
     </script>
