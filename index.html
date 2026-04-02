@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium EXE Software UI</title>
+    <title>Premium Mobile Portfolio</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         * {
@@ -15,165 +15,196 @@
         }
 
         body {
-            /* Premium Dark Charcoal Background */
-            background: radial-gradient(circle at center, #1a252f 0%, #080a0c 100%);
+            background: #080a0c;
+            color: white;
             height: 100vh;
             display: flex;
-            justify-content: center;
-            align-items: center;
+            flex-direction: column;
             overflow: hidden;
         }
 
-        /* --- Highly Optimized Navbar --- */
+        /* --- Main Content Area --- */
+        .main-content {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            overflow-y: auto;
+            padding-bottom: 100px; /* Nav bar er jonno space */
+        }
+
+        .profile-card {
+            width: 100%;
+            max-width: 350px;
+        }
+
+        .profile-img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            object-fit: cover;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .profile-card h1 {
+            font-size: 24px;
+            font-weight: 800;
+            margin-bottom: 10px;
+            letter-spacing: -0.5px;
+        }
+
+        .profile-card p {
+            font-size: 15px;
+            color: rgba(255, 255, 255, 0.6);
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+
+        /* --- Premium Bottom Navbar --- */
+        .nav-wrapper {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            z-index: 100;
+        }
+
         .nav-bar {
             display: flex;
             align-items: center;
-            /* Ultra-premium Frosted Dark Glass */
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            padding: 10px;
+            padding: 8px;
             border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            gap: 6px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
-            /* Essential for smooth animation */
-            will-change: transform, backdrop-filter;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            gap: 5px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
 
-        /* --- Nav Item Styling (Base) --- */
         .nav-item {
             position: relative;
             display: flex;
             align-items: center;
-            padding: 14px 24px;
+            padding: 12px 18px;
             border-radius: 100px;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.5); /* Dimmed state */
-            text-decoration: none;
-            user-select: none;
+            color: rgba(255, 255, 255, 0.5);
             transition: color 0.3s ease;
-            /* Smooth transitions hint */
             will-change: transform;
         }
 
-        /* --- Individual Active Back Layer --- */
+        /* Background highlight layer */
         .nav-item::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: #ffffff; /* White background for highlight */
+            background: #ffffff;
             border-radius: 100px;
             z-index: -1;
             opacity: 0;
-            /* High-Performance Scaling for smoothness */
-            transform: scale(0.85); 
-            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.25s ease;
-            will-change: transform, opacity;
+            transform: scale(0.8);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
         }
 
         .nav-item i {
-            font-size: 26px;
-            transition: transform 0.3s ease;
+            font-size: 24px;
         }
 
         .nav-item span {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: 700;
             margin-left: 0;
             width: 0;
             overflow: hidden;
             display: inline-block;
-            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), margin 0.3s ease, opacity 0.2s ease;
+            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), margin 0.3s ease, opacity 0.2s ease;
             opacity: 0;
             white-space: nowrap;
         }
 
-        /* --- High-Performance Active States --- */
+        /* Active State */
         .nav-item.active {
-            color: #000; /* Contrast text against white bg */
-            will-change: transform;
+            color: #000;
         }
 
         .nav-item.active::before {
             opacity: 1;
-            transform: scale(1); /* Dynamic scale-up for premium look */
+            transform: scale(1);
         }
 
-        /* Fixed text widths for smoothness */
-        .nav-item.active .home-text {
-            width: 60px;
-            margin-left: 10px;
+        .nav-item.active span {
+            margin-left: 8px;
             opacity: 1;
         }
 
-        .nav-item.active .exe-text {
-            width: 50px; /* Specific width for "EXE" to be tight */
-            margin-left: 10px;
-            opacity: 1;
-        }
-
-        .nav-item.active .files-text {
-            width: 60px;
-            margin-left: 10px;
-            opacity: 1;
-        }
-
-        .nav-item.active .chat-text {
-            width: 60px;
-            margin-left: 10px;
-            opacity: 1;
-        }
-
-        /* Subtle depth scaling on icon */
-        .nav-item.active i {
-            transform: scale(0.92);
-        }
-
-        /* Instant Hover Feedback */
-        .nav-item:hover:not(.active) {
-            color: #fff;
-            background: rgba(255,255,255,0.03);
-        }
+        /* Specific text widths for smooth transition */
+        .nav-item.active .home-txt { width: 45px; }
+        .nav-item.active .exe-txt { width: 35px; }
+        .nav-item.active .files-txt { width: 40px; }
+        .nav-item.active .chat-txt { width: 40px; }
 
     </style>
 </head>
 <body>
 
-    <nav class="nav-bar">
-        <div class="nav-item active" onclick="switchTab(this)">
-            <i class='bx bx-home-alt-2'></i>
-            <span class="home-text">Home</span>
+    <main class="main-content" id="content">
+        <div class="profile-card">
+            <img src="https://via.placeholder.com/150" alt="Profile Image" class="profile-img">
+            <h1>Apnar Naam</h1>
+            <p>Ami ekjon professional software enthusiast. Ekhane amar bistarito tottho thakbe. Ami clean UI design ebong high-performance web engineering niye kaj kori.</p>
+            <div style="color: #fff; font-size: 13px; opacity: 0.4;">Scroll for more ↓</div>
         </div>
+    </main>
 
-        <div class="nav-item" onclick="switchTab(this)">
-            <i class='bx bx-terminal'></i>
-            <span class="exe-text">EXE</span>
-        </div>
+    <div class="nav-wrapper">
+        <nav class="nav-bar">
+            <div class="nav-item active" onclick="switchTab(this, 'home')">
+                <i class='bx bx-home-alt-2'></i>
+                <span class="home-txt">Home</span>
+            </div>
 
-        <div class="nav-item" onclick="switchTab(this)">
-            <i class='bx bx-folder'></i>
-            <span class="files-text">Files</span>
-        </div>
+            <div class="nav-item" onclick="switchTab(this, 'exe')">
+                <i class='bx bx-terminal'></i>
+                <span class="exe-txt">EXE</span>
+            </div>
 
-        <div class="nav-item" onclick="switchTab(this)">
-            <i class='bx bx-message-square-dots'></i>
-            <span class="chat-text">Chat</span>
-        </div>
-    </nav>
+            <div class="nav-item" onclick="switchTab(this, 'files')">
+                <i class='bx bx-folder'></i>
+                <span class="files-txt">Files</span>
+            </div>
+
+            <div class="nav-item" onclick="switchTab(this, 'chat')">
+                <i class='bx bx-message-square-dots'></i>
+                <span class="chat-txt">Chat</span>
+            </div>
+        </nav>
+    </div>
 
     <script>
-        // High-Performance Tab Switching
-        function switchTab(el) {
+        function switchTab(el, type) {
             const currentActive = document.querySelector('.nav-item.active');
-            
-            // Do nothing if same tab is clicked
             if (currentActive === el) return;
 
-            // Instant class removal for responsiveness
             currentActive.classList.remove('active');
-            // Instant class add
             el.classList.add('active');
+
+            // Tab switch korle content change korar logic (optional)
+            const content = document.getElementById('content');
+            if(type !== 'home') {
+                content.style.opacity = "0.5";
+                content.innerHTML = `<h1>${type.toUpperCase()} Section</h1><p>Content for ${type} will appear here.</p>`;
+                setTimeout(() => content.style.opacity = "1", 100);
+            } else {
+                location.reload(); // Home e firle details back korbe
+            }
         }
     </script>
 
