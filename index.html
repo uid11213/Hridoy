@@ -18,82 +18,88 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            /* ব্যাকগ্রাউন্ডে একটি প্রিমিয়াম ডার্ক গ্রেডিয়েন্ট */
+            background: radial-gradient(circle, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: cover;
             padding: 20px;
         }
 
-        /* মেইন কার্ড ডিজাইন */
+        /* মেইন কার্ড */
         .profile-card {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px) saturate(180%);
-            -webkit-backdrop-filter: blur(20px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.25);
-            border-radius: 30px;
-            padding: 40px 30px;
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 25px;
+            padding: 40px 25px;
             text-align: center;
-            color: #fff;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
-        /* প্রোফাইল পিকচার */
+        /* প্রোফাইল ইমেজ */
         .profile-img {
-            width: 120px;
-            height: 120px;
+            width: 110px;
+            height: 110px;
             border-radius: 50%;
-            border: 4px solid rgba(255, 255, 255, 0.3);
-            margin-bottom: 20px;
+            border: 3px solid #fff;
+            margin-bottom: 15px;
             object-fit: cover;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
         }
 
         h1 {
-            font-size: 24px;
-            margin-bottom: 10px;
+            color: #fff;
+            font-size: 22px;
+            margin-bottom: 8px;
             letter-spacing: 1px;
         }
 
-        p.bio {
-            font-size: 14px;
-            opacity: 0.8;
+        .subtitle {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 13px;
             margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
-        /* কন্টাক্ট লিঙ্ক বাটন */
-        .social-links {
+        /* বাটন সিরিয়াল কন্টেইনার */
+        .button-group {
             display: flex;
-            flex-direction: column;
-            gap: 15px;
+            flex-direction: column; /* সিরিয়াল ভাবে সাজানোর জন্য */
+            gap: 15px; /* বাটনের মাঝখানের ফাঁকা জায়গা */
         }
 
-        .link-item {
+        /* কমন বাটন স্টাইল */
+        .btn {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 15px;
-            padding: 12px;
+            padding: 14px;
+            border-radius: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 500;
+            font-size: 15px;
             background: rgba(255, 255, 255, 0.1);
             border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 15px;
-            color: #fff;
-            text-decoration: none;
-            font-weight: 500;
-            transition: all 0.3s ease;
+            transition: all 0.4s ease;
         }
 
-        .link-item i {
-            font-size: 20px;
+        .btn i {
+            margin-right: 12px; /* আইকন এবং লেখার দূরত্ব */
+            font-size: 18px;
         }
 
-        /* হোভার ইফেক্ট */
-        .link-item:hover {
-            background: rgba(255, 255, 255, 0.25);
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        /* হোভার ইফেক্টস */
+        .btn:hover {
+            transform: translateY(-3px);
+            background: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
         }
 
-        /* প্রতিটি প্ল্যাটফর্মের জন্য আলাদা টাচ */
+        /* আলাদা রঙের টাচ */
         .whatsapp:hover { border-color: #25D366; color: #25D366; }
         .telegram:hover { border-color: #0088cc; color: #0088cc; }
         .facebook:hover { border-color: #1877F2; color: #1877F2; }
@@ -103,21 +109,21 @@
 <body>
 
     <div class="profile-card">
-        <img src="profile.jpg" alt="Your Name" class="profile-img">
+        <img src="profile.jpg" alt="Profile Picture" class="profile-img">
         
-        <h1>আপনার নাম এখানে</h1>
-        <p class="bio">Web Developer | Guitarist | Rider</p>
+        <h1>আপনার নাম</h1>
+        <p class="subtitle">Connect With Me</p>
 
-        <div class="social-links">
-            <a href="https://wa.me/YOUR_NUMBER" class="link-item whatsapp" target="_blank">
+        <div class="button-group">
+            <a href="https://wa.me/yournumber" class="btn whatsapp" target="_blank">
                 <i class="fab fa-whatsapp"></i> WhatsApp
             </a>
 
-            <a href="https://t.me/YOUR_USERNAME" class="link-item telegram" target="_blank">
+            <a href="https://t.me/yourusername" class="btn telegram" target="_blank">
                 <i class="fab fa-telegram-plane"></i> Telegram
             </a>
 
-            <a href="https://facebook.com/YOUR_PROFILE" class="link-item facebook" target="_blank">
+            <a href="https://facebook.com/yourprofile" class="btn facebook" target="_blank">
                 <i class="fab fa-facebook-f"></i> Facebook
             </a>
         </div>
