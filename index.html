@@ -44,25 +44,12 @@
         .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Background Sunlight Glow */
         .header-spacer { 
             width: 100%; 
             height: 180px; 
             background: radial-gradient(circle at top, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%); 
             position: relative; 
             z-index: 1; 
-        }
-        .header-spacer::before { 
-            content: ''; 
-            position: absolute; 
-            top: -60px; 
-            left: 50%; 
-            transform: translateX(-50%); 
-            width: 150%; 
-            height: 220px; 
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%); 
-            filter: blur(40px); 
-            z-index: 2; 
         }
 
         .profile-pic { 
@@ -118,7 +105,7 @@
             font-weight: 800;
         }
 
-        /* Buttons & Nav */
+        /* Nav & Buttons */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
         .nav-item { padding: 12px 22px; border-radius: 30px; color: #555; display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -152,19 +139,15 @@
                 <h3>কীভাবে অর্ডার করবেন?</h3>
                 <div class="step">
                     <div class="step-num">১</div>
-                    <p>নিচের <b>Shop</b> সেকশনে গিয়ে পছন্দের আইটেমটি পছন্দ করুন।</p>
+                    <p>প্রথমে <b>Shop</b> সেকশনে গিয়ে আপনার পছন্দের প্রোডাক্টটি সিলেক্ট করুন।</p>
                 </div>
                 <div class="step">
                     <div class="step-num">২</div>
-                    <p>আইটেমের ওপর ক্লিক করে আপনার <b>নাম, ঠিকানা ও ফোন নম্বর</b> দিন।</p>
+                    <p>আপনার <b>নাম, ঠিকানা ও ফোন নম্বর</b> দিয়ে অর্ডার কনফার্ম করুন।</p>
                 </div>
                 <div class="step">
                     <div class="step-num">৩</div>
-                    <p><b>Confirm Order</b> বাটনে চাপ দিলে আমাদের কাছে আপনার অর্ডার চলে আসবে।</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">৪</div>
-                    <p>আমরা ফোন করে আপনার সাথে যোগাযোগ করে ডেলিভারি নিশ্চিত করবো।</p>
+                    <p>অর্ডার পাওয়ার পর আমরা ফোন করে আপনার ডেলিভারি নিশ্চিত করবো।</p>
                 </div>
             </div>
             
@@ -227,7 +210,7 @@
     </div>
 
     <script>
-        // Init Settings
+        // Init Scripts
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userAddress').innerText = MY_CONFIG.address;
