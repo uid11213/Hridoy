@@ -24,12 +24,12 @@
         };
 
         const ITEM_LIST = [
-            { name: "Signature Guitar 265", price: "15500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg", available: true }, 
-            { name: "AXE 48c", price: "12000", img: "https://i.ibb.co.com/BVtFghPT/image.jpg", available: true },
-            { name: "TGM", price: "9500", img: "https://i.ibb.co.com/7J16YptF/image.jpg", available: true },
-            { name: "Ukulele 26\"", price: "4500", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg", available: true },
-            { name: "Ukulele 24\"", price: "3800", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg", available: true },
-            { name: "Yemaha cm2", price: "18000", img: "https://i.ibb.co.com/TMYSqKCM/image.jpg", available: true }
+            { name: "Signature Guitar 265", price: "15500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg" }, 
+            { name: "AXE 48c", price: "12000", img: "https://i.ibb.co.com/BVtFghPT/image.jpg" },
+            { name: "TGM", price: "9500", img: "https://i.ibb.co.com/7J16YptF/image.jpg" },
+            { name: "Ukulele 26\"", price: "4500", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg" },
+            { name: "Ukulele 24\"", price: "3800", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg" },
+            { name: "Yemaha cm2", price: "18000", img: "https://i.ibb.co.com/TMYSqKCM/image.jpg" }
         ];
     </script>
 
@@ -50,7 +50,6 @@
         .header-spacer { 
             width: 100%; 
             height: 180px; 
-            /* খুব ঘন এবং বড় আকারের ওপরের আভা */
             background: radial-gradient(circle at top, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%);
             position: relative;
             z-index: 1;
@@ -64,24 +63,10 @@
             transform: translateX(-50%);
             width: 150%;
             height: 220px;
-            /* কুয়াশাচ্ছন্ন ঘন সাদা ধোঁয়াশা */
             background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%);
             filter: blur(40px);
             pointer-events: none;
             z-index: 2;
-        }
-
-        .header-spacer::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            /* নিচ পর্যন্ত বিস্তৃত আলোর বিচ্ছুরণ */
-            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.12) 0%, transparent 100%);
-            pointer-events: none;
-            z-index: 3;
         }
 
         .profile-pic { 
@@ -97,7 +82,6 @@
             background: #111;
         }
         
-        /* --- Text Styling --- */
         .home-info { text-align: center; margin-top: 15px; width: 100%; position: relative; z-index: 5; }
         .home-info h1 { font-size: 28px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
         .bio-text { color: #888; font-size: 13px; font-weight: 500; margin-top: 4px; }
@@ -114,34 +98,70 @@
             transition: 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.12);
         }
-        .map-btn:active { background: rgba(0, 255, 136, 0.15); border-color: #00ff88; }
-        .map-btn i { color: #00ff88; font-size: 18px; }
-        .map-btn span { color: #eee; font-size: 14px; font-weight: 600; }
 
-        /* --- Order Guide --- */
+        /* --- CONTACT SECTION REDESIGN --- */
+        .contact-container {
+            width: 100%;
+            max-width: 400px;
+            margin-top: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .social-buttons-row {
+            display: flex;
+            gap: 15px;
+            width: 100%;
+            justify-content: center;
+        }
+
+        .app-btn {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            border-radius: 24px;
+            text-decoration: none;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            gap: 8px;
+            transition: 0.3s;
+        }
+
+        .wa-small { background: #25D366; }
+        .fb-small { background: #1877F2; }
+        .app-btn i { font-size: 28px; }
+
+        .phone-display-card {
+            width: 100%;
+            background: rgba(255,255,255,0.03);
+            padding: 25px;
+            border-radius: 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .phone-label { color: #666; font-size: 11px; font-weight: 800; letter-spacing: 2px; margin-bottom: 5px; display: block; }
+        .phone-number { font-size: 28px; font-weight: 800; color: #fff; text-decoration: none; display: block; }
+
+        /* --- Shop & Order Guide --- */
         .order-guide { background: #0f0f0f; border-radius: 24px; padding: 20px; margin-top: 30px; width: 100%; max-width: 380px; border: 1px solid rgba(255,255,255,0.03); }
-        .order-guide h3 { font-size: 13px; margin-bottom: 12px; color: #555; text-transform: uppercase; letter-spacing: 1.5px; }
-        .guide-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: 14px; color: #bbb; line-height: 1.4; }
+        .guide-step { display: flex; gap: 10px; margin-bottom: 10px; font-size: 14px; color: #bbb; }
         .step-num { color: #00ff88; font-weight: 800; }
 
-        /* --- Shop Styles --- */
         .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 500px; margin-top: 25px; }
-        .item-card { background: #0f0f0f; border-radius: 24px; padding: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.02); transition: 0.2s; }
-        .item-card:active { transform: scale(0.96); background: #151515; }
+        .item-card { background: #0f0f0f; border-radius: 24px; padding: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.02); }
         .item-img { width: 100%; height: 120px; border-radius: 18px; object-fit: cover; margin-bottom: 10px; }
-        .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; margin-top: 4px; display: block; }
-
-        /* --- Contact List --- */
-        .contact-list { width: 100%; max-width: 400px; margin-top: 25px; display: flex; flex-direction: column; gap: 12px; }
-        .contact-card { display: flex; align-items: center; padding: 18px; border-radius: 22px; text-decoration: none; color: white; font-weight: 700; transition: 0.3s; }
-        .fb-btn { background: #1877F2; }
-        .wa-btn { background: #25D366; }
-        .phone-highlight-card { background: #0f0f0f; padding: 25px; border-radius: 24px; text-align: center; border: 1px solid rgba(255,255,255,0.02); }
-        .phone-number { display: block; font-size: 26px; font-weight: 800; color: #00ff88; margin-top: 5px; text-decoration: none !important; }
+        .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; }
 
         /* --- Navigation --- */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
-        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); box-shadow: 0 10px 40px rgba(0,0,0,0.5); }
+        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
         .nav-item { padding: 12px 22px; border-radius: 30px; color: #555; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
         .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
         .nav-item span { display: none; font-weight: 700; font-size: 14px; }
@@ -150,9 +170,8 @@
         /* --- Modal --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         .modal-content { background: #111; padding: 30px; border-radius: 35px; width: 100%; max-width: 370px; border: 1px solid rgba(255,255,255,0.08); }
-        input { width: 100%; padding: 16px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 15px; outline: none; font-size: 15px; }
-        input:focus { border-color: #00ff88; }
-        .confirm-btn { position: relative; width: 100%; height: 55px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; font-size: 16px; }
+        input { width: 100%; padding: 16px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 15px; outline: none; }
+        .confirm-btn { position: relative; width: 100%; height: 55px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
         .success-text { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; }
         .btn-active .success-text { display: flex; }
     </style>
@@ -162,47 +181,44 @@
     <div class="content-wrapper">
         <section id="home" class="section active">
             <div class="header-spacer"></div>
-            
             <img id="userPic" src="" class="profile-pic" alt="Profile">
-            
             <div class="home-info">
                 <h1 id="userName">Loading...</h1>
                 <p class="bio-text" id="userBio">...</p>
-                
                 <a id="mapLink" href="#" target="_blank" class="map-btn">
                     <i class='bx bxs-map-pin'></i>
                     <span id="userAddress">Loading Address...</span>
                 </a>
             </div>
-
             <div class="order-guide">
-                <h3>অর্ডার করার নিয়ম</h3>
-                <div class="guide-step">
-                    <span class="step-num">১.</span>
-                    <span><b>Shop</b> মেন্যু থেকে আপনার পছন্দের আইটেমটি খুঁজে নিন।</span>
-                </div>
-                <div class="guide-step">
-                    <span class="step-num">২.</span>
-                    <span>আপনার নাম, ঠিকানা এবং নম্বর দিয়ে অর্ডার কনফার্ম করুন।</span>
-                </div>
+                <h3 style="color:#555; font-size:12px; margin-bottom:10px; letter-spacing:1px;">অর্ডার করার নিয়ম</h3>
+                <div class="guide-step"><span class="step-num">১.</span><span>Shop থেকে ইনস্ট্রুমেন্ট সিলেক্ট করুন।</span></div>
+                <div class="guide-step"><span class="step-num">২.</span><span>ঠিকানা দিয়ে অর্ডার কনফার্ম করুন।</span></div>
             </div>
         </section>
 
         <section id="buy" class="section">
-            <h2 style="margin-top: 35px; font-weight: 800; letter-spacing: -1px;">Premium Store</h2>
-            <p style="color: #666; font-size: 13px; margin-bottom: 10px;">Select an item to place order</p>
+            <h2 style="margin-top: 35px; font-weight: 800;">Premium Store</h2>
             <div class="shop-grid" id="itemGrid"></div>
         </section>
 
         <section id="chat" class="section">
-            <h2 style="margin-top: 40px; font-weight: 800; letter-spacing: -1px;">Get In Touch</h2>
-            <div class="contact-list">
-                <a id="waBtn" href="#" class="contact-card wa-btn"><i class='bx bxl-whatsapp' style='font-size:24px; margin-right:10px;'></i> WhatsApp Chat</a>
-                <a id="fbBtn" href="#" class="contact-card fb-btn"><i class='bx bxl-facebook-circle' style='font-size:24px; margin-right:10px;'></i> Facebook Page</a>
-                
-                <div class="phone-highlight-card">
-                    <span style="color:#555; font-size:11px; font-weight:800; letter-spacing:1px;">DIRECT CALL</span>
-                    <span id="phoneDisplay" class="phone-number">000</span>
+            <h2 style="margin-top: 40px; font-weight: 800;">Get In Touch</h2>
+            <div class="contact-container">
+                <div class="social-buttons-row">
+                    <a id="waBtn" href="#" class="app-btn wa-small">
+                        <i class='bx bxl-whatsapp'></i>
+                        <span>WhatsApp</span>
+                    </a>
+                    <a id="fbBtn" href="#" class="app-btn fb-small">
+                        <i class='bx bxl-facebook-circle'></i>
+                        <span>Facebook</span>
+                    </a>
+                </div>
+
+                <div class="phone-display-card">
+                    <span class="phone-label">DIRECT CALL</span>
+                    <a id="phoneCall" href="#" class="phone-number">000</a>
                 </div>
             </div>
         </section>
@@ -210,19 +226,16 @@
 
     <div id="orderModal" class="modal">
         <div class="modal-content">
-            <h3 id="itemTitle" style="text-align:center; margin-bottom:10px; font-size: 20px;">অর্ডার ডিটেইলস</h3>
+            <h3 id="itemTitle" style="text-align:center; margin-bottom:10px;">অর্ডার ডিটেইলস</h3>
             <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; margin-bottom:20px; font-weight:800; font-size:18px;"></p>
-            
             <input type="text" id="orderName" placeholder="আপনার নাম">
             <input type="text" id="orderAddress" placeholder="ডেলিভারি ঠিকানা">
-            <input type="text" id="orderWhatsapp" placeholder="আপনার ফোন নম্বর">
-            
+            <input type="text" id="orderWhatsapp" placeholder="ফোন নম্বর">
             <button class="confirm-btn" id="mainOrderBtn" onclick="sendOrder()">
-                <span id="btnText">অর্ডার কনফার্ম করুন</span>
-                <div class="success-text">✅ অর্ডার সফল হয়েছে!</div>
+                <span id="btnText">Confirm Order</span>
+                <div class="success-text">✅ অর্ডার সফল!</div>
             </button>
-            
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer; font-weight: 600;">ফিরে যান</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">Cancel</button>
         </div>
     </div>
 
@@ -235,7 +248,7 @@
     </div>
 
     <script>
-        // Config Loading
+        // Config Load
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userAddress').innerText = MY_CONFIG.address;
@@ -243,24 +256,18 @@
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
         document.getElementById('waBtn').href = `https://wa.me/${MY_CONFIG.whatsappNum}`;
         document.getElementById('fbBtn').href = MY_CONFIG.facebookURL;
-        document.getElementById('phoneDisplay').innerText = MY_CONFIG.displayPhone;
+        document.getElementById('phoneCall').innerText = MY_CONFIG.displayPhone;
+        document.getElementById('phoneCall').href = `tel:${MY_CONFIG.whatsappNum}`;
 
-        // Render Shop Items
         const grid = document.getElementById('itemGrid');
         ITEM_LIST.forEach(item => {
             const card = document.createElement('div');
             card.className = 'item-card';
             card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `
-                <img src="${item.img}" class="item-img">
-                <span style="color:#00ff88; font-size:9px; font-weight:800; letter-spacing:1px;">READY STOCK</span>
-                <h4 style="font-size:14px; margin:5px 0; color:#eee;">${item.name}</h4>
-                <p class="price-tag">${item.price} ৳</p>
-            `;
+            card.innerHTML = `<img src="${item.img}" class="item-img"><span style="color:#00ff88; font-size:9px; font-weight:800;">READY STOCK</span><h4 style="font-size:14px; margin:5px 0;">${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
             grid.appendChild(card);
         });
 
-        // Navigation Function
         function navTo(id, el) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -269,7 +276,6 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Modal Controls
         function openModal(name, price) {
             document.getElementById('itemTitle').innerText = name;
             document.getElementById('itemPriceDisplay').innerText = price + " ৳";
@@ -278,35 +284,18 @@
 
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
-        // Send Order to Telegram
         function sendOrder() {
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddress').value;
             const w = document.getElementById('orderWhatsapp').value;
             const btn = document.getElementById('mainOrderBtn');
-            
-            if(!n || !a || !w) {
-                alert("দয়া করে সবগুলো তথ্য সঠিকভাবে দিন।");
-                return;
-            }
+            if(!n || !a || !w) return;
 
-            const msg = `🛍️ *নতুন অর্ডার রিকোয়েস্ট!*%0A━━━━━━━━━━━━━━━━%0A🎸 আইটেম: ${document.getElementById('itemTitle').innerText}%0A👤 কাস্টমার: ${n}%0A📍 ঠিকানা: ${a}%0A📞 যোগাযোগ: ${w}%0A━━━━━━━━━━━━━━━━`;
-            
+            const msg = `🛍️ *নতুন অর্ডার!*%0Aআইটেম: ${document.getElementById('itemTitle').innerText}%0Aনাম: ${n}%0Aঠিকানা: ${a}%0Aফোন: ${w}`;
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
-            .then(response => {
-                if(response.ok) {
-                    btn.classList.add('btn-active');
-                    setTimeout(() => { 
-                        closeModal(); 
-                        btn.classList.remove('btn-active'); 
-                        // Clear inputs
-                        document.getElementById('orderName').value = "";
-                        document.getElementById('orderAddress').value = "";
-                        document.getElementById('orderWhatsapp').value = "";
-                    }, 2500);
-                } else {
-                    alert("অর্ডার পাঠাতে সমস্যা হয়েছে। আবার চেষ্টা করুন।");
-                }
+            .then(() => {
+                btn.classList.add('btn-active');
+                setTimeout(() => { closeModal(); btn.classList.remove('btn-active'); }, 2500);
             });
         }
     </script>
