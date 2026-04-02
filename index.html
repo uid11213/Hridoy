@@ -14,7 +14,7 @@
             name: "AHMED HRIDOY",                
             bio: "PREMIUM MUSICAL INSTRUMENTS SHOP", 
             address: "Mahbub Shopping Center, Sirajganj",
-            mapLink: "https://maps.app.goo.gl/your-map-link-here", // এখানে আপনার দোকানের ম্যাপ লিঙ্ক বসান
+            mapLink: "https://maps.google.com", 
             profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
             whatsappNum: "8801700000000",      
             displayPhone: "+880 1700-000000",  
@@ -50,42 +50,38 @@
         .header-spacer { width: 100%; height: 50px; }
         .profile-container { position: relative; text-align: center; }
         
-        /* Best Music BD Lekha */
-        .best-music-text {
-            font-size: 14px;
+        /* 🔥 BIG BRANDING TEXT 🔥 */
+        .brand-text {
+            font-size: 30px; /* আপনার নামের মতোই বড় */
             font-weight: 800;
-            color: white;
-            letter-spacing: 2px;
             margin-bottom: 15px;
+            letter-spacing: -1px;
             text-transform: uppercase;
         }
-        
-        /* Colouring B & D */
-        .col-green { color: #00ff88; }
-        .col-red { color: #ff3c3c; }
+        .best { color: #ff3c3c; } /* লাল */
+        .music { color: #3c82ff; } /* নীল */
+        .bd { color: #00ff88; } /* সবুজ */
 
-        .profile-pic { width: 125px; height: 125px; border-radius: 50%; border: 2px solid rgba(255,255,255,0.1); object-fit: cover; }
+        .profile-pic { width: 130px; height: 130px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); object-fit: cover; }
         
         .home-info { text-align: center; margin-top: 20px; width: 100%; }
-        .home-info h1 { font-size: 30px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
-        .bio-text { color: #888; font-size: 13px; font-weight: 500; margin-top: 4px; }
+        .home-info h1 { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
+        .bio-text { color: #888; font-size: 14px; font-weight: 500; margin-top: 4px; letter-spacing: 1px; }
 
         /* --- Compact Map Button --- */
         .map-btn {
             display: inline-flex;
             align-items: center;
             gap: 8px;
-            margin-top: 15px;
-            padding: 10px 18px;
+            margin-top: 20px;
+            padding: 12px 20px;
             background: rgba(255, 255, 255, 0.05);
             border-radius: 50px;
             text-decoration: none;
-            transition: 0.3s;
             border: 1px solid rgba(255, 255, 255, 0.1);
         }
-        .map-btn:active { background: rgba(0, 255, 136, 0.1); border-color: #00ff88; }
         .map-btn i { color: #00ff88; font-size: 18px; }
-        .map-btn span { color: #eee; font-size: 14px; font-weight: 600; }
+        .map-btn span { color: #eee; font-size: 15px; font-weight: 600; }
 
         /* --- Order Guide --- */
         .order-guide { background: #0f0f0f; border-radius: 24px; padding: 20px; margin-top: 30px; width: 100%; max-width: 380px; }
@@ -117,7 +113,7 @@
 
         /* --- Modal --- */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 35px; width: 100%; max-width: 370px; }
+        .modal-content { background: #111; padding: 30px; border-radius: 35px; width: 100%; max-width: 370px; border: 1px solid #222; }
         input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 15px; outline: none; }
         .confirm-btn { position: relative; width: 100%; height: 55px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
         .success-text { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; }
@@ -131,7 +127,11 @@
             <div class="header-spacer"></div>
             
             <div class="profile-container">
-                <div class="best-music-text">BEST MUSIC <span class="col-green">B</span><span class="col-red">D</span></div>
+                <div class="brand-text">
+                    <span class="best">BEST</span> 
+                    <span class="music">MUSIC</span> 
+                    <span class="bd">BD</span>
+                </div>
                 <img id="userPic" src="" class="profile-pic" alt="Profile">
             </div>
 
@@ -146,15 +146,9 @@
             </div>
 
             <div class="order-guide">
-                <h3>Steps to Order</h3>
-                <div class="guide-step">
-                    <span class="step-num">1.</span>
-                    <span>Select an item from the <b>Shop</b>.</span>
-                </div>
-                <div class="guide-step">
-                    <span class="step-num">2.</span>
-                    <span>Confirm your order with details.</span>
-                </div>
+                <h3>Quick Guide</h3>
+                <div class="guide-step"><span class="step-num">1.</span><span>Select Instrument from Shop.</span></div>
+                <div class="guide-step"><span class="step-num">2.</span><span>Fill Address & Confirm.</span></div>
             </div>
         </section>
 
@@ -164,7 +158,7 @@
         </section>
 
         <section id="chat" class="section">
-            <h2 style="margin-top: 35px; font-weight: 800;">Get In Touch</h2>
+            <h2 style="margin-top: 35px; font-weight: 800;">Contact Us</h2>
             <div class="contact-list">
                 <a id="waBtn" href="#" class="contact-card wa-btn"><i class='bx bxl-whatsapp'></i> WhatsApp Chat</a>
                 <a id="fbBtn" href="#" class="contact-card fb-btn"><i class='bx bxl-facebook-circle'></i> Facebook Page</a>
@@ -200,7 +194,6 @@
     </div>
 
     <script>
-        // Config Load
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userAddress').innerText = MY_CONFIG.address;
@@ -215,7 +208,7 @@
             const card = document.createElement('div');
             card.className = 'item-card';
             card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `<img src="${item.img}" class="item-img"><span style="color:#00ff88; font-size:10px; font-weight:800;">READY STOCK</span><h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
+            card.innerHTML = `<img src="${item.img}" class="item-img"><span style="color:#00ff88; font-size:10px; font-weight:800;">IN STOCK</span><h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
             grid.appendChild(card);
         });
 
