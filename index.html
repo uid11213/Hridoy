@@ -111,7 +111,7 @@
         .nav-item span { display: none; font-weight: 700; }
         .nav-item.active span { display: inline; }
 
-        .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
+        .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; font-size: 15px; }
         .success-overlay { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; z-index: 5; }
         .btn-active .success-overlay { display: flex; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
@@ -167,6 +167,22 @@
                 </div>
                 <div style="width: 100%; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
                     <a id="phoneCall" href="#" style="font-size: 18px; font-weight: 800; color: #fff; text-decoration: none;">000</a>
+                </div>
+
+                <div style="width: 100%; background: #0f0f0f; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.03); margin-top: 10px;">
+                    <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">SEND FEEDBACK</h4>
+                    <input type="text" id="fbName" class="input-field" placeholder="আপনার নাম">
+                    <textarea id="fbMsg" class="input-field" style="height:80px;" placeholder="আপনার মতামত..."></textarea>
+                    
+                    <label for="fbFile" style="display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px;" id="fileLabel">
+                        <i class='bx bx-image-add'></i> Attach Photo (Optional)
+                    </label>
+                    <input type="file" id="fbFile" accept="image/*" style="display:none;" onchange="updateLabel()">
+                    
+                    <button class="action-btn" id="feedbackSubmitBtn" onclick="sendFeedback()">
+                        <span>Send Feedback</span>
+                        <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
+                    </button>
                 </div>
             </div>
         </section>
@@ -230,6 +246,42 @@
             document.getElementById('orderModal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
+
+        function updateLabel() {
+            const file = document.getElementById('fbFile').files[0];
+            if(file) document.getElementById('fileLabel').innerText = "✅ " + file.name;
+        }
+
+        async function sendFeedback() {
+            const name = document.getElementById('fbName').value;
+            const msg = document.getElementById('fbMsg').value;
+            const fileInput = document.getElementById('fbFile');
+            const btn = document.getElementById('feedbackSubmitBtn');
+            if(!name || !msg) { alert("সব তথ্য দিন"); return; }
+            
+            const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${name}\n💬 মেসেজ: ${msg}`;
+            
+            try {
+                if(fileInput.files.length > 0) {
+                    const formData = new FormData();
+                    formData.append('chat_id', MY_CONFIG.chatID);
+                    formData.append('caption', text);
+                    formData.append('photo', fileInput.files[0]);
+                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendPhoto`, { method: 'POST', body: formData });
+                } else {
+                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
+                }
+                
+                btn.classList.add('btn-active');
+                setTimeout(() => {
+                    btn.classList.remove('btn-active');
+                    document.getElementById('fbName').value = "";
+                    document.getElementById('fbMsg').value = "";
+                    document.getElementById('fbFile').value = "";
+                    document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> Attach Photo (Optional)";
+                }, 2500);
+            } catch (err) { alert("ত্রুটি হয়েছে!"); }
+        }
 
         function sendOrder() {
             const n = document.getElementById('orderName').value;
