@@ -46,38 +46,52 @@
         .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- Sunlight & Liquid Glow Effect --- */
+        /* --- Extra Dense Sunlight Glow Effect --- */
         .header-spacer { 
             width: 100%; 
-            height: 150px; 
-            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.12) 0%, rgba(255, 255, 255, 0.03) 50%, transparent 100%);
+            height: 160px; 
+            /* প্রধান ঘন আলোর আভা */
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.25) 0%, rgba(255, 255, 255, 0.08) 40%, transparent 80%);
             position: relative;
         }
         
+        .header-spacer::before {
+            content: '';
+            position: absolute;
+            top: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120%;
+            height: 100%;
+            /* দ্বিতীয় স্তরের ধোঁয়াশা ইফেক্ট */
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.15) 0%, transparent 65%);
+            filter: blur(45px);
+            pointer-events: none;
+        }
+
         .header-spacer::after {
             content: '';
             position: absolute;
-            top: -20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 150%;
+            top: 0;
+            left: 0;
+            width: 100%;
             height: 100%;
-            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.08) 0%, transparent 70%);
-            filter: blur(50px);
+            /* নিচে নামার সময় হালকা কুয়াশাচ্ছন্ন ভাব */
+            background: linear-gradient(to bottom, transparent 20%, rgba(255, 255, 255, 0.03) 100%);
             pointer-events: none;
         }
 
         .profile-pic { 
-            width: 130px; 
-            height: 130px; 
+            width: 135px; 
+            height: 135px; 
             border-radius: 50%; 
-            border: 3px solid rgba(255, 255, 255, 0.15); 
+            border: 4px solid rgba(255, 255, 255, 0.2); 
             object-fit: cover; 
-            margin-top: -65px; 
+            margin-top: -70px; 
             position: relative; 
             z-index: 10;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.8);
-            background: #000;
+            box-shadow: 0 20px 40px rgba(0,0,0,1);
+            background: #111;
         }
         
         .home-info { text-align: center; margin-top: 15px; width: 100%; }
@@ -157,11 +171,11 @@
                 <h3>অর্ডার করার নিয়ম</h3>
                 <div class="guide-step">
                     <span class="step-num">১.</span>
-                    <span><b>Shop</b> থেকে আপনার পছন্দের ইনস্ট্রুমেন্ট সিলেক্ট করুন।</span>
+                    <span><b>Shop</b> থেকে ইনস্ট্রুমেন্ট সিলেক্ট করুন।</span>
                 </div>
                 <div class="guide-step">
                     <span class="step-num">২.</span>
-                    <span>আপনার নাম ও ঠিকানা দিয়ে অর্ডার কনফার্ম করুন।</span>
+                    <span>ঠিকানা দিয়ে অর্ডার কনফার্ম করুন।</span>
                 </div>
             </div>
         </section>
@@ -248,7 +262,7 @@
             const a = document.getElementById('orderAddress').value;
             const w = document.getElementById('orderWhatsapp').value;
             const btn = document.getElementById('mainOrderBtn');
-            if(!n || !a || !w) { alert("সবগুলো তথ্য সঠিকভাবে দিন"); return; }
+            if(!n || !a || !w) { alert("সব তথ্য দিন"); return; }
 
             const msg = `🛍️ *নতুন অর্ডার!*%0A━━━━━━━━━━━━━━━━%0A🎸 আইটেম: ${document.getElementById('itemTitle').innerText}%0A👤 নাম: ${n}%0A📍 ঠিকানা: ${a}%0A📞 WhatsApp: ${w}`;
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
