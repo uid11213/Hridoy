@@ -7,12 +7,18 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <script>
+        // ==========================================
+        // 🛠️ CONFIGURATION SETUP
+        // ==========================================
         const MY_CONFIG = {
             name: "AHMED HRIDOY",                
             bio: "ALL MUSICAL INSTUMENTS GUITAR UKULELE SHOP SIRAJGANJ", 
             profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
+
             whatsappNum: "8801700000000",      
             displayPhone: "+880 1700-000000",  
+            facebookURL: "https://facebook.com/yourprofile", 
+
             botToken: "8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY",   
             chatID: "8535841928"        
         };
@@ -50,7 +56,7 @@
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Profile & Shop Styles (Same as before) */
+        /* Profile & Shop Styles */
         .header-spacer { width: 100%; height: 40px; }
         .profile-pic { width: 125px; height: 125px; border-radius: 50%; border: 3px solid #00ff88; object-fit: cover; background: #222; box-shadow: 0 0 25px rgba(0, 255, 136, 0.15); }
         .home-info { text-align: center; margin-top: 20px; }
@@ -58,34 +64,38 @@
         .home-info p { color: #777; font-size: 15px; margin-top: 8px; line-height: 1.4; }
 
         .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 500px; margin-top: 25px; }
-        .item-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 24px; padding: 15px; text-align: center; cursor: pointer; }
+        .item-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 24px; padding: 15px; text-align: center; cursor: pointer; transition: transform 0.2s; }
+        .item-card:active { transform: scale(0.97); }
         .item-img { width: 100%; height: 120px; border-radius: 18px; object-fit: cover; margin-bottom: 12px; background: #1a1a1a; }
         .status-badge { font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; background: rgba(0, 255, 136, 0.1); color: #00ff88; }
         .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; }
 
         /* Contact Section */
         .contact-list { width: 100%; max-width: 400px; margin-top: 25px; }
-        .contact-btn { display: flex; align-items: center; justify-content: center; padding: 18px; border-radius: 22px; margin-bottom: 15px; text-decoration: none; font-weight: 700; gap: 12px; background: #25D366; color: white; }
+        .contact-btn { display: flex; align-items: center; justify-content: center; padding: 18px; border-radius: 22px; margin-bottom: 15px; text-decoration: none; font-weight: 700; gap: 12px; background: #25D366; color: white; transition: opacity 0.2s; }
+        .contact-btn:active { opacity: 0.8; }
         .phone-highlight { background: #0f0f0f; border: 1px solid #222; padding: 25px; border-radius: 24px; text-align: center; }
         .phone-number { display: block; font-size: 24px; font-weight: 800; margin-top: 8px; color: #fff; }
 
         /* Navigation */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
-        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); padding: 8px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .nav-item { padding: 12px 22px; border-radius: 25px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 8px; }
+        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); padding: 8px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        .nav-item { padding: 12px 22px; border-radius: 25px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 8px; transition: all 0.3s ease; }
         .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
         .nav-item span { display: none; font-weight: 700; font-size: 14px; }
         .nav-item.active span { display: inline; }
 
-        /* Fix: Animated Button without Size Change */
+        /* Modal & Updated Instant Success Button */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; overflow: hidden; }
-        input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; font-size: 16px !important; }
+        .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; overflow: hidden; animation: modalIn 0.3s ease-out; }
+        @keyframes modalIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+        input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; font-size: 16px !important; transition: border-color 0.2s; }
+        input:focus { border-color: #00ff88; }
         
         .confirm-btn { 
             position: relative; 
             width: 100%; 
-            height: 55px; /* Fixed Height to prevent jumping */
+            height: 55px; 
             background: #fff; 
             color: #000; 
             border: none; 
@@ -96,10 +106,10 @@
             align-items: center; 
             justify-content: center;
             overflow: hidden; 
-            transition: 0.3s; 
+            transition: background-color 0.3s, color 0.3s; 
         }
 
-        .btn-original-text { transition: 0.2s; }
+        .btn-original-text { transition: opacity 0.2s; opacity: 1; }
 
         .spinner {
             display: none; 
@@ -113,24 +123,26 @@
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
+        /* Success State: No Slide, Instant Appear */
         .success-text {
-            display: flex; 
+            display: none; /* Default Hidden */
             position: absolute; 
             width: 100%; 
             height: 100%;
-            left: 100%; /* Hidden to the right */
-            top: 0;
+            left: 0; top: 0;
             background: #00ff88; 
             color: #000; 
             align-items: center; 
             justify-content: center; 
             font-weight: 800;
-            transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            /* Slide transition removed */
         }
 
-        /* Button Active State */
-        .btn-active .success-text { left: 0; }
-        .btn-active .btn-original-text, .btn-active .spinner { display: none; }
+        /* Button Active State Styles */
+        .btn-active .success-text { display: flex; animation: instantPop 0.2s ease-out; } /* Direct Display */
+        .btn-active .btn-original-text, .btn-active .spinner { display: none !important; }
+
+        @keyframes instantPop { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
 
     </style>
 </head>
@@ -148,6 +160,7 @@
 
         <section id="buy" class="section">
             <h2 style="margin-top: 30px; font-weight: 800;">Musical Shop</h2>
+            <p style="color:#555; font-size: 13px; margin-bottom: 10px;">Select an instrument to order</p>
             <div class="shop-grid" id="itemGrid"></div>
         </section>
 
@@ -177,7 +190,7 @@
                 <div class="success-text">✅ অর্ডার সফল হয়েছে!</div>
             </button>
             
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">Cancel</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer; font-size: 14px;">Cancel</button>
         </div>
     </div>
 
@@ -190,6 +203,7 @@
     </div>
 
     <script>
+        // Data Initialization
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
@@ -205,6 +219,7 @@
             grid.appendChild(card);
         });
 
+        // Navigation Function
         function navTo(id, el) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -213,6 +228,7 @@
             window.scrollTo(0,0);
         }
 
+        // Modal Functions
         function openModal(name, price) {
             document.getElementById('itemTitle').innerText = name;
             document.getElementById('itemPriceDisplay').innerText = price + " ৳";
@@ -228,6 +244,7 @@
 
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
+        // Send Order & Handle Animation
         function sendOrder() {
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddress').value;
@@ -237,8 +254,8 @@
             const btnText = document.getElementById('btnText');
 
             if(!n || !a || !w) {
-                btn.style.boxShadow = "0 0 10px red";
-                setTimeout(() => btn.style.boxShadow = "none", 500);
+                btn.style.animation = "shake 0.4s";
+                setTimeout(() => btn.style.animation = "", 400);
                 return;
             }
 
@@ -250,17 +267,26 @@
             
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
             .then(() => {
+                // Short loading period before instant success
                 setTimeout(() => {
                     spinner.style.display = 'none';
-                    btn.classList.add('btn-active'); 
+                    btn.classList.add('btn-active'); // Instant Pop-up Success
                     
+                    // Close modal after showing success
                     setTimeout(() => {
                         closeModal();
                         document.getElementById('orderName').value = "";
                         document.getElementById('orderAddress').value = "";
                         document.getElementById('orderWhatsapp').value = "";
                     }, 2000);
-                }, 800); 
+                }, 800); // 0.8s loading time
+            })
+            .catch(() => {
+                // Handle basic error
+                btn.disabled = false;
+                btnText.style.opacity = '1';
+                spinner.style.display = 'none';
+                alert("Error! Try again.");
             });
         }
     </script>
