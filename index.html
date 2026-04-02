@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Mobile Portfolio</title>
+    <title>No-Reload Smooth UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         * {
@@ -23,85 +23,78 @@
             overflow: hidden;
         }
 
-        /* --- Main Content Area --- */
-        .main-content {
+        /* --- Content Sections --- */
+        .content-wrapper {
             flex: 1;
+            position: relative;
+            width: 100%;
+        }
+
+        .section {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             padding: 20px;
             text-align: center;
-            overflow-y: auto;
-            padding-bottom: 100px; /* Nav bar er jonno space */
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(10px);
+            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
         }
 
-        .profile-card {
-            width: 100%;
-            max-width: 350px;
+        .section.active {
+            opacity: 1;
+            pointer-events: auto;
+            transform: translateY(0);
         }
 
+        /* Home Specific Profile Design */
         .profile-img {
-            width: 120px;
-            height: 120px;
+            width: 110px; height: 110px;
             border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.1);
-            object-fit: cover;
+            border: 2px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .profile-card h1 {
-            font-size: 24px;
-            font-weight: 800;
-            margin-bottom: 10px;
-            letter-spacing: -0.5px;
-        }
+        .section h1 { font-size: 26px; margin-bottom: 10px; font-weight: 800; }
+        .section p { color: rgba(255,255,255,0.6); line-height: 1.6; max-width: 320px; }
 
-        .profile-card p {
-            font-size: 15px;
-            color: rgba(255, 255, 255, 0.6);
-            line-height: 1.6;
-            margin-bottom: 25px;
-        }
-
-        /* --- Premium Bottom Navbar --- */
+        /* --- Premium Bottom Navbar (Stable) --- */
         .nav-wrapper {
             position: fixed;
-            bottom: 20px;
-            left: 0;
-            right: 0;
-            display: flex;
-            justify-content: center;
+            bottom: 25px; left: 0; right: 0;
+            display: flex; justify-content: center;
             z-index: 100;
         }
 
         .nav-bar {
             display: flex;
-            align-items: center;
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
             padding: 8px;
             border-radius: 100px;
             border: 1px solid rgba(255, 255, 255, 0.1);
-            gap: 5px;
+            gap: 6px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.8);
         }
 
         .nav-item {
             position: relative;
-            display: flex;
-            align-items: center;
-            padding: 12px 18px;
+            display: flex; align-items: center;
+            padding: 14px 22px;
             border-radius: 100px;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
             transition: color 0.3s ease;
-            will-change: transform;
         }
 
-        /* Background highlight layer */
         .nav-item::before {
             content: '';
             position: absolute;
@@ -110,101 +103,87 @@
             border-radius: 100px;
             z-index: -1;
             opacity: 0;
-            transform: scale(0.8);
-            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.25s ease;
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
         }
 
-        .nav-item i {
-            font-size: 24px;
-        }
-
+        .nav-item i { font-size: 24px; }
         .nav-item span {
-            font-size: 14px;
-            font-weight: 700;
-            margin-left: 0;
-            width: 0;
-            overflow: hidden;
-            display: inline-block;
-            transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), margin 0.3s ease, opacity 0.2s ease;
-            opacity: 0;
+            font-size: 15px; font-weight: 700;
+            width: 0; opacity: 0; overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             white-space: nowrap;
         }
 
         /* Active State */
-        .nav-item.active {
-            color: #000;
-        }
-
-        .nav-item.active::before {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .nav-item.active span {
-            margin-left: 8px;
-            opacity: 1;
-        }
-
-        /* Specific text widths for smooth transition */
-        .nav-item.active .home-txt { width: 45px; }
-        .nav-item.active .exe-txt { width: 35px; }
-        .nav-item.active .files-txt { width: 40px; }
-        .nav-item.active .chat-txt { width: 40px; }
+        .nav-item.active { color: #000; }
+        .nav-item.active::before { opacity: 1; transform: scale(1); }
+        .nav-item.active span { width: 50px; margin-left: 10px; opacity: 1; }
 
     </style>
 </head>
 <body>
 
-    <main class="main-content" id="content">
-        <div class="profile-card">
-            <img src="https://via.placeholder.com/150" alt="Profile Image" class="profile-img">
-            <h1>Apnar Naam</h1>
-            <p>Ami ekjon professional software enthusiast. Ekhane amar bistarito tottho thakbe. Ami clean UI design ebong high-performance web engineering niye kaj kori.</p>
-            <div style="color: #fff; font-size: 13px; opacity: 0.4;">Scroll for more ↓</div>
-        </div>
-    </main>
+    <div class="content-wrapper">
+        <section id="home" class="section active">
+            <img src="https://via.placeholder.com/150" class="profile-img">
+            <h1>Your Name</h1>
+            <p>Welcome! This is your home profile. Every info about you stays here securely without any reloads.</p>
+        </section>
+
+        <section id="exe" class="section">
+            <i class='bx bx-terminal' style="font-size: 60px; margin-bottom: 20px; color: #fff;"></i>
+            <h1>EXE Software</h1>
+            <p>Manage your computer software and executable files from this premium dashboard.</p>
+        </section>
+
+        <section id="files" class="section">
+            <i class='bx bx-folder-open' style="font-size: 60px; margin-bottom: 20px; color: #fff;"></i>
+            <h1>Your Files</h1>
+            <p>All your documents and cloud storage data are synced right here.</p>
+        </section>
+
+        <section id="chat" class="section">
+            <i class='bx bx-message-rounded-dots' style="font-size: 60px; margin-bottom: 20px; color: #fff;"></i>
+            <h1>Messages</h1>
+            <p>Stay connected with your team through our ultra-fast messaging system.</p>
+        </section>
+    </div>
 
     <div class="nav-wrapper">
         <nav class="nav-bar">
-            <div class="nav-item active" onclick="switchTab(this, 'home')">
+            <div class="nav-item active" onclick="showSection('home', this)">
                 <i class='bx bx-home-alt-2'></i>
-                <span class="home-txt">Home</span>
+                <span>Home</span>
             </div>
-
-            <div class="nav-item" onclick="switchTab(this, 'exe')">
+            <div class="nav-item" onclick="showSection('exe', this)">
                 <i class='bx bx-terminal'></i>
-                <span class="exe-txt">EXE</span>
+                <span>EXE</span>
             </div>
-
-            <div class="nav-item" onclick="switchTab(this, 'files')">
+            <div class="nav-item" onclick="showSection('files', this)">
                 <i class='bx bx-folder'></i>
-                <span class="files-txt">Files</span>
+                <span>Files</span>
             </div>
-
-            <div class="nav-item" onclick="switchTab(this, 'chat')">
+            <div class="nav-item" onclick="showSection('chat', this)">
                 <i class='bx bx-message-square-dots'></i>
-                <span class="chat-txt">Chat</span>
+                <span>Chat</span>
             </div>
         </nav>
     </div>
 
     <script>
-        function switchTab(el, type) {
-            const currentActive = document.querySelector('.nav-item.active');
-            if (currentActive === el) return;
+        function showSection(sectionId, navEl) {
+            // 1. Update Navigation Bar
+            const items = document.querySelectorAll('.nav-item');
+            items.forEach(item => item.classList.remove('active'));
+            navEl.classList.add('active');
 
-            currentActive.classList.remove('active');
-            el.classList.add('active');
-
-            // Tab switch korle content change korar logic (optional)
-            const content = document.getElementById('content');
-            if(type !== 'home') {
-                content.style.opacity = "0.5";
-                content.innerHTML = `<h1>${type.toUpperCase()} Section</h1><p>Content for ${type} will appear here.</p>`;
-                setTimeout(() => content.style.opacity = "1", 100);
-            } else {
-                location.reload(); // Home e firle details back korbe
-            }
+            // 2. Update Content Sections
+            const sections = document.querySelectorAll('.section');
+            sections.forEach(sec => sec.classList.remove('active'));
+            
+            const target = document.getElementById(sectionId);
+            target.classList.add('active');
         }
     </script>
 
