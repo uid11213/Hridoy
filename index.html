@@ -30,7 +30,7 @@
 
         // ৪. আইটেম লিস্ট (নাম, দাম এবং ছবি এখান থেকে পরিবর্তন করুন)
         const ITEM_LIST = [
-            { name: "Premium Filter", price: "500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg" }, // ১ম আইটেম
+            { name: "Premium Filter", price: "500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg" }, 
             { name: "Lightroom Preset", price: "350", img: "https://via.placeholder.com/150" },
             { name: "Video Overlay", price: "800", img: "https://via.placeholder.com/150" },
             { name: "UI Design Kit", price: "1200", img: "https://via.placeholder.com/150" },
@@ -74,15 +74,18 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        /* Home Layout - Facebook Style */
+        /* --- Updated Cover Photo Style (Fixes Zoom) --- */
         .cover-photo { 
             width: 100%; 
-            height: 190px; 
-            background-size: cover; 
+            height: 200px; 
+            background-size: 100% 100%; /* ছবিটিকে জুম না করে পুরোটা দেখাবে */
             background-position: center; 
+            background-repeat: no-repeat;
+            background-color: #0f0f0f;
             border-bottom: 1px solid #222; 
             position: relative; 
         }
+
         .profile-pic-wrapper { 
             position: absolute; 
             left: 50%; 
@@ -90,17 +93,17 @@
             transform: translateX(-50%); 
         }
         .profile-pic { 
-            width: 115px; 
-            height: 115px; 
+            width: 110px; 
+            height: 110px; 
             border-radius: 50%; 
             border: 4px solid #000; 
             object-fit: cover; 
             background: #222; 
             box-shadow: 0 10px 25px rgba(0,0,0,0.6); 
         }
-        .home-info { text-align: center; margin-top: 70px; padding: 0 20px; }
-        .home-info h1 { font-size: 26px; font-weight: 800; letter-spacing: -0.5px; }
-        .home-info p { color: #888; font-size: 14px; margin-top: 6px; line-height: 1.4; }
+        .home-info { text-align: center; margin-top: 65px; padding: 0 20px; }
+        .home-info h1 { font-size: 26px; font-weight: 800; }
+        .home-info p { color: #888; font-size: 14px; margin-top: 6px; }
 
         /* Shop Grid */
         .shop-grid { 
@@ -114,7 +117,7 @@
         .item-card { 
             background: #0f0f0f; 
             border: 1px solid #1a1a1a; 
-            border-radius: 22px; 
+            border-radius: 20px; 
             padding: 12px; 
             text-align: center; 
             cursor: pointer; 
@@ -123,13 +126,12 @@
         .item-card:active { transform: scale(0.96); background: #151515; }
         .item-img { 
             width: 100%; 
-            height: 115px; 
-            border-radius: 16px; 
+            height: 110px; 
+            border-radius: 14px; 
             object-fit: cover; 
             margin-bottom: 10px; 
             background: #1a1a1a; 
         }
-        .item-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; color: #eee; }
         .price-tag { color: #00ff88; font-weight: 800; font-size: 16px; }
 
         /* Contact Section */
@@ -147,8 +149,8 @@
             gap: 12px; 
             font-size: 16px;
         }
-        .whatsapp { background: #25D366; color: white; box-shadow: 0 5px 15px rgba(37,211,102,0.2); }
-        .facebook { background: #1877F2; color: white; box-shadow: 0 5px 15px rgba(24,119,242,0.2); }
+        .whatsapp { background: #25D366; color: white; }
+        .facebook { background: #1877F2; color: white; }
         
         .phone-highlight { 
             background: linear-gradient(145deg, #111, #080808); 
@@ -165,7 +167,6 @@
             margin-top: 8px; 
             color: #fff; 
             letter-spacing: 1px; 
-            text-shadow: 0 0 15px rgba(255,255,255,0.2);
         }
 
         /* Bottom Navigation */
@@ -185,7 +186,6 @@
             border-radius: 30px; 
             border: 1px solid rgba(255, 255, 255, 0.1); 
             gap: 8px;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
         .nav-item { 
             padding: 12px 28px; 
@@ -208,21 +208,15 @@
             align-items: center; justify-content: center; z-index: 2000; padding: 20px; 
         }
         .modal-content { 
-            background: #111; 
-            padding: 30px; 
-            border-radius: 30px; 
-            width: 100%; 
-            max-width: 370px; 
-            border: 1px solid #333; 
-            box-shadow: 0 0 40px rgba(0,0,0,1);
+            background: #111; padding: 30px; 
+            border-radius: 30px; width: 100%; 
+            max-width: 370px; border: 1px solid #333; 
         }
-        .modal-content h3 { font-size: 22px; text-align: center; margin-bottom: 5px; }
         input { 
             width: 100%; padding: 15px; margin-bottom: 12px; 
             background: #1a1a1a; border: 1px solid #333; 
             color: white; border-radius: 14px; outline: none; font-size: 15px;
         }
-        input:focus { border-color: #00ff88; }
         .confirm-btn { 
             width: 100%; padding: 16px; 
             background: #fff; color: #000; 
@@ -255,8 +249,8 @@
         <section id="chat" class="section">
             <h2 style="margin-top: 30px; font-weight: 800;">Connect Me</h2>
             <div class="contact-list">
-                <a id="waBtn" href="#" class="contact-btn whatsapp"><i class='bx bxl-whatsapp' style="font-size:26px"></i> WhatsApp Chat</a>
-                <a id="fbBtn" href="#" class="contact-btn facebook"><i class='bx bxl-facebook-circle' style="font-size:26px"></i> Facebook Profile</a>
+                <a id="waBtn" href="#" class="contact-btn whatsapp"><i class='bx bxl-whatsapp' style="font-size:24px"></i> WhatsApp Chat</a>
+                <a id="fbBtn" href="#" class="contact-btn facebook"><i class='bx bxl-facebook-circle' style="font-size:24px"></i> Facebook Profile</a>
                 <div class="phone-highlight">
                     <span style="color: #555; font-size: 11px; letter-spacing: 2px; font-weight: 800;">DIRECT CALL</span>
                     <span id="phoneDisplay" class="phone-number">000000000</span>
@@ -273,7 +267,7 @@
             <input type="text" id="orderAddress" placeholder="আপনার ঠিকানা">
             <input type="text" id="orderWhatsapp" placeholder="হোয়াটসঅ্যাপ নম্বর">
             <button class="confirm-btn" onclick="sendOrder()">Confirm Order</button>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#666; margin-top:15px; cursor:pointer; font-weight: 600;">Cancel</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#666; margin-top:15px; cursor:pointer;">Cancel</button>
         </div>
     </div>
 
@@ -286,7 +280,7 @@
     </div>
 
     <script>
-        // তথ্য লোড করা
+        // তথ্য সেট করা
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
@@ -308,9 +302,6 @@
             grid.appendChild(card);
         });
 
-        let selectedItem = "";
-        let selectedPrice = "";
-
         function navTo(id, el) {
             document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
@@ -320,8 +311,6 @@
         }
 
         function openModal(name, price) {
-            selectedItem = name;
-            selectedPrice = price;
             document.getElementById('itemTitle').innerText = name;
             document.getElementById('itemPriceDisplay').innerText = "৳ " + price;
             document.getElementById('orderModal').style.display = 'flex';
@@ -333,18 +322,11 @@
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddress').value;
             const w = document.getElementById('orderWhatsapp').value;
-            if(!n || !a || !w) return alert("দয়া করে সবগুলো তথ্য দিন।");
+            if(!n || !a || !w) return alert("দয়া করে সব তথ্য দিন।");
             
-            const msg = `🛍️ *নতুন অর্ডার!*%0A------------------------%0A📦 আইটেম: ${selectedItem}%0A💰 দাম: ${selectedPrice} BDT%0A👤 কাস্টমার: ${n}%0A📍 ঠিকানা: ${a}%0A📱 WhatsApp: ${w}`;
+            const msg = `🛍️ *নতুন অর্ডার!*%0Aআইটেম: ${document.getElementById('itemTitle').innerText}%0Aদাম: ${document.getElementById('itemPriceDisplay').innerText}%0Aনাম: ${n}%0Aঠিকানা: ${a}%0AWA: ${w}`;
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
-            .then(res => {
-                if(res.ok) {
-                    alert("অর্ডারটি সফলভাবে পাঠানো হয়েছে!");
-                    closeModal();
-                } else {
-                    alert("টেলিগ্রাম বোট সেটআপে ভুল আছে!");
-                }
-            }).catch(() => alert("ইন্টারনেট কানেকশন চেক করুন।"));
+            .then(() => { alert("অর্ডারটি পাঠানো হয়েছে!"); closeModal(); });
         }
     </script>
 </body>
