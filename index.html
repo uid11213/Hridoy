@@ -78,7 +78,7 @@
             background: #111; 
         }
 
-        /* Order Steps Point Styling */
+        /* Order Instructions Styling */
         .order-instructions {
             width: 100%;
             max-width: 380px;
@@ -118,27 +118,11 @@
             font-weight: 800;
         }
 
-        /* Contact & Buttons */
-        .contact-container { width: 100%; max-width: 400px; margin-top: 30px; display: flex; flex-direction: column; gap: 15px; }
-        .social-buttons-row { display: flex; gap: 10px; width: 100%; }
-        .app-btn { flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px; border-radius: 18px; text-decoration: none; color: white; font-weight: 700; font-size: 13px; gap: 6px; }
-        .wa-small { background: #25D366; }
-        .fb-small { background: #1877F2; }
-
-        .phone-mini-card { width: 100%; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1); }
-        .phone-number { font-size: 18px; font-weight: 800; color: #fff; text-decoration: none; }
-
-        .feedback-box { width: 100%; background: #0f0f0f; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.03); margin-top: 10px; }
-        .feedback-input { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; outline: none; margin-bottom: 10px; font-size: 14px; }
-        .file-label { display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px; }
-        #feedbackFile { display: none; }
-
         .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; font-size: 15px; }
         .success-overlay { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; z-index: 5; }
         .btn-active .success-overlay { display: flex; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        /* Navigation */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
         .nav-item { padding: 12px 22px; border-radius: 30px; color: #555; display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -146,9 +130,9 @@
         .nav-item span { display: none; font-weight: 700; }
         .nav-item.active span { display: inline; }
 
-        /* Modal */
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         .modal-content { background: #111; padding: 25px; border-radius: 30px; width: 100%; max-width: 350px; border: 1px solid rgba(255,255,255,0.1); }
+        .feedback-input { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; outline: none; margin-bottom: 10px; font-size: 14px; }
     </style>
 </head>
 <body>
@@ -167,7 +151,7 @@
                 <h3>কীভাবে অর্ডার করবেন?</h3>
                 <div class="step">
                     <div class="step-icon">১</div>
-                    <p>নিচের <b>Shop</b> মেন্যু থেকে আপনার পছন্দের প্রোডাক্টটি বেছে নিন।</p>
+                    <p>প্রথমে নিচের <b>Shop</b> মেন্যু থেকে আপনার পছন্দের প্রোডাক্টটি বেছে নিন।</p>
                 </div>
                 <div class="step">
                     <div class="step-icon">২</div>
@@ -179,7 +163,7 @@
                 </div>
                 <div class="step">
                     <div class="step-icon">৪</div>
-                    <p>অর্ডার পাওয়ার পর আমরা দ্রুত আপনার সাথে যোগাযোগ করবো।</p>
+                    <p>আমরা দ্রুত আপনার সাথে যোগাযোগ করে ডেলিভারি কনফার্ম করবো।</p>
                 </div>
             </div>
             
@@ -189,26 +173,26 @@
         </section>
 
         <section id="buy" class="section">
-            <h2 style="margin-top: 30px; font-weight: 800; text-align:center;">Our Store</h2>
-            <div class="shop-grid" id="itemGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; margin-top: 25px;"></div>
+            <h2 style="margin-top: 30px; font-weight: 800;">Our Store</h2>
+            <div id="itemGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; margin-top: 25px;"></div>
         </section>
 
         <section id="chat" class="section">
             <h2 style="margin-top: 35px; font-weight: 800;">Contact Us</h2>
-            <div class="contact-container">
-                <div class="social-buttons-row">
-                    <a id="waBtn" href="#" class="app-btn wa-small"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
-                    <a id="fbBtn" href="#" class="app-btn fb-small"><i class='bx bxl-facebook-circle'></i> Facebook</a>
+            <div style="width: 100%; max-width: 400px; margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; gap: 10px; width: 100%;">
+                    <a id="waBtn" href="#" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px; border-radius: 18px; text-decoration: none; color: white; background: #25D366; font-weight: 700; font-size: 13px; gap: 6px;"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
+                    <a id="fbBtn" href="#" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px; border-radius: 18px; text-decoration: none; color: white; background: #1877F2; font-weight: 700; font-size: 13px; gap: 6px;"><i class='bx bxl-facebook-circle'></i> Facebook</a>
                 </div>
-                <div class="phone-mini-card">
-                    <a id="phoneCall" href="#" class="phone-number">000</a>
+                <div style="width: 100%; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+                    <a id="phoneCall" href="#" style="font-size: 18px; font-weight: 800; color: #fff; text-decoration: none;">000</a>
                 </div>
-                <div class="feedback-box">
+                <div style="width: 100%; background: #0f0f0f; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.03); margin-top: 10px;">
                     <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">SEND FEEDBACK</h4>
                     <input type="text" id="fbName" class="feedback-input" placeholder="আপনার নাম">
                     <textarea id="fbMsg" class="feedback-input" style="height:80px;" placeholder="আপনার মতামত লিখুন..."></textarea>
-                    <label for="feedbackFile" class="file-label" id="fileLabel"><i class='bx bx-image-add'></i> Attach Photo (Optional)</label>
-                    <input type="file" id="feedbackFile" accept="image/*" onchange="updateLabel()">
+                    <label for="feedbackFile" style="display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px;" id="fileLabel"><i class='bx bx-image-add'></i> Attach Photo</label>
+                    <input type="file" id="feedbackFile" accept="image/*" style="display:none;" onchange="updateLabel()">
                     <button class="action-btn" id="feedbackSubmitBtn" onclick="sendFeedback()">
                         <span>Send Feedback</span>
                         <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
@@ -256,7 +240,6 @@
         const grid = document.getElementById('itemGrid');
         ITEM_LIST.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'item-card';
             card.style = "background: #0f0f0f; border-radius: 20px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.02); cursor: pointer;";
             card.onclick = () => openModal(item.name, item.price);
             card.innerHTML = `<img src="${item.img}" style="width: 100%; height: 110px; border-radius: 15px; object-fit: cover;"><h4 style="font-size:13px; margin-top:8px;">${item.name}</h4><p style="color:#00ff88; font-weight:800;">${item.price} ৳</p>`;
@@ -306,7 +289,7 @@
                     document.getElementById('fbName').value = "";
                     document.getElementById('fbMsg').value = "";
                     document.getElementById('feedbackFile').value = "";
-                    document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> Attach Photo (Optional)";
+                    document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> Attach Photo";
                 }, 2500);
             } catch (err) { alert("ত্রুটি হয়েছে!"); }
         }
