@@ -50,19 +50,17 @@
         
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* Profile Section */
+        /* Profile & Shop Styles (Same as before) */
         .header-spacer { width: 100%; height: 40px; }
         .profile-pic { width: 125px; height: 125px; border-radius: 50%; border: 3px solid #00ff88; object-fit: cover; background: #222; box-shadow: 0 0 25px rgba(0, 255, 136, 0.15); }
         .home-info { text-align: center; margin-top: 20px; }
         .home-info h1 { font-size: 28px; font-weight: 800; color: #fff; }
         .home-info p { color: #777; font-size: 15px; margin-top: 8px; line-height: 1.4; }
 
-        /* Shop Grid */
         .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 500px; margin-top: 25px; }
         .item-card { background: #0f0f0f; border: 1px solid #1a1a1a; border-radius: 24px; padding: 15px; text-align: center; cursor: pointer; }
         .item-img { width: 100%; height: 120px; border-radius: 18px; object-fit: cover; margin-bottom: 12px; background: #1a1a1a; }
-        .status-badge { font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; }
-        .status-available { background: rgba(0, 255, 136, 0.1); color: #00ff88; }
+        .status-badge { font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; background: rgba(0, 255, 136, 0.1); color: #00ff88; }
         .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; }
 
         /* Contact Section */
@@ -74,38 +72,65 @@
         /* Navigation */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(15px); padding: 8px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1); }
-        .nav-item { padding: 12px 22px; border-radius: 25px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .nav-item { padding: 12px 22px; border-radius: 25px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 8px; }
         .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
         .nav-item span { display: none; font-weight: 700; font-size: 14px; }
         .nav-item.active span { display: inline; }
 
-        /* Order Modal & Animated Button */
+        /* Fix: Animated Button without Size Change */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; overflow: hidden; }
         input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; font-size: 16px !important; }
         
         .confirm-btn { 
-            position: relative; width: 100%; padding: 16px; background: #fff; color: #000; 
-            border: none; border-radius: 14px; font-weight: 800; cursor: pointer; 
-            overflow: hidden; transition: 0.3s; 
+            position: relative; 
+            width: 100%; 
+            height: 55px; /* Fixed Height to prevent jumping */
+            background: #fff; 
+            color: #000; 
+            border: none; 
+            border-radius: 14px; 
+            font-weight: 800; 
+            cursor: pointer; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            overflow: hidden; 
+            transition: 0.3s; 
         }
 
-        /* স্পিনার এনিমেশন */
+        .btn-original-text { transition: 0.2s; }
+
         .spinner {
-            display: none; width: 20px; height: 20px; border: 3px solid rgba(0,0,0,0.1);
-            border-top: 3px solid #000; border-radius: 50%;
-            animation: spin 0.6s linear infinite; margin: 0 auto;
+            display: none; 
+            width: 22px; 
+            height: 22px; 
+            border: 3px solid rgba(0,0,0,0.1);
+            border-top: 3px solid #000; 
+            border-radius: 50%;
+            animation: spin 0.6s linear infinite;
+            position: absolute;
         }
         @keyframes spin { 100% { transform: rotate(360deg); } }
 
-        /* সাকসেস স্লাইড এনিমেশন */
         .success-text {
-            display: none; position: absolute; width: 100%; left: 100%; top: 50%;
-            transform: translateY(-50%); background: #00ff88; color: #000; height: 100%;
-            align-items: center; justify-content: center; transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+            display: flex; 
+            position: absolute; 
+            width: 100%; 
+            height: 100%;
+            left: 100%; /* Hidden to the right */
+            top: 0;
+            background: #00ff88; 
+            color: #000; 
+            align-items: center; 
+            justify-content: center; 
+            font-weight: 800;
+            transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
         }
-        .btn-active .success-text { display: flex; left: 0; }
-        .btn-active .btn-original-text { opacity: 0; }
+
+        /* Button Active State */
+        .btn-active .success-text { left: 0; }
+        .btn-active .btn-original-text, .btn-active .spinner { display: none; }
 
     </style>
 </head>
@@ -176,7 +201,7 @@
             const card = document.createElement('div');
             card.className = 'item-card';
             card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `<img src="${item.img}" class="item-img"><span class="status-badge status-available">Available</span><h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
+            card.innerHTML = `<img src="${item.img}" class="item-img"><span class="status-badge">Available</span><h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
             grid.appendChild(card);
         });
 
@@ -192,9 +217,11 @@
             document.getElementById('itemTitle').innerText = name;
             document.getElementById('itemPriceDisplay').innerText = price + " ৳";
             document.getElementById('orderModal').style.display = 'flex';
+            
             // Reset Button State
             const btn = document.getElementById('mainOrderBtn');
             btn.classList.remove('btn-active');
+            btn.disabled = false;
             document.getElementById('btnText').style.opacity = '1';
             document.getElementById('btnSpinner').style.display = 'none';
         }
@@ -209,9 +236,13 @@
             const spinner = document.getElementById('btnSpinner');
             const btnText = document.getElementById('btnText');
 
-            if(!n || !a || !w) return;
+            if(!n || !a || !w) {
+                btn.style.boxShadow = "0 0 10px red";
+                setTimeout(() => btn.style.boxShadow = "none", 500);
+                return;
+            }
 
-            // ১ সেকেন্ডের কম ঘোরার এনিমেশন শুরু
+            btn.disabled = true;
             btnText.style.opacity = '0';
             spinner.style.display = 'block';
 
@@ -221,16 +252,15 @@
             .then(() => {
                 setTimeout(() => {
                     spinner.style.display = 'none';
-                    btn.classList.add('btn-active'); // স্লাইড করে সাকসেস লেখা আসবে
+                    btn.classList.add('btn-active'); 
                     
-                    // ২ সেকেন্ড পর মডাল বন্ধ হবে
                     setTimeout(() => {
                         closeModal();
                         document.getElementById('orderName').value = "";
                         document.getElementById('orderAddress').value = "";
                         document.getElementById('orderWhatsapp').value = "";
                     }, 2000);
-                }, 700); // ০.৭ সেকেন্ড ঘুরবে
+                }, 800); 
             });
         }
     </script>
