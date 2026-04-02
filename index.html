@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eiroko Smooth Sliding UI</title>
+    <title>Premium Compact UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         * {
@@ -21,96 +21,120 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            /* 4-Dike Border */
-            border: 10px solid #1a1d21;
+            /* --- Website 4-Dike Border --- */
+            border: 12px solid #1a1d21; /* Outer Frame */
+            position: relative;
         }
 
-        /* --- Content Sections --- */
+        /* Inner soft glow for the border */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
+        }
+
         .content-wrapper {
             flex: 1;
             position: relative;
+            width: 100%;
         }
 
         .section {
             position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            padding: 20px; text-align: center;
-            opacity: 0; visibility: hidden;
-            transform: translateY(15px);
+            top: 0; left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            text-align: center;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate3d(0, 15px, 0);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            will-change: transform, opacity;
         }
 
         .section.active {
-            opacity: 1; visibility: visible;
-            transform: translateY(0);
+            opacity: 1;
+            visibility: visible;
+            transform: translate3d(0, 0, 0);
         }
 
         .profile-img {
-            width: 100px; height: 100px;
-            border-radius: 50%; border: 3px solid rgba(255,255,255,0.1);
-            margin-bottom: 20px; object-fit: cover;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        /* --- Sliding Bottom Nav --- */
+        h1 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+        p { color: rgba(255, 255, 255, 0.5); font-size: 14px; max-width: 280px; line-height: 1.5; }
+
+        /* --- Compact Bottom Nav --- */
         .nav-wrapper {
             position: fixed;
-            bottom: 30px; left: 0; right: 0;
+            bottom: 35px; /* Border er thik upore */
+            left: 0; right: 0;
             display: flex; justify-content: center;
             z-index: 1000;
         }
 
         .nav-bar {
-            position: relative;
             display: flex;
-            background: rgba(255, 255, 255, 0.05);
+            background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 6px;
+            padding: 6px; /* Choto korar jonno padding komano hoyeche */
             border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 4px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        /* Moving Indicator (The Liquid Pill) */
-        .nav-indicator {
-            position: absolute;
-            height: calc(100% - 12px);
-            top: 6px;
-            left: 6px;
-            background: #ffffff;
-            border-radius: 100px;
-            z-index: 1;
-            /* Ultra-smooth sliding logic */
-            transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1.15); 
-            will-change: transform, width, left;
         }
 
         .nav-item {
             position: relative;
             display: flex; align-items: center;
-            padding: 10px 18px;
+            padding: 10px 18px; /* Button size choto kora hoyeche */
             border-radius: 100px;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.5);
-            z-index: 2; /* Content sits on top of indicator */
-            transition: color 0.3s ease;
+            color: rgba(255, 255, 255, 0.4);
             -webkit-tap-highlight-color: transparent;
+            will-change: transform;
         }
 
-        .nav-item i { font-size: 22px; }
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #ffffff;
+            border-radius: 100px;
+            z-index: -1;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+        }
+
+        .nav-item i { font-size: 22px; } /* Icon size halka komano */
 
         .nav-item span {
             font-size: 14px; font-weight: 700;
             width: 0; opacity: 0; overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             white-space: nowrap;
         }
 
         /* Active State */
         .nav-item.active { color: #000; }
-        .nav-item.active span { width: 45px; margin-left: 8px; opacity: 1; }
+        .nav-item.active::before { opacity: 1; transform: scale(1); }
+        .nav-item.active span { width: 42px; margin-left: 8px; opacity: 1; }
 
     </style>
 </head>
@@ -119,46 +143,44 @@
     <div class="content-wrapper">
         <section id="home" class="section active">
             <img src="https://via.placeholder.com/150" class="profile-img">
-            <h1>Your Profile</h1>
-            <p>Home section e apnar shob details thakbe. Smoothly slide kore check korun.</p>
+            <h1>Eiroko Profile</h1>
+            <p>আমি একজন ডেভেলপার। আমার এই সেকশনটি ১২০ এফপিএস এ অপ্টিমাইজড করা হয়েছে একদম স্মুদলি চলার জন্য।</p>
         </section>
 
         <section id="exe" class="section">
-            <i class='bx bx-terminal' style="font-size: 55px; margin-bottom: 15px;"></i>
-            <h1>EXE Software</h1>
-            <p>Computer programs and scripts execute here.</p>
+            <i class='bx bx-terminal' style="font-size: 50px; margin-bottom: 15px;"></i>
+            <h1>Software EXE</h1>
+            <p>আপনার সকল কম্পিউটার ফাইল এখানে পাবেন।</p>
         </section>
 
         <section id="files" class="section">
-            <i class='bx bx-folder' style="font-size: 55px; margin-bottom: 15px;"></i>
-            <h1>Storage</h1>
-            <p>Safe and secure file management system.</p>
+            <i class='bx bx-folder' style="font-size: 50px; margin-bottom: 15px;"></i>
+            <h1>File Manager</h1>
+            <p>সব ডাটা সেভ থাকবে কোনো রিলোড ছাড়াই।</p>
         </section>
 
         <section id="chat" class="section">
-            <i class='bx bx-message-square-dots' style="font-size: 55px; margin-bottom: 15px;"></i>
-            <h1>Chat</h1>
-            <p>Connect with others instantly.</p>
+            <i class='bx bx-message-square-dots' style="font-size: 50px; margin-bottom: 15px;"></i>
+            <h1>Chat Box</h1>
+            <p>রিয়েল টাইম চ্যাটিং এক্সপেরিয়েন্স।</p>
         </section>
     </div>
 
     <div class="nav-wrapper">
-        <nav class="nav-bar" id="navBar">
-            <div class="nav-indicator" id="indicator"></div>
-
-            <div class="nav-item active" onclick="jump('home', this)">
+        <nav class="nav-bar">
+            <div class="nav-item active" onclick="navTo('home', this)">
                 <i class='bx bx-home-alt-2'></i>
                 <span>Home</span>
             </div>
-            <div class="nav-item" onclick="jump('exe', this)">
+            <div class="nav-item" onclick="navTo('exe', this)">
                 <i class='bx bx-terminal'></i>
                 <span>EXE</span>
             </div>
-            <div class="nav-item" onclick="jump('files', this)">
+            <div class="nav-item" onclick="navTo('files', this)">
                 <i class='bx bx-folder'></i>
                 <span>Files</span>
             </div>
-            <div class="nav-item" onclick="jump('chat', this)">
+            <div class="nav-item" onclick="navTo('chat', this)">
                 <i class='bx bx-message-square-dots'></i>
                 <span>Chat</span>
             </div>
@@ -166,32 +188,21 @@
     </div>
 
     <script>
-        const indicator = document.getElementById('indicator');
+        function navTo(id, el) {
+            const currentNav = document.querySelector('.nav-item.active');
+            const currentSec = document.querySelector('.section.active');
+            const targetSec = document.getElementById(id);
 
-        function slideTo(el) {
-            // Pill-er width ebong left position set kora
-            indicator.style.width = el.offsetWidth + 'px';
-            indicator.style.left = el.offsetLeft + 'px';
-        }
+            if (currentNav === el) return;
 
-        function jump(id, el) {
-            // Navigation update
-            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
+            currentNav.classList.remove('active');
             el.classList.add('active');
 
-            // Slide the background
-            slideTo(el);
-
-            // Switch sections
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
+            currentSec.classList.remove('active');
+            requestAnimationFrame(() => {
+                targetSec.classList.add('active');
+            });
         }
-
-        // Window load hole default position set kora
-        window.onload = () => {
-            const active = document.querySelector('.nav-item.active');
-            slideTo(active);
-        };
     </script>
 
 </body>
