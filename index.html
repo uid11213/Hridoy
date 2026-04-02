@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ultra Smooth Sliding UI</title>
+    <title>Premium Compact UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         * {
@@ -21,8 +21,18 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 12px solid #1a1d21; 
+            /* --- Website 4-Dike Border --- */
+            border: 12px solid #1a1d21; /* Outer Frame */
             position: relative;
+        }
+
+        /* Inner soft glow for the border */
+        body::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            pointer-events: none;
         }
 
         .content-wrapper {
@@ -45,7 +55,7 @@
             opacity: 0;
             visibility: hidden;
             transform: translate3d(0, 15px, 0);
-            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
             will-change: transform, opacity;
         }
 
@@ -62,67 +72,68 @@
             border: 3px solid rgba(255, 255, 255, 0.1);
             margin-bottom: 20px;
             object-fit: cover;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
         }
 
-        /* --- Compact Bottom Nav with Slider --- */
+        h1 { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+        p { color: rgba(255, 255, 255, 0.5); font-size: 14px; max-width: 280px; line-height: 1.5; }
+
+        /* --- Compact Bottom Nav --- */
         .nav-wrapper {
             position: fixed;
-            bottom: 35px;
+            bottom: 35px; /* Border er thik upore */
             left: 0; right: 0;
             display: flex; justify-content: center;
             z-index: 1000;
         }
 
         .nav-bar {
-            position: relative; /* Indicator er jonno relative */
             display: flex;
             background: rgba(255, 255, 255, 0.04);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            padding: 6px;
+            padding: 6px; /* Choto korar jonno padding komano hoyeche */
             border-radius: 100px;
             border: 1px solid rgba(255, 255, 255, 0.08);
             gap: 4px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        /* Moving Background Layer (The Pill) */
-        .nav-indicator {
-            position: absolute;
-            height: calc(100% - 12px);
-            top: 6px;
-            left: 6px;
-            background: #ffffff;
-            border-radius: 100px;
-            z-index: 1;
-            /* Ultra Smooth Slide logic */
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1.1); 
-            will-change: transform, width, left;
-        }
-
         .nav-item {
             position: relative;
             display: flex; align-items: center;
-            padding: 10px 18px;
+            padding: 10px 18px; /* Button size choto kora hoyeche */
             border-radius: 100px;
             cursor: pointer;
             color: rgba(255, 255, 255, 0.4);
-            z-index: 2; /* Content sits on top of indicator */
-            transition: color 0.3s ease;
             -webkit-tap-highlight-color: transparent;
+            will-change: transform;
         }
 
-        .nav-item i { font-size: 22px; }
+        .nav-item::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: #ffffff;
+            border-radius: 100px;
+            z-index: -1;
+            opacity: 0;
+            transform: scale(0.85);
+            transition: transform 0.4s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+        }
+
+        .nav-item i { font-size: 22px; } /* Icon size halka komano */
 
         .nav-item span {
             font-size: 14px; font-weight: 700;
             width: 0; opacity: 0; overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
             white-space: nowrap;
         }
 
         /* Active State */
         .nav-item.active { color: #000; }
+        .nav-item.active::before { opacity: 1; transform: scale(1); }
         .nav-item.active span { width: 42px; margin-left: 8px; opacity: 1; }
 
     </style>
@@ -133,7 +144,7 @@
         <section id="home" class="section active">
             <img src="https://via.placeholder.com/150" class="profile-img">
             <h1>Eiroko Profile</h1>
-            <p>আমি একজন ডেভেলপার। এটি ১২০ এফপিএস স্লাইডিং এনিমেশন।</p>
+            <p>আমি একজন ডেভেলপার। আমার এই সেকশনটি ১২০ এফপিএস এ অপ্টিমাইজড করা হয়েছে একদম স্মুদলি চলার জন্য।</p>
         </section>
 
         <section id="exe" class="section">
@@ -145,7 +156,7 @@
         <section id="files" class="section">
             <i class='bx bx-folder' style="font-size: 50px; margin-bottom: 15px;"></i>
             <h1>File Manager</h1>
-            <p>সব ডাটা সেভ থাকবে কোনো ল্যাগ ছাড়াই।</p>
+            <p>সব ডাটা সেভ থাকবে কোনো রিলোড ছাড়াই।</p>
         </section>
 
         <section id="chat" class="section">
@@ -156,9 +167,7 @@
     </div>
 
     <div class="nav-wrapper">
-        <nav class="nav-bar" id="navBar">
-            <div class="nav-indicator" id="indicator"></div>
-
+        <nav class="nav-bar">
             <div class="nav-item active" onclick="navTo('home', this)">
                 <i class='bx bx-home-alt-2'></i>
                 <span>Home</span>
@@ -179,14 +188,6 @@
     </div>
 
     <script>
-        const indicator = document.getElementById('indicator');
-
-        function movePill(el) {
-            // Update indicator size and position smoothly
-            indicator.style.width = el.offsetWidth + 'px';
-            indicator.style.left = el.offsetLeft + 'px';
-        }
-
         function navTo(id, el) {
             const currentNav = document.querySelector('.nav-item.active');
             const currentSec = document.querySelector('.section.active');
@@ -194,25 +195,14 @@
 
             if (currentNav === el) return;
 
-            // Update Nav Item classes
             currentNav.classList.remove('active');
             el.classList.add('active');
 
-            // Slide the Pill
-            movePill(el);
-
-            // Switch sections with fade
             currentSec.classList.remove('active');
             requestAnimationFrame(() => {
                 targetSec.classList.add('active');
             });
         }
-
-        // Initialize pill position on load
-        window.onload = () => {
-            const activeItem = document.querySelector('.nav-item.active');
-            movePill(activeItem);
-        };
     </script>
 
 </body>
