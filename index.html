@@ -32,23 +32,18 @@
         
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        /* স্ক্রলিং ইনেবল করার জন্য overflow আপডেট */
         html, body { 
             touch-action: manipulation; 
             background: #000; 
             color: white; 
             height: 100%; 
-            overflow-x: hidden; /* ডানে-বামে স্ক্রল বন্ধ */
-            overflow-y: auto;   /* উপর-নিচে স্ক্রল চালু */
+            overflow-x: hidden; 
+            overflow-y: auto;
         }
 
         body { border: 8px solid #111; min-height: 100vh; display: flex; flex-direction: column; }
 
-        .content-wrapper { 
-            flex: 1; 
-            width: 100%; 
-            padding-bottom: 120px; /* নিচের নেভিগেশন বারের জন্য গ্যাপ */
-        }
+        .content-wrapper { flex: 1; width: 100%; padding-bottom: 120px; }
 
         .section { display: none; flex-direction: column; align-items: center; width: 100%; padding: 0 15px; }
         .section.active { display: flex; animation: fadeIn 0.3s ease-out; }
@@ -68,7 +63,6 @@
         .item-img { width: 100%; height: 120px; border-radius: 18px; object-fit: cover; margin-bottom: 12px; background: #1a1a1a; }
         .status-badge { font-size: 9px; font-weight: 800; padding: 4px 10px; border-radius: 20px; text-transform: uppercase; margin-bottom: 8px; display: inline-block; }
         .status-available { background: rgba(0, 255, 136, 0.1); color: #00ff88; }
-        .status-out { background: rgba(255, 60, 60, 0.1); color: #ff3c3c; }
         .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; }
 
         /* Contact Section */
@@ -85,17 +79,34 @@
         .nav-item span { display: none; font-weight: 700; font-size: 14px; }
         .nav-item.active span { display: inline; }
 
-        /* Order Modal */
+        /* Order Modal & Animated Button */
         .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; }
+        .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; overflow: hidden; }
         input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; font-size: 16px !important; }
-        .confirm-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 14px; font-weight: 800; cursor: pointer; }
-
-        .success-overlay {
-            display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
-            background: #00ff88; color: #000; padding: 20px 40px; border-radius: 20px; font-weight: 800;
-            z-index: 3000; box-shadow: 0 10px 40px rgba(0, 255, 136, 0.4); text-align: center;
+        
+        .confirm-btn { 
+            position: relative; width: 100%; padding: 16px; background: #fff; color: #000; 
+            border: none; border-radius: 14px; font-weight: 800; cursor: pointer; 
+            overflow: hidden; transition: 0.3s; 
         }
+
+        /* স্পিনার এনিমেশন */
+        .spinner {
+            display: none; width: 20px; height: 20px; border: 3px solid rgba(0,0,0,0.1);
+            border-top: 3px solid #000; border-radius: 50%;
+            animation: spin 0.6s linear infinite; margin: 0 auto;
+        }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* সাকসেস স্লাইড এনিমেশন */
+        .success-text {
+            display: none; position: absolute; width: 100%; left: 100%; top: 50%;
+            transform: translateY(-50%); background: #00ff88; color: #000; height: 100%;
+            align-items: center; justify-content: center; transition: 0.4s cubic-bezier(0.18, 0.89, 0.32, 1.28);
+        }
+        .btn-active .success-text { display: flex; left: 0; }
+        .btn-active .btn-original-text { opacity: 0; }
+
     </style>
 </head>
 <body>
@@ -127,8 +138,6 @@
         </section>
     </div>
 
-    <div id="successMsg" class="success-overlay">✅ অর্ডার সফল হয়েছে!</div>
-
     <div id="orderModal" class="modal">
         <div class="modal-content">
             <h3 id="itemTitle" style="text-align:center;">Order</h3>
@@ -136,7 +145,13 @@
             <input type="text" id="orderName" placeholder="আপনার নাম">
             <input type="text" id="orderAddress" placeholder="আপনার ঠিকানা">
             <input type="text" id="orderWhatsapp" placeholder="WhatsApp নম্বর">
-            <button class="confirm-btn" onclick="sendOrder()">Confirm Order</button>
+            
+            <button class="confirm-btn" id="mainOrderBtn" onclick="sendOrder()">
+                <div class="spinner" id="btnSpinner"></div>
+                <span class="btn-original-text" id="btnText">Confirm Order</span>
+                <div class="success-text">✅ অর্ডার সফল হয়েছে!</div>
+            </button>
+            
             <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">Cancel</button>
         </div>
     </div>
@@ -160,9 +175,8 @@
         ITEM_LIST.forEach(item => {
             const card = document.createElement('div');
             card.className = 'item-card';
-            const badge = item.available ? '<span class="status-badge status-available">Available</span>' : '<span class="status-badge status-out">Out</span>';
             card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `<img src="${item.img}" class="item-img">${badge}<h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
+            card.innerHTML = `<img src="${item.img}" class="item-img"><span class="status-badge status-available">Available</span><h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
             grid.appendChild(card);
         });
 
@@ -171,13 +185,18 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
-            window.scrollTo(0,0); // নতুন সেকশনে গেলে উপরে স্ক্রল হবে
+            window.scrollTo(0,0);
         }
 
         function openModal(name, price) {
             document.getElementById('itemTitle').innerText = name;
             document.getElementById('itemPriceDisplay').innerText = price + " ৳";
             document.getElementById('orderModal').style.display = 'flex';
+            // Reset Button State
+            const btn = document.getElementById('mainOrderBtn');
+            btn.classList.remove('btn-active');
+            document.getElementById('btnText').style.opacity = '1';
+            document.getElementById('btnSpinner').style.display = 'none';
         }
 
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
@@ -186,16 +205,32 @@
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddress').value;
             const w = document.getElementById('orderWhatsapp').value;
+            const btn = document.getElementById('mainOrderBtn');
+            const spinner = document.getElementById('btnSpinner');
+            const btnText = document.getElementById('btnText');
+
             if(!n || !a || !w) return;
+
+            // ১ সেকেন্ডের কম ঘোরার এনিমেশন শুরু
+            btnText.style.opacity = '0';
+            spinner.style.display = 'block';
 
             const msg = `🛍️ *নতুন অর্ডার!*%0Aআইটেম: ${document.getElementById('itemTitle').innerText}%0Aদাম: ${document.getElementById('itemPriceDisplay').innerText}%0Aনাম: ${n}%0Aঠিকানা: ${a}%0AWhatsApp: ${w}`;
             
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
             .then(() => {
-                closeModal();
-                const successEl = document.getElementById('successMsg');
-                successEl.style.display = 'block';
-                setTimeout(() => { successEl.style.display = 'none'; }, 3000);
+                setTimeout(() => {
+                    spinner.style.display = 'none';
+                    btn.classList.add('btn-active'); // স্লাইড করে সাকসেস লেখা আসবে
+                    
+                    // ২ সেকেন্ড পর মডাল বন্ধ হবে
+                    setTimeout(() => {
+                        closeModal();
+                        document.getElementById('orderName').value = "";
+                        document.getElementById('orderAddress').value = "";
+                        document.getElementById('orderWhatsapp').value = "";
+                    }, 2000);
+                }, 700); // ০.৭ সেকেন্ড ঘুরবে
             });
         }
     </script>
