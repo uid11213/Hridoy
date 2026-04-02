@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Sliding UI</title>
+    <title>Eiroko Smooth Sliding UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         * {
@@ -21,10 +21,11 @@
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            border: 10px solid #1a1d21; /* 4-Dike Border */
+            /* 4-Dike Border */
+            border: 10px solid #1a1d21;
         }
 
-        /* --- Content Area --- */
+        /* --- Content Sections --- */
         .content-wrapper {
             flex: 1;
             position: relative;
@@ -37,13 +38,13 @@
             align-items: center; justify-content: center;
             padding: 20px; text-align: center;
             opacity: 0; visibility: hidden;
-            transform: translate3d(0, 15px, 0);
+            transform: translateY(15px);
             transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
         .section.active {
             opacity: 1; visibility: visible;
-            transform: translate3d(0, 0, 0);
+            transform: translateY(0);
         }
 
         .profile-img {
@@ -52,7 +53,7 @@
             margin-bottom: 20px; object-fit: cover;
         }
 
-        /* --- Sliding Nav Bar --- */
+        /* --- Sliding Bottom Nav --- */
         .nav-wrapper {
             position: fixed;
             bottom: 30px; left: 0; right: 0;
@@ -63,25 +64,26 @@
         .nav-bar {
             position: relative;
             display: flex;
-            background: rgba(255, 255, 255, 0.04);
+            background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             padding: 6px;
             border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             box-shadow: 0 20px 40px rgba(0,0,0,0.6);
         }
 
-        /* Moving Indicator (The Pill) */
+        /* Moving Indicator (The Liquid Pill) */
         .nav-indicator {
             position: absolute;
             height: calc(100% - 12px);
-            top: 6px; left: 6px;
+            top: 6px;
+            left: 6px;
             background: #ffffff;
             border-radius: 100px;
             z-index: 1;
-            /* Ultra smooth sliding animation */
-            transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1.2); 
+            /* Ultra-smooth sliding logic */
+            transition: all 0.45s cubic-bezier(0.23, 1, 0.32, 1.15); 
             will-change: transform, width, left;
         }
 
@@ -92,7 +94,7 @@
             border-radius: 100px;
             cursor: pointer;
             color: rgba(255, 255, 255, 0.5);
-            z-index: 2; /* Text icon shada background er upor thakbe */
+            z-index: 2; /* Content sits on top of indicator */
             transition: color 0.3s ease;
             -webkit-tap-highlight-color: transparent;
         }
@@ -106,9 +108,9 @@
             white-space: nowrap;
         }
 
-        /* Active State Color */
+        /* Active State */
         .nav-item.active { color: #000; }
-        .nav-item.active span { width: 42px; margin-left: 8px; opacity: 1; }
+        .nav-item.active span { width: 45px; margin-left: 8px; opacity: 1; }
 
     </style>
 </head>
@@ -117,26 +119,26 @@
     <div class="content-wrapper">
         <section id="home" class="section active">
             <img src="https://via.placeholder.com/150" class="profile-img">
-            <h1>Eiroko Profile</h1>
-            <p>Welcome to home! Everything is smooth and sliding.</p>
+            <h1>Your Profile</h1>
+            <p>Home section e apnar shob details thakbe. Smoothly slide kore check korun.</p>
         </section>
 
         <section id="exe" class="section">
-            <i class='bx bx-terminal' style="font-size: 50px; margin-bottom: 15px;"></i>
-            <h1>Software EXE</h1>
-            <p>Your programs are here.</p>
+            <i class='bx bx-terminal' style="font-size: 55px; margin-bottom: 15px;"></i>
+            <h1>EXE Software</h1>
+            <p>Computer programs and scripts execute here.</p>
         </section>
 
         <section id="files" class="section">
-            <i class='bx bx-folder' style="font-size: 50px; margin-bottom: 15px;"></i>
-            <h1>File Storage</h1>
-            <p>All your data is safe.</p>
+            <i class='bx bx-folder' style="font-size: 55px; margin-bottom: 15px;"></i>
+            <h1>Storage</h1>
+            <p>Safe and secure file management system.</p>
         </section>
 
         <section id="chat" class="section">
-            <i class='bx bx-message-square-dots' style="font-size: 50px; margin-bottom: 15px;"></i>
-            <h1>Chat Box</h1>
-            <p>Real-time messaging.</p>
+            <i class='bx bx-message-square-dots' style="font-size: 55px; margin-bottom: 15px;"></i>
+            <h1>Chat</h1>
+            <p>Connect with others instantly.</p>
         </section>
     </div>
 
@@ -144,19 +146,19 @@
         <nav class="nav-bar" id="navBar">
             <div class="nav-indicator" id="indicator"></div>
 
-            <div class="nav-item active" onclick="navigate('home', this)">
+            <div class="nav-item active" onclick="jump('home', this)">
                 <i class='bx bx-home-alt-2'></i>
                 <span>Home</span>
             </div>
-            <div class="nav-item" onclick="navigate('exe', this)">
+            <div class="nav-item" onclick="jump('exe', this)">
                 <i class='bx bx-terminal'></i>
                 <span>EXE</span>
             </div>
-            <div class="nav-item" onclick="navigate('files', this)">
+            <div class="nav-item" onclick="jump('files', this)">
                 <i class='bx bx-folder'></i>
                 <span>Files</span>
             </div>
-            <div class="nav-item" onclick="navigate('chat', this)">
+            <div class="nav-item" onclick="jump('chat', this)">
                 <i class='bx bx-message-square-dots'></i>
                 <span>Chat</span>
             </div>
@@ -166,33 +168,29 @@
     <script>
         const indicator = document.getElementById('indicator');
 
-        function moveIndicator(el) {
-            // Get clicked element's size and position
-            const rect = el.getBoundingClientRect();
-            const parentRect = el.parentElement.getBoundingClientRect();
-            
-            // Apply size and position to the white pill
+        function slideTo(el) {
+            // Pill-er width ebong left position set kora
             indicator.style.width = el.offsetWidth + 'px';
             indicator.style.left = el.offsetLeft + 'px';
         }
 
-        function navigate(id, el) {
-            // 1. Update Navigation items
-            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+        function jump(id, el) {
+            // Navigation update
+            document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
             el.classList.add('active');
 
-            // 2. Slide the indicator
-            moveIndicator(el);
+            // Slide the background
+            slideTo(el);
 
-            // 3. Switch Sections
-            document.querySelectorAll('.section').forEach(sec => sec.classList.remove('active'));
+            // Switch sections
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
             document.getElementById(id).classList.add('active');
         }
 
-        // Initialize indicator position on page load
+        // Window load hole default position set kora
         window.onload = () => {
-            const activeItem = document.querySelector('.nav-item.active');
-            moveIndicator(activeItem);
+            const active = document.querySelector('.nav-item.active');
+            slideTo(active);
         };
     </script>
 
