@@ -1,241 +1,34 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Profile UI</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+        // ==========================================
+        // 🛠️ CONFIGURATION SETUP (এখান থেকে পরিবর্তন করুন)
+        // ==========================================
+        
+        const MY_CONFIG = {
+            // ১. প্রোফাইল সেটিংস
+            name: "Eiroko Dev",                
+            bio: "Digital Creator & Developer", 
+            profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
+            coverPic: "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?auto=format&fit=crop&q=80&w=1000", 
 
-        body {
-            background: #050708;
-            color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-            border: 12px solid #1a1d21;
-            position: relative;
-        }
+            // ২. কন্টাক্ট সেটিংস
+            whatsappNum: "8801700000000",      
+            displayPhone: "+880 1700-000000",  
+            facebookURL: "https://facebook.com/yourprofile", 
 
-        .content-wrapper {
-            flex: 1;
-            position: relative;
-            width: 100%;
-        }
+            // ৩. টেলিগ্রাম বোট সেটিংস
+            botToken: "YOUR_BOT_TOKEN_HERE",   
+            chatID: "YOUR_CHAT_ID_HERE"        
+        };
 
-        .section {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transform: translate3d(0, 15px, 0);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-        }
+        // ৪. আইটেম লিস্ট (প্রথম আইটেমে আপনার দেওয়া লিঙ্কটি বসানো হয়েছে)
+        const ITEM_LIST = [
+            { name: "Premium Filter", price: "500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg" }, // আপনার দেওয়া লিঙ্ক
+            { name: "Lightroom Preset", price: "350", img: "https://via.placeholder.com/150" },
+            { name: "Video Overlay", price: "800", img: "https://via.placeholder.com/150" },
+            { name: "UI Design Kit", price: "1200", img: "https://via.placeholder.com/150" },
+            { name: "Custom Logo", price: "2500", img: "https://via.placeholder.com/150" },
+            { name: "Social Media Post", price: "600", img: "https://via.placeholder.com/150" }
+        ];
 
-        .section.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate3d(0, 0, 0);
-        }
-
-        /* --- Facebook Style Profile Header --- */
-        .profile-header {
-            width: 100%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 60px;
-        }
-
-        .cover-photo {
-            width: 100%;
-            height: 180px;
-            background: linear-gradient(135deg, #1a1d21 0%, #050708 100%);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-        }
-
-        .profile-img-container {
-            position: relative;
-            margin-top: -55px; 
-            z-index: 10;
-        }
-
-        .profile-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: 4px solid #050708;
-            object-fit: cover;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-            background: #1a1d21;
-        }
-
-        .section-content {
-            padding: 0 20px;
-            text-align: center;
-        }
-
-        h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; }
-        p { color: rgba(255, 255, 255, 0.5); font-size: 14px; max-width: 300px; line-height: 1.6; margin: 0 auto; }
-
-        .big-icon {
-            font-size: 60px;
-            margin-top: 100px;
-            margin-bottom: 20px;
-            color: rgba(255,255,255,0.9);
-        }
-
-        /* --- Navigation --- */
-        .nav-wrapper {
-            position: fixed;
-            bottom: 35px;
-            left: 0; right: 0;
-            display: flex; justify-content: center;
-            z-index: 1000;
-        }
-
-        .nav-bar {
-            display: flex;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            padding: 6px;
-            border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            gap: 4px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-        }
-
-        .nav-item {
-            position: relative;
-            display: flex; align-items: center;
-            padding: 10px 18px;
-            border-radius: 100px;
-            cursor: pointer;
-            color: rgba(255, 255, 255, 0.4);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-tap-highlight-color: transparent;
-        }
-
-        .nav-item.active { color: #000; }
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: #ffffff;
-            border-radius: 100px;
-            z-index: -1;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .nav-item.active::before {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .nav-item i { font-size: 22px; }
-        .nav-item span {
-            font-size: 14px; font-weight: 700;
-            width: 0; opacity: 0; overflow: hidden;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .nav-item.active span { width: 45px; margin-left: 8px; opacity: 1; }
-
-    </style>
-</head>
-<body>
-
-    <div class="content-wrapper">
-        <section id="home" class="section active">
-            <div class="profile-header">
-                <div class="cover-photo"></div>
-                <div class="profile-img-container">
-                    <img src="https://i.ibb.co.com/ZpKH1d4n/image.jpg" class="profile-img" alt="Profile Picture">
-                </div>
-            </div>
-            <div class="section-content">
-                <h1>Eiroko Profile</h1>
-                <p>নতুন প্রোফাইল পিকচার আপডেট করা হয়েছে। এটি এখন আপনার হোম সেকশনে দেখাবে।</p>
-            </div>
-        </section>
-
-        <section id="exe" class="section">
-            <i class='bx bx-terminal big-icon'></i>
-            <h1>Software EXE</h1>
-            <p>আপনার সকল কম্পিউটার ফাইল এবং স্ক্রিপ্ট এখানে ম্যানেজ করুন।</p>
-        </section>
-
-        <section id="files" class="section">
-            <i class='bx bx-folder big-icon'></i>
-            <h1>File Manager</h1>
-            <p>ক্লাউড স্টোরেজ এবং লোকাল ডাটা অ্যাক্সেস করুন খুব সহজে।</p>
-        </section>
-
-        <section id="chat" class="section">
-            <i class='bx bx-message-square-dots big-icon'></i>
-            <h1>Chat Box</h1>
-            <p>বন্ধুদের সাথে রিয়েল টাইম চ্যাটিং এবং ফাইল শেয়ারিং।</p>
-        </section>
-    </div>
-
-    <div class="nav-wrapper">
-        <nav class="nav-bar">
-            <div class="nav-item active" onclick="navTo('home', this)">
-                <i class='bx bx-home-alt-2'></i>
-                <span>Home</span>
-            </div>
-            <div class="nav-item" onclick="navTo('exe', this)">
-                <i class='bx bx-terminal'></i>
-                <span>EXE</span>
-            </div>
-            <div class="nav-item" onclick="navTo('files', this)">
-                <i class='bx bx-folder'></i>
-                <span>Files</span>
-            </div>
-            <div class="nav-item" onclick="navTo('chat', this)">
-                <i class='bx bx-message-square-dots'></i>
-                <span>Chat</span>
-            </div>
-        </nav>
-    </div>
-
-    <script>
-        function navTo(id, el) {
-            const currentNav = document.querySelector('.nav-item.active');
-            const currentSec = document.querySelector('.section.active');
-            const targetSec = document.getElementById(id);
-
-            if (currentNav === el) return;
-
-            currentNav.classList.remove('active');
-            el.classList.add('active');
-
-            currentSec.classList.remove('active');
-            
-            setTimeout(() => {
-                targetSec.classList.add('active');
-            }, 50);
-        }
-    </script>
-
-</body>
-</html>
+        // ==========================================
+        // CONFIGURATION শেষ
+        // ==========================================
