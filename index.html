@@ -44,12 +44,81 @@
         .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Sunlight Glow */
-        .header-spacer { width: 100%; height: 180px; background: radial-gradient(circle at top, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%); position: relative; z-index: 1; }
-        .header-spacer::before { content: ''; position: absolute; top: -60px; left: 50%; transform: translateX(-50%); width: 150%; height: 220px; background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%); filter: blur(40px); z-index: 2; }
-        .profile-pic { width: 140px; height: 140px; border-radius: 50%; border: 5px solid rgba(255, 255, 255, 0.35); object-fit: cover; margin-top: -85px; position: relative; z-index: 10; box-shadow: 0 25px 60px rgba(0,0,0,1); background: #111; }
+        /* Extreme Dense Sunlight Glow */
+        .header-spacer { 
+            width: 100%; 
+            height: 180px; 
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%); 
+            position: relative; 
+            z-index: 1; 
+        }
+        .header-spacer::before { 
+            content: ''; 
+            position: absolute; 
+            top: -60px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 150%; 
+            height: 220px; 
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.3) 0%, transparent 70%); 
+            filter: blur(40px); 
+            z-index: 2; 
+        }
 
-        /* Contact & Feedback UI */
+        .profile-pic { 
+            width: 140px; 
+            height: 140px; 
+            border-radius: 50%; 
+            border: 5px solid rgba(255, 255, 255, 0.35); 
+            object-fit: cover; 
+            margin-top: -85px; 
+            position: relative; 
+            z-index: 10; 
+            box-shadow: 0 25px 60px rgba(0,0,0,1); 
+            background: #111; 
+        }
+
+        /* Order Steps Styling */
+        .order-instructions {
+            width: 100%;
+            max-width: 380px;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 25px;
+            padding: 20px;
+            margin-top: 25px;
+        }
+        .order-instructions h3 {
+            font-size: 14px;
+            color: #00ff88;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 12px;
+            color: #ccc;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+        .step-icon {
+            background: rgba(0, 255, 136, 0.1);
+            color: #00ff88;
+            min-width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 800;
+        }
+
+        /* Contact & Buttons */
         .contact-container { width: 100%; max-width: 400px; margin-top: 30px; display: flex; flex-direction: column; gap: 15px; }
         .social-buttons-row { display: flex; gap: 10px; width: 100%; }
         .app-btn { flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px; border-radius: 18px; text-decoration: none; color: white; font-weight: 700; font-size: 13px; gap: 6px; }
@@ -64,7 +133,6 @@
         .file-label { display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px; }
         #feedbackFile { display: none; }
 
-        /* Order-style Button Animation */
         .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; font-size: 15px; }
         .success-overlay { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; z-index: 5; }
         .btn-active .success-overlay { display: flex; animation: slideUp 0.3s ease; }
@@ -94,13 +162,35 @@
         <section id="home" class="section active">
             <div class="header-spacer"></div>
             <img id="userPic" src="" class="profile-pic">
+            
             <div style="text-align:center; margin-top:15px;">
                 <h1 id="userName">...</h1>
                 <p id="userBio" style="color:#888; font-size:13px;"></p>
-                <a id="mapLink" href="#" target="_blank" style="text-decoration:none; color:#00ff88; font-size:12px; margin-top:10px; display:inline-block;">
-                    <i class='bx bxs-map'></i> <span id="userAddress">...</span>
-                </a>
             </div>
+
+            <div class="order-instructions">
+                <h3>কীভাবে অর্ডার করবেন?</h3>
+                <div class="step">
+                    <div class="step-icon">১</div>
+                    <p>নিচের <b>Shop</b> মেন্যু থেকে আপনার পছন্দের প্রোডাক্টটি বেছে নিন।</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">২</div>
+                    <p>প্রোডাক্টের ওপর ক্লিক করে আপনার <b>নাম, ঠিকানা</b> এবং <b>ফোন নম্বর</b> দিন।</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">৩</div>
+                    <p><b>Confirm Order</b> বাটনে ক্লিক করলেই আপনার অর্ডারটি আমাদের কাছে পৌঁছে যাবে।</p>
+                </div>
+                <div class="step">
+                    <div class="step-icon">৪</div>
+                    <p>আমরা আপনার সাথে যোগাযোগ করে ডেলিভারি কনফার্ম করবো।</p>
+                </div>
+            </div>
+            
+            <a id="mapLink" href="#" target="_blank" style="text-decoration:none; color:#555; font-size:12px; margin-top:20px; display:inline-block;">
+                <i class='bx bxs-map'></i> <span id="userAddress">...</span>
+            </a>
         </section>
 
         <section id="buy" class="section">
@@ -134,7 +224,6 @@
                         <span>Send Feedback</span>
                         <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
                     </button>
-                    <p style="text-align:center; color:#444; font-size:10px; margin-top:12px;">WhatsApp Support: <span id="waSupport"></span></p>
                 </div>
             </div>
         </section>
@@ -175,7 +264,6 @@
         document.getElementById('fbBtn').href = MY_CONFIG.facebookURL;
         document.getElementById('phoneCall').innerText = MY_CONFIG.displayPhone;
         document.getElementById('phoneCall').href = `tel:${MY_CONFIG.whatsappNum}`;
-        document.getElementById('waSupport').innerText = MY_CONFIG.displayPhone;
 
         const grid = document.getElementById('itemGrid');
         ITEM_LIST.forEach(item => {
@@ -191,6 +279,7 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openModal(n, p) {
