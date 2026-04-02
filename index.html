@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Liquid Glass UI</title>
+    <title>Fixed Liquid Glass UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         * {
@@ -14,138 +14,143 @@
         }
 
         body {
-            background: #f4f7f6;
+            background: #f0f2f5;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            background-image: radial-gradient(circle at 20% 30%, #e0e7ff 0%, transparent 40%),
-                              radial-gradient(circle at 80% 70%, #ffebf0 0%, transparent 40%);
+            background-image: radial-gradient(circle at 10% 20%, rgba(0, 150, 255, 0.1) 0%, transparent 40%),
+                              radial-gradient(circle at 90% 80%, rgba(255, 100, 150, 0.1) 0%, transparent 40%);
         }
 
-        /* --- Navbar Container --- */
+        /* --- Main Navbar Container --- */
         .nav-container {
             position: relative;
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.4);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 10px;
-            border-radius: 50px;
-            border: 1px solid rgba(255, 255, 255, 0.7);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
-            z-index: 10;
+            background: rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 8px; /* Container er bhitorer space */
+            border-radius: 100px;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05);
         }
 
-        /* --- Liquid Moving Background --- */
+        /* --- Fixed Liquid Indicator --- */
         .nav-indicator {
             position: absolute;
-            height: calc(100% - 20px);
-            width: 110px; /* Default width for Home */
+            top: 8px;
+            bottom: 8px;
+            left: 8px;
             background: #ffffff;
-            border-radius: 40px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
-            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Liquid Motion Physics */
-            z-index: -1;
-            left: 10px;
+            border-radius: 100px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: all 0.5s cubic-bezier(0.6, -0.28, 0.735, 0.045); /* Liquid Feel */
+            z-index: 1;
         }
 
+        /* --- Nav Items --- */
         .nav-item {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 20px;
+            padding: 14px 22px;
             cursor: pointer;
             color: #666;
-            transition: 0.3s;
-            user-select: none;
-            min-width: 65px;
-            position: relative;
+            z-index: 2;
+            transition: color 0.4s ease;
+            white-space: nowrap;
         }
 
         .nav-item i {
-            font-size: 26px;
-            transition: 0.3s;
+            font-size: 24px;
         }
 
         .nav-item span {
             font-size: 16px;
-            font-weight: 600;
-            margin-left: 8px;
+            font-weight: 700;
+            margin-left: 0;
             max-width: 0;
             opacity: 0;
             overflow: hidden;
-            transition: all 0.4s ease;
-            white-space: nowrap;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        /* --- Active States --- */
+        /* --- Active Styles --- */
         .nav-item.active {
             color: #000;
         }
 
         .nav-item.active span {
-            max-width: 100px;
+            margin-left: 10px;
+            max-width: 100px; /* Text smoothly expand korbe */
             opacity: 1;
-        }
-
-        /* Hover effect slightly expands the item */
-        .nav-item:hover:not(.active) {
-            color: #111;
         }
 
     </style>
 </head>
 <body>
 
-    <nav class="nav-container">
+    <nav class="nav-container" id="navBar">
         <div class="nav-indicator" id="indicator"></div>
 
-        <div class="nav-item active" onclick="moveIndicator(this, 0)">
+        <div class="nav-item active" data-index="0">
             <i class='bx bx-home-alt-2'></i>
             <span>Home</span>
         </div>
-        <div class="nav-item" onclick="moveIndicator(this, 1)">
+        <div class="nav-item" data-index="1">
             <i class='bx bx-list-check'></i>
             <span>Tasks</span>
         </div>
-        <div class="nav-item" onclick="moveIndicator(this, 2)">
+        <div class="nav-item" data-index="2">
             <i class='bx bx-folder'></i>
             <span>Files</span>
         </div>
-        <div class="nav-item" onclick="moveIndicator(this, 3)">
+        <div class="nav-item" data-index="3">
             <i class='bx bx-message-square-detail'></i>
             <span>Chat</span>
         </div>
     </nav>
 
     <script>
-        function moveIndicator(element, index) {
-            const indicator = document.getElementById('indicator');
-            const items = document.querySelectorAll('.nav-item');
-            
-            // Remove active class from all
-            items.forEach(item => item.classList.remove('active'));
-            
-            // Add active class to clicked one
-            element.classList.add('active');
+        const indicator = document.getElementById('indicator');
+        const items = document.querySelectorAll('.nav-item');
 
-            // Calculate Position & Width for Liquid Effect
-            const rect = element.getBoundingClientRect();
-            const parentRect = element.parentElement.getBoundingClientRect();
+        function updateIndicator(el) {
+            // Element er width ebong left position exact mapi
+            const width = el.offsetWidth;
+            const left = el.offsetLeft;
             
-            // Apply new width and position
-            indicator.style.width = element.offsetWidth + 'px';
-            indicator.style.left = (element.offsetLeft) + 'px';
+            // Indicator ke exact oi size e bosiye dei
+            indicator.style.width = `${width}px`;
+            indicator.style.left = `${left}px`;
         }
 
-        // Initialize position on load
+        items.forEach(item => {
+            item.addEventListener('click', function() {
+                // Sob active class remove kori
+                items.forEach(i => i.classList.remove('active'));
+                
+                // Clicked item ke active kori
+                this.classList.add('active');
+                
+                // Indicator move kori
+                updateIndicator(this);
+            });
+        });
+
+        // Prothom bar load hole active item set kora
         window.onload = () => {
             const activeItem = document.querySelector('.nav-item.active');
-            const indicator = document.getElementById('indicator');
-            indicator.style.width = activeItem.offsetWidth + 'px';
-            indicator.style.left = activeItem.offsetLeft + 'px';
+            updateIndicator(activeItem);
+        };
+        
+        // Window resize hole position thik rakha
+        window.onresize = () => {
+            const activeItem = document.querySelector('.nav-item.active');
+            updateIndicator(activeItem);
         };
     </script>
 
