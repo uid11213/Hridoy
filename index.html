@@ -7,9 +7,6 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <script>
-        // ==========================================
-        // 🛠️ CONFIGURATION SETUP
-        // ==========================================
         const MY_CONFIG = {
             name: "AHMED HRIDOY",                
             bio: "PREMIUM MUSICAL INSTRUMENTS SHOP", 
@@ -24,100 +21,104 @@
         };
 
         const ITEM_LIST = [
-            { name: "Signature Guitar 265", price: "15500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg", available: true }, 
-            { name: "AXE 48c", price: "12000", img: "https://i.ibb.co.com/BVtFghPT/image.jpg", available: true },
-            { name: "TGM", price: "9500", img: "https://i.ibb.co.com/7J16YptF/image.jpg", available: true },
-            { name: "Ukulele 26\"", price: "4500", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg", available: true },
-            { name: "Ukulele 24\"", price: "3800", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg", available: true },
-            { name: "Yemaha cm2", price: "18000", img: "https://i.ibb.co.com/TMYSqKCM/image.jpg", available: true }
+            { name: "Signature Guitar 265", price: "15500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg" }, 
+            { name: "AXE 48c", price: "12000", img: "https://i.ibb.co.com/BVtFghPT/image.jpg" },
+            { name: "TGM", price: "9500", img: "https://i.ibb.co.com/7J16YptF/image.jpg" },
+            { name: "Ukulele 26\"", price: "4500", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg" },
+            { name: "Ukulele 24\"", price: "3800", img: "https://i.ibb.co.com/VW3H5MLr/image.jpg" },
+            { name: "Yemaha cm2", price: "18000", img: "https://i.ibb.co.com/TMYSqKCM/image.jpg" }
         ];
     </script>
 
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap');
         
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; -webkit-tap-highlight-color: transparent; }
         
-        html, body { background: #000; color: white; height: 100%; overflow-x: hidden; overflow-y: auto; }
-        body { border: 8px solid #111; min-height: 100vh; display: flex; flex-direction: column; }
+        body { background: #050505; color: white; min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; }
 
         .content-wrapper { flex: 1; width: 100%; padding-bottom: 120px; }
-        .section { display: none; flex-direction: column; align-items: center; width: 100%; padding: 0 15px; }
-        .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .section { display: none; flex-direction: column; align-items: center; width: 100%; padding: 0 20px; }
+        .section.active { display: flex; animation: fadeIn 0.5s cubic-bezier(0.4, 0, 0.2, 1); }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- Profile Header --- */
-        .header-spacer { width: 100%; height: 50px; }
-        .profile-container { position: relative; text-align: center; }
+        /* --- Premium Profile Section --- */
+        .header-spacer { width: 100%; height: 60px; }
         
-        /* 🔥 BIG BRANDING TEXT 🔥 */
-        .brand-text {
-            font-size: 30px; /* আপনার নামের মতোই বড় */
-            font-weight: 800;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
+        .profile-stack { position: relative; display: flex; flex-direction: column; align-items: center; }
+        
+        .premium-tag {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 6px 16px;
+            border-radius: 50px;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            color: #aaa;
+            margin-bottom: -15px;
+            z-index: 2;
             text-transform: uppercase;
         }
-        .best { color: #ff3c3c; } /* লাল */
-        .music { color: #3c82ff; } /* নীল */
-        .bd { color: #00ff88; } /* সবুজ */
 
-        .profile-pic { width: 130px; height: 130px; border-radius: 50%; border: 3px solid rgba(255,255,255,0.1); object-fit: cover; }
+        .profile-pic { 
+            width: 140px; height: 140px; 
+            border-radius: 50%; 
+            border: 4px solid #111; 
+            object-fit: cover;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
         
-        .home-info { text-align: center; margin-top: 20px; width: 100%; }
-        .home-info h1 { font-size: 32px; font-weight: 800; color: #fff; letter-spacing: -0.5px; }
-        .bio-text { color: #888; font-size: 14px; font-weight: 500; margin-top: 4px; letter-spacing: 1px; }
+        .home-info { text-align: center; margin-top: 25px; }
+        .home-info h1 { font-size: 28px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
+        .bio-text { color: #666; font-size: 13px; font-weight: 500; text-transform: uppercase; letter-spacing: 1px; }
 
-        /* --- Compact Map Button --- */
-        .map-btn {
+        /* --- Minimal Address Pill --- */
+        .map-pill {
             display: inline-flex;
             align-items: center;
             gap: 8px;
             margin-top: 20px;
-            padding: 12px 20px;
-            background: rgba(255, 255, 255, 0.05);
+            padding: 10px 20px;
+            background: #111;
             border-radius: 50px;
             text-decoration: none;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            border: 1px solid #222;
+            transition: 0.3s;
         }
-        .map-btn i { color: #00ff88; font-size: 18px; }
-        .map-btn span { color: #eee; font-size: 15px; font-weight: 600; }
+        .map-pill i { color: #00ff88; font-size: 16px; }
+        .map-pill span { color: #fff; font-size: 13px; font-weight: 600; }
 
-        /* --- Order Guide --- */
-        .order-guide { background: #0f0f0f; border-radius: 24px; padding: 20px; margin-top: 30px; width: 100%; max-width: 380px; }
-        .order-guide h3 { font-size: 14px; margin-bottom: 12px; color: #555; text-transform: uppercase; letter-spacing: 1px; }
-        .guide-step { display: flex; gap: 10px; margin-bottom: 8px; font-size: 14px; color: #bbb; }
-        .step-num { color: #00ff88; font-weight: 800; }
-
-        /* --- Shop Styles --- */
-        .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 500px; margin-top: 25px; }
-        .item-card { background: #0f0f0f; border-radius: 24px; padding: 15px; text-align: center; }
-        .item-img { width: 100%; height: 120px; border-radius: 18px; object-fit: cover; margin-bottom: 10px; }
-        .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; }
+        /* --- Shop Grid --- */
+        .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; max-width: 500px; margin-top: 30px; }
+        .item-card { background: #0f0f0f; border-radius: 28px; padding: 12px; border: 1px solid #1a1a1a; transition: 0.3s; }
+        .item-img { width: 100%; height: 140px; border-radius: 22px; object-fit: cover; margin-bottom: 12px; }
+        .item-card h4 { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+        .price-tag { color: #00ff88; font-weight: 800; font-size: 16px; }
 
         /* --- Contact List --- */
-        .contact-list { width: 100%; max-width: 400px; margin-top: 25px; display: flex; flex-direction: column; gap: 12px; }
-        .contact-card { display: flex; align-items: center; padding: 18px; border-radius: 20px; text-decoration: none; color: white; font-weight: 700; }
-        .fb-btn { background: #1877F2; }
+        .contact-list { width: 100%; max-width: 400px; margin-top: 30px; display: flex; flex-direction: column; gap: 12px; }
+        .contact-card { display: flex; align-items: center; justify-content: center; padding: 18px; border-radius: 24px; text-decoration: none; color: white; font-weight: 700; font-size: 15px; transition: 0.3s; }
         .wa-btn { background: #25D366; }
-        .phone-highlight-card { background: #0f0f0f; padding: 25px; border-radius: 24px; text-align: center; }
-        .phone-number { display: block; font-size: 26px; font-weight: 800; color: #00ff88; margin-top: 5px; }
+        .fb-btn { background: #1877F2; }
+        .phone-card { background: #111; border: 1px solid #222; flex-direction: column; display: flex; padding: 25px; border-radius: 30px; text-align: center; }
 
-        /* --- Navigation --- */
+        /* --- Premium Navbar --- */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
-        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.95); backdrop-filter: blur(20px); padding: 8px; border-radius: 40px; }
-        .nav-item { padding: 12px 22px; border-radius: 30px; color: #555; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.08); }
-        .nav-item span { display: none; font-weight: 700; font-size: 14px; }
+        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255, 255, 255, 0.05); box-shadow: 0 15px 30px rgba(0,0,0,0.5); }
+        .nav-item { padding: 12px 24px; border-radius: 30px; color: #555; cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
+        .nav-item span { display: none; font-size: 13px; font-weight: 700; }
         .nav-item.active span { display: inline; }
 
-        /* --- Modal --- */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #111; padding: 30px; border-radius: 35px; width: 100%; max-width: 370px; border: 1px solid #222; }
-        input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 15px; outline: none; }
-        .confirm-btn { position: relative; width: 100%; height: 55px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
-        .success-text { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; }
-        .btn-active .success-text { display: flex; }
+        /* --- Order Modal --- */
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: #0a0a0a; padding: 35px; border-radius: 35px; width: 100%; max-width: 380px; border: 1px solid #222; }
+        input { width: 100%; padding: 16px; margin-bottom: 12px; background: #151515; border: 1px solid #222; color: white; border-radius: 18px; outline: none; font-size: 15px; }
+        .confirm-btn { width: 100%; height: 55px; background: #fff; color: #000; border: none; border-radius: 18px; font-weight: 800; cursor: pointer; position: relative; overflow: hidden; }
+        .success-overlay { position: absolute; inset: 0; background: #00ff88; display: none; align-items: center; justify-content: center; font-weight: 800; }
+        .btn-active .success-overlay { display: flex; }
     </style>
 </head>
 <body>
@@ -126,12 +127,8 @@
         <section id="home" class="section active">
             <div class="header-spacer"></div>
             
-            <div class="profile-container">
-                <div class="brand-text">
-                    <span class="best">BEST</span> 
-                    <span class="music">MUSIC</span> 
-                    <span class="bd">BD</span>
-                </div>
+            <div class="profile-stack">
+                <div class="premium-tag">Best Music BD</div>
                 <img id="userPic" src="" class="profile-pic" alt="Profile">
             </div>
 
@@ -139,32 +136,26 @@
                 <h1 id="userName">Loading...</h1>
                 <p class="bio-text" id="userBio">...</p>
                 
-                <a id="mapLink" href="#" target="_blank" class="map-btn">
+                <a id="mapLink" href="#" target="_blank" class="map-pill">
                     <i class='bx bxs-map-pin'></i>
                     <span id="userAddress">Loading Address...</span>
                 </a>
             </div>
-
-            <div class="order-guide">
-                <h3>Quick Guide</h3>
-                <div class="guide-step"><span class="step-num">1.</span><span>Select Instrument from Shop.</span></div>
-                <div class="guide-step"><span class="step-num">2.</span><span>Fill Address & Confirm.</span></div>
-            </div>
         </section>
 
         <section id="buy" class="section">
-            <h2 style="margin-top: 30px; font-weight: 800;">Our Store</h2>
+            <h2 style="margin-top: 30px; letter-spacing: -1px;">Premium Collection</h2>
             <div class="shop-grid" id="itemGrid"></div>
         </section>
 
         <section id="chat" class="section">
-            <h2 style="margin-top: 35px; font-weight: 800;">Contact Us</h2>
+            <h2 style="margin-top: 35px; letter-spacing: -1px;">Connect with Us</h2>
             <div class="contact-list">
-                <a id="waBtn" href="#" class="contact-card wa-btn"><i class='bx bxl-whatsapp'></i> WhatsApp Chat</a>
-                <a id="fbBtn" href="#" class="contact-card fb-btn"><i class='bx bxl-facebook-circle'></i> Facebook Page</a>
-                <div class="phone-highlight-card">
-                    <span style="color:#444; font-size:11px; font-weight:800;">DIRECT CALL</span>
-                    <span id="phoneDisplay" class="phone-number">000</span>
+                <a id="waBtn" href="#" class="contact-card wa-btn"><i class='bx bxl-whatsapp' style="font-size: 24px; margin-right: 10px;"></i> WhatsApp</a>
+                <a id="fbBtn" href="#" class="contact-card fb-btn"><i class='bx bxl-facebook-circle' style="font-size: 24px; margin-right: 10px;"></i> Facebook</a>
+                <div class="phone-card">
+                    <span style="color: #444; font-size: 10px; font-weight: 800; letter-spacing: 2px; margin-bottom: 5px;">DIRECT LINE</span>
+                    <span id="phoneDisplay" style="font-size: 24px; font-weight: 800; color: #00ff88;">000</span>
                 </div>
             </div>
         </section>
@@ -172,28 +163,29 @@
 
     <div id="orderModal" class="modal">
         <div class="modal-content">
-            <h3 id="itemTitle" style="text-align:center; margin-bottom:15px;">Order Details</h3>
-            <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; margin-bottom:20px; font-weight:800; font-size:18px;"></p>
+            <h3 id="itemTitle" style="text-align:center; margin-bottom:10px;">Order Details</h3>
+            <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; margin-bottom:25px; font-weight:800; font-size:18px;"></p>
             <input type="text" id="orderName" placeholder="আপনার নাম">
             <input type="text" id="orderAddress" placeholder="ডেলিভারি ঠিকানা">
             <input type="text" id="orderWhatsapp" placeholder="WhatsApp নম্বর">
             <button class="confirm-btn" id="mainOrderBtn" onclick="sendOrder()">
-                <span id="btnText">Place Order</span>
-                <div class="success-text">✅ অর্ডার সফল হয়েছে!</div>
+                <span>Confirm Order</span>
+                <div class="success-overlay">✅ Order Received!</div>
             </button>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">Cancel</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#444; margin-top:15px; font-weight:600; cursor:pointer;">Close</button>
         </div>
     </div>
 
     <div class="nav-wrapper">
         <nav class="nav-bar">
-            <div class="nav-item active" onclick="navTo('home', this)"><i class='bx bx-home-alt-2'></i><span>Home</span></div>
+            <div class="nav-item active" onclick="navTo('home', this)"><i class='bx bx-grid-alt'></i><span>Home</span></div>
             <div class="nav-item" onclick="navTo('buy', this)"><i class='bx bx-shopping-bag'></i><span>Shop</span></div>
             <div class="nav-item" onclick="navTo('chat', this)"><i class='bx bx-phone'></i><span>Contact</span></div>
         </nav>
     </div>
 
     <script>
+        // Load Data
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userAddress').innerText = MY_CONFIG.address;
@@ -208,7 +200,7 @@
             const card = document.createElement('div');
             card.className = 'item-card';
             card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `<img src="${item.img}" class="item-img"><span style="color:#00ff88; font-size:10px; font-weight:800;">IN STOCK</span><h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
+            card.innerHTML = `<img src="${item.img}" class="item-img"><h4>${item.name}</h4><p class="price-tag">${item.price} ৳</p>`;
             grid.appendChild(card);
         });
 
@@ -235,7 +227,7 @@
             const btn = document.getElementById('mainOrderBtn');
             if(!n || !a || !w) return;
 
-            const msg = `🛍️ *নতুন অর্ডার!*%0Aআইটেম: ${document.getElementById('itemTitle').innerText}%0Aনাম: ${n}%0Aঠিকানা: ${a}%0AWhatsApp: ${w}`;
+            const msg = `🛍️ *New Order!*%0AItem: ${document.getElementById('itemTitle').innerText}%0AName: ${n}%0AAddr: ${a}%0AWA: ${w}`;
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
             .then(() => {
                 btn.classList.add('btn-active');
