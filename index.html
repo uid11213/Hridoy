@@ -44,25 +44,51 @@
         .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
+        /* More Dense & Bright Sunlight Glow */
         .header-spacer { 
             width: 100%; 
-            height: 180px; 
-            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%); 
+            height: 200px; 
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.25) 45%, transparent 85%); 
             position: relative; 
             z-index: 1; 
+        }
+        .header-spacer::before { 
+            content: ''; 
+            position: absolute; 
+            top: -40px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 160%; 
+            height: 250px; 
+            background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.4) 0%, transparent 70%); 
+            filter: blur(35px); 
+            z-index: 2; 
         }
 
         .profile-pic { 
             width: 140px; 
             height: 140px; 
             border-radius: 50%; 
-            border: 5px solid rgba(255, 255, 255, 0.35); 
+            border: 5px solid rgba(255, 255, 255, 0.5); 
             object-fit: cover; 
-            margin-top: -85px; 
+            margin-top: -95px; 
             position: relative; 
             z-index: 10; 
-            box-shadow: 0 25px 60px rgba(0,0,0,1); 
+            box-shadow: 0 25px 60px rgba(0,0,0,1), 0 0 30px rgba(255,255,255,0.1); 
             background: #111; 
+        }
+
+        /* Red Location Text */
+        #mapLink {
+            text-decoration: none;
+            color: #ff3333; /* Red color */
+            font-size: 13px;
+            font-weight: 600;
+            margin-top: 12px;
+            display: inline-block;
+            background: rgba(255, 0, 0, 0.05);
+            padding: 5px 12px;
+            border-radius: 20px;
         }
 
         .order-box {
@@ -72,7 +98,7 @@
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 25px;
             padding: 20px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
         .order-box h3 {
             font-size: 14px;
@@ -131,7 +157,7 @@
             <div style="text-align:center; margin-top:15px;">
                 <h1 id="userName">...</h1>
                 <p id="userBio" style="color:#888; font-size:13px;"></p>
-                <a id="mapLink" href="#" target="_blank" style="text-decoration:none; color:#555; font-size:12px; margin-top:10px; display:inline-block;">
+                <a id="mapLink" href="#" target="_blank">
                     <i class='bx bxs-map'></i> <span id="userAddress">...</span>
                 </a>
             </div>
@@ -140,7 +166,7 @@
                 <h3>কীভাবে অর্ডার করবেন?</h3>
                 <div class="step">
                     <div class="step-num">১</div>
-                    <p>প্রথমে <b>Shop</b> সেকশনে গিয়ে আপনার পছন্দের প্রোডাক্টটি সিলেক্ট করুন।</p>
+                    <p>প্রথমে <b>Shop</b> সেকশনে গিয়ে পছন্দের আইটেমটি সিলেক্ট করুন।</p>
                 </div>
                 <div class="step">
                     <div class="step-num">২</div>
@@ -258,47 +284,8 @@
             const fileInput = document.getElementById('fbFile');
             const btn = document.getElementById('feedbackSubmitBtn');
             if(!name || !msg) { alert("সব তথ্য দিন"); return; }
-            
             const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${name}\n💬 মেসেজ: ${msg}`;
-            
             try {
                 if(fileInput.files.length > 0) {
                     const formData = new FormData();
-                    formData.append('chat_id', MY_CONFIG.chatID);
-                    formData.append('caption', text);
-                    formData.append('photo', fileInput.files[0]);
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendPhoto`, { method: 'POST', body: formData });
-                } else {
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
-                }
-                
-                btn.classList.add('btn-active');
-                setTimeout(() => {
-                    btn.classList.remove('btn-active');
-                    document.getElementById('fbName').value = "";
-                    document.getElementById('fbMsg').value = "";
-                    document.getElementById('fbFile').value = "";
-                    document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> Attach Photo (Optional)";
-                }, 2500);
-            } catch (err) { alert("ত্রুটি হয়েছে!"); }
-        }
-
-        function sendOrder() {
-            const n = document.getElementById('orderName').value;
-            const a = document.getElementById('orderAddr').value;
-            const p = document.getElementById('orderPhone').value;
-            const btn = document.getElementById('orderSubmitBtn');
-            if(!n || !a || !p) { alert("সব তথ্য দিন"); return; }
-            const msg = `🛍️ *নতুন অর্ডার!*\nআইটেম: ${document.getElementById('itemTitle').innerText}\nনাম: ${n}\nঠিকানা: ${a}\nফোন: ${p}`;
-            fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`)
-            .then(() => { 
-                btn.classList.add('btn-active');
-                setTimeout(() => { 
-                    btn.classList.remove('btn-active'); 
-                    closeModal(); 
-                }, 2500);
-            });
-        }
-    </script>
-</body>
-</html>
+                    formData.append('chat_
