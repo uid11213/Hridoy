@@ -8,34 +8,64 @@
     
     <script>
         // ==========================================
-        // 🛠️ CONFIGURATION SETUP
+        // 🛠️ CONFIGURATION SETUP (এখান থেকে পরিবর্তন করুন)
         // ==========================================
         
         const MY_CONFIG = {
             // ১. প্রোফাইল সেটিংস
             name: "Eiroko Dev",                
-            bio: "Musician & Developer", 
+            bio: "Musician & Web Developer", 
             profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
-            // Cover Photo remove kora hoyeche, tai ekhane kichu dewar dorkar nei
 
             // ২. কন্টাক্ট সেটিংস
-            whatsappNum: "8801700000000",      
+            whatsappNum: "8801700000000",      // আপনার হোয়াটসঅ্যাপ নম্বর
             displayPhone: "+880 1700-000000",  
             facebookURL: "https://facebook.com/yourprofile", 
 
-            // ৩. টেলিগ্রাম বোট সেটিংস
+            // ৩. টেলিগ্রাম বোট সেটিংস (অর্ডার পাওয়ার জন্য)
             botToken: "YOUR_BOT_TOKEN_HERE",   
             chatID: "YOUR_CHAT_ID_HERE"        
         };
 
-        // ৪. আইটেম লিস্ট (Apnar dewa notun nam-gulo ekhane set kora hoyeche)
+        // ৪. আইটেম লিস্ট (আপনার দেওয়া নতুন ছবি ও নামসহ)
+        // available: true মানে স্টকে আছে, false মানে স্টক আউট দেখাবে
         const ITEM_LIST = [
-            { name: "Signature Guitar 265", price: "15500", img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg" }, 
-            { name: "AXE 48c", price: "12000", img: "https://via.placeholder.com/150" },
-            { name: "TGM", price: "9500", img: "https://via.placeholder.com/150" },
-            { name: "Ukulele 26\"", price: "4500", img: "https://via.placeholder.com/150" },
-            { name: "Ukulele 24\"", price: "3800", img: "https://via.placeholder.com/150" },
-            { name: "Yemaha cm2", price: "18000", img: "https://via.placeholder.com/150" }
+            { 
+                name: "Signature Guitar 265", 
+                price: "15500", 
+                img: "https://i.ibb.co.com/ZpKH1d4n/image.jpg", 
+                available: true 
+            }, 
+            { 
+                name: "AXE 48c", 
+                price: "12000", 
+                img: "https://i.ibb.co.com/BVtFghPT/image.jpg", 
+                available: true 
+            },
+            { 
+                name: "TGM", 
+                price: "9500", 
+                img: "https://i.ibb.co.com/7J16YptF/image.jpg", 
+                available: true 
+            },
+            { 
+                name: "Ukulele 26\"", 
+                price: "4500", 
+                img: "https://i.ibb.co.com/VW3H5MLr/image.jpg", 
+                available: true 
+            },
+            { 
+                name: "Ukulele 24\"", 
+                price: "3800", 
+                img: "https://i.ibb.co.com/VW3H5MLr/image.jpg", 
+                available: true 
+            },
+            { 
+                name: "Yemaha cm2", 
+                price: "18000", 
+                img: "https://i.ibb.co.com/TMYSqKCM/image.jpg", 
+                available: true 
+            }
         ];
 
         // ==========================================
@@ -74,33 +104,24 @@
             to { opacity: 1; transform: translateY(0); } 
         }
 
-        /* --- Cover Photo Removed & Header Adjusted --- */
-        .header-spacer {
-            width: 100%;
-            height: 60px; /* Cover photo bade upor theke ektu faka */
-            background: #000;
-        }
-
-        .profile-pic-wrapper { 
-            margin-top: 20px;
-            display: flex;
-            justify-content: center;
-        }
+        /* Profile Header (No Cover) */
+        .header-spacer { width: 100%; height: 50px; }
+        .profile-pic-wrapper { margin-top: 10px; display: flex; justify-content: center; }
         .profile-pic { 
-            width: 120px; 
-            height: 120px; 
+            width: 125px; 
+            height: 125px; 
             border-radius: 50%; 
             border: 3px solid #00ff88; 
             object-fit: cover; 
             background: #222; 
-            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2); 
+            box-shadow: 0 0 25px rgba(0, 255, 136, 0.15); 
         }
 
         .home-info { text-align: center; margin-top: 20px; padding: 0 20px; }
         .home-info h1 { font-size: 28px; font-weight: 800; color: #fff; }
-        .home-info p { color: #888; font-size: 15px; margin-top: 8px; }
+        .home-info p { color: #777; font-size: 15px; margin-top: 8px; }
 
-        /* Shop Grid */
+        /* Shop Grid & Status Badges */
         .shop-grid { 
             display: grid; 
             grid-template-columns: repeat(2, 1fr); 
@@ -117,8 +138,11 @@
             text-align: center; 
             cursor: pointer; 
             transition: 0.3s; 
+            position: relative;
         }
+        .item-card.out-of-stock { opacity: 0.5; filter: grayscale(1); pointer-events: none; }
         .item-card:active { transform: scale(0.95); background: #151515; }
+        
         .item-img { 
             width: 100%; 
             height: 120px; 
@@ -127,7 +151,21 @@
             margin-bottom: 12px; 
             background: #1a1a1a; 
         }
-        .item-card h4 { font-size: 14px; font-weight: 600; color: #eee; margin-bottom: 5px; }
+
+        .status-badge {
+            font-size: 9px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 8px;
+            display: inline-block;
+        }
+        .status-available { background: rgba(0, 255, 136, 0.1); color: #00ff88; }
+        .status-out { background: rgba(255, 60, 60, 0.1); color: #ff3c3c; }
+
+        .item-card h4 { font-size: 14px; font-weight: 600; color: #eee; margin-bottom: 4px; }
         .price-tag { color: #00ff88; font-weight: 800; font-size: 17px; }
 
         /* Contact Section */
@@ -137,16 +175,14 @@
             align-items: center; 
             justify-content: center; 
             padding: 18px; 
-            border-radius: 20px; 
+            border-radius: 22px; 
             margin-bottom: 15px; 
             text-decoration: none; 
             font-weight: 700; 
             gap: 12px; 
-            font-size: 16px;
+            background: #25D366; 
+            color: white;
         }
-        .whatsapp { background: #25D366; color: white; }
-        .facebook { background: #1877F2; color: white; }
-        
         .phone-highlight { 
             background: #0f0f0f; 
             border: 1px solid #222; 
@@ -154,23 +190,17 @@
             border-radius: 24px; 
             text-align: center; 
         }
-        .phone-number { 
-            display: block; 
-            font-size: 24px; 
-            font-weight: 800; 
-            margin-top: 8px; 
-            color: #fff; 
-        }
+        .phone-number { display: block; font-size: 24px; font-weight: 800; margin-top: 8px; color: #fff; }
 
         /* Nav & Modal */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
-        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(20px); padding: 8px; border-radius: 30px; border: 1px solid rgba(255, 255, 255, 0.1); gap: 10px; }
-        .nav-item { padding: 12px 25px; border-radius: 25px; cursor: pointer; color: #555; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.9); backdrop-filter: blur(20px); padding: 8px; border-radius: 35px; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .nav-item { padding: 12px 25px; border-radius: 25px; cursor: pointer; color: #555; display: flex; align-items: center; gap: 8px; }
         .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
         .nav-item span { display: none; font-weight: 700; }
         .nav-item.active span { display: inline; }
 
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.96); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         .modal-content { background: #111; padding: 30px; border-radius: 30px; width: 100%; max-width: 370px; border: 1px solid #333; }
         input { width: 100%; padding: 15px; margin-bottom: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 14px; outline: none; }
         .confirm-btn { width: 100%; padding: 16px; background: #fff; color: #000; border: none; border-radius: 14px; font-weight: 800; cursor: pointer; }
@@ -191,16 +221,15 @@
         </section>
 
         <section id="buy" class="section">
-            <h2 style="margin-top: 30px; font-weight: 800;">Available Instruments</h2>
-            <p style="color:#555; font-size: 13px; margin-bottom: 10px;">Select to Order</p>
+            <h2 style="margin-top: 30px; font-weight: 800;">Musical Shop</h2>
+            <p style="color:#555; font-size: 13px; margin-bottom: 5px;">Select an instrument to order</p>
             <div class="shop-grid" id="itemGrid"></div>
         </section>
 
         <section id="chat" class="section">
             <h2 style="margin-top: 35px; font-weight: 800;">Contact Me</h2>
             <div class="contact-list">
-                <a id="waBtn" href="#" class="contact-btn whatsapp"><i class='bx bxl-whatsapp' style="font-size:24px"></i> WhatsApp</a>
-                <a id="fbBtn" href="#" class="contact-btn facebook"><i class='bx bxl-facebook-circle' style="font-size:24px"></i> Facebook</a>
+                <a id="waBtn" href="#" class="contact-btn"><i class='bx bxl-whatsapp' style="font-size:24px"></i> WhatsApp Chat</a>
                 <div class="phone-highlight">
                     <span style="color: #444; font-size: 11px; letter-spacing: 2px; font-weight: 800;">DIRECT CALL</span>
                     <span id="phoneDisplay" class="phone-number">000000000</span>
@@ -213,9 +242,9 @@
         <div class="modal-content">
             <h3 id="itemTitle" style="text-align:center; margin-bottom:5px;">Order</h3>
             <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; margin-bottom:25px; font-weight:800; font-size:18px;"></p>
-            <input type="text" id="orderName" placeholder="Apnar Nam">
-            <input type="text" id="orderAddress" placeholder="Thikana">
-            <input type="text" id="orderWhatsapp" placeholder="WhatsApp Number">
+            <input type="text" id="orderName" placeholder="আপনার নাম">
+            <input type="text" id="orderAddress" placeholder="আপনার ঠিকানা">
+            <input type="text" id="orderWhatsapp" placeholder="WhatsApp নম্বর">
             <button class="confirm-btn" onclick="sendOrder()">Confirm Order</button>
             <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">Cancel</button>
         </div>
@@ -230,20 +259,26 @@
     </div>
 
     <script>
+        // জাভাস্ক্রিপ্ট দিয়ে ডেটা সেট করা
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
         document.getElementById('waBtn').href = `https://wa.me/${MY_CONFIG.whatsappNum}`;
-        document.getElementById('fbBtn').href = MY_CONFIG.facebookURL;
         document.getElementById('phoneDisplay').innerText = MY_CONFIG.displayPhone;
 
         const grid = document.getElementById('itemGrid');
         ITEM_LIST.forEach(item => {
             const card = document.createElement('div');
-            card.className = 'item-card';
-            card.onclick = () => openModal(item.name, item.price);
+            card.className = `item-card ${item.available ? '' : 'out-of-stock'}`;
+            
+            const badge = item.available ? 
+                '<span class="status-badge status-available">Available</span>' : 
+                '<span class="status-badge status-out">Stock Out</span>';
+
+            card.onclick = () => { if(item.available) openModal(item.name, item.price); };
             card.innerHTML = `
                 <img src="${item.img}" class="item-img" alt="${item.name}">
+                ${badge}
                 <h4>${item.name}</h4>
                 <p class="price-tag">${item.price} ৳</p>
             `;
@@ -259,7 +294,7 @@
 
         function openModal(name, price) {
             document.getElementById('itemTitle').innerText = name;
-            document.getElementById('itemPriceDisplay').innerText = "৳ " + price;
+            document.getElementById('itemPriceDisplay').innerText = price + " ৳";
             document.getElementById('orderModal').style.display = 'flex';
         }
 
@@ -269,11 +304,11 @@
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddress').value;
             const w = document.getElementById('orderWhatsapp').value;
-            if(!n || !a || !w) return alert("Sob totho din");
+            if(!n || !a || !w) return alert("সব তথ্য দিন");
             
-            const msg = `🛍️ *New Order!*%0AItem: ${document.getElementById('itemTitle').innerText}%0APrice: ${document.getElementById('itemPriceDisplay').innerText}%0AName: ${n}%0AAddress: ${a}%0AWA: ${w}`;
+            const msg = `🛍️ *নতুন অর্ডার!*%0Aআইটেম: ${document.getElementById('itemTitle').innerText}%0Aদাম: ${document.getElementById('itemPriceDisplay').innerText}%0Aনাম: ${n}%0Aঠিকানা: ${a}%0AWhatsApp: ${w}`;
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${msg}&parse_mode=Markdown`)
-            .then(() => { alert("Order successfully sent!"); closeModal(); });
+            .then(() => { alert("অর্ডার পাঠানো হয়েছে!"); closeModal(); });
         }
     </script>
 </body>
