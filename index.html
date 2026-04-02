@@ -44,7 +44,7 @@
         .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* Extreme Dense Sunlight Glow */
+        /* Background Sunlight Glow */
         .header-spacer { 
             width: 100%; 
             height: 180px; 
@@ -78,17 +78,17 @@
             background: #111; 
         }
 
-        /* Order Instructions Styling */
-        .order-instructions {
+        /* Order Box Styling */
+        .order-box {
             width: 100%;
             max-width: 380px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-radius: 25px;
             padding: 20px;
-            margin-top: 25px;
+            margin-top: 20px;
         }
-        .order-instructions h3 {
+        .order-box h3 {
             font-size: 14px;
             color: #00ff88;
             text-transform: uppercase;
@@ -100,29 +100,25 @@
             display: flex;
             align-items: flex-start;
             gap: 12px;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
             color: #ccc;
-            font-size: 14px;
-            line-height: 1.5;
+            font-size: 13px;
+            line-height: 1.4;
         }
-        .step-icon {
+        .step-num {
             background: rgba(0, 255, 136, 0.1);
             color: #00ff88;
-            min-width: 24px;
-            height: 24px;
+            min-width: 22px;
+            height: 22px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 12px;
+            font-size: 11px;
             font-weight: 800;
         }
 
-        .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; font-size: 15px; }
-        .success-overlay { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; z-index: 5; }
-        .btn-active .success-overlay { display: flex; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-
+        /* Buttons & Nav */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
         .nav-item { padding: 12px 22px; border-radius: 30px; color: #555; display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -130,9 +126,14 @@
         .nav-item span { display: none; font-weight: 700; }
         .nav-item.active span { display: inline; }
 
+        .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; }
+        .success-overlay { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; z-index: 5; }
+        .btn-active .success-overlay { display: flex; animation: slideUp 0.3s ease; }
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
         .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
         .modal-content { background: #111; padding: 25px; border-radius: 30px; width: 100%; max-width: 350px; border: 1px solid rgba(255,255,255,0.1); }
-        .feedback-input { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; outline: none; margin-bottom: 10px; font-size: 14px; }
+        .input-field { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; margin-bottom: 10px; font-size: 14px; outline: none; }
     </style>
 </head>
 <body>
@@ -147,23 +148,23 @@
                 <p id="userBio" style="color:#888; font-size:13px;"></p>
             </div>
 
-            <div class="order-instructions">
+            <div class="order-box">
                 <h3>কীভাবে অর্ডার করবেন?</h3>
                 <div class="step">
-                    <div class="step-icon">১</div>
-                    <p>প্রথমে নিচের <b>Shop</b> মেন্যু থেকে আপনার পছন্দের প্রোডাক্টটি বেছে নিন।</p>
+                    <div class="step-num">১</div>
+                    <p>নিচের <b>Shop</b> সেকশনে গিয়ে পছন্দের আইটেমটি পছন্দ করুন।</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">২</div>
-                    <p>প্রোডাক্টের ওপর ক্লিক করে আপনার <b>নাম, ঠিকানা</b> এবং <b>ফোন নম্বর</b> দিন।</p>
+                    <div class="step-num">২</div>
+                    <p>আইটেমের ওপর ক্লিক করে আপনার <b>নাম, ঠিকানা ও ফোন নম্বর</b> দিন।</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">৩</div>
-                    <p><b>Confirm Order</b> বাটনে ক্লিক করলেই আপনার অর্ডারটি আমাদের কাছে পৌঁছে যাবে।</p>
+                    <div class="step-num">৩</div>
+                    <p><b>Confirm Order</b> বাটনে চাপ দিলে আমাদের কাছে আপনার অর্ডার চলে আসবে।</p>
                 </div>
                 <div class="step">
-                    <div class="step-icon">৪</div>
-                    <p>আমরা দ্রুত আপনার সাথে যোগাযোগ করে ডেলিভারি কনফার্ম করবো।</p>
+                    <div class="step-num">৪</div>
+                    <p>আমরা ফোন করে আপনার সাথে যোগাযোগ করে ডেলিভারি নিশ্চিত করবো।</p>
                 </div>
             </div>
             
@@ -189,10 +190,10 @@
                 </div>
                 <div style="width: 100%; background: #0f0f0f; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.03); margin-top: 10px;">
                     <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">SEND FEEDBACK</h4>
-                    <input type="text" id="fbName" class="feedback-input" placeholder="আপনার নাম">
-                    <textarea id="fbMsg" class="feedback-input" style="height:80px;" placeholder="আপনার মতামত লিখুন..."></textarea>
-                    <label for="feedbackFile" style="display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px;" id="fileLabel"><i class='bx bx-image-add'></i> Attach Photo</label>
-                    <input type="file" id="feedbackFile" accept="image/*" style="display:none;" onchange="updateLabel()">
+                    <input type="text" id="fbName" class="input-field" placeholder="আপনার নাম">
+                    <textarea id="fbMsg" class="input-field" style="height:80px;" placeholder="আপনার মতামত..."></textarea>
+                    <label for="fbFile" style="display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px;" id="fileLabel"><i class='bx bx-image-add'></i> Attach Photo</label>
+                    <input type="file" id="fbFile" accept="image/*" style="display:none;" onchange="updateLabel()">
                     <button class="action-btn" id="feedbackSubmitBtn" onclick="sendFeedback()">
                         <span>Send Feedback</span>
                         <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
@@ -206,9 +207,9 @@
         <div class="modal-content">
             <h3 id="itemTitle" style="text-align:center; margin-bottom:10px;">Order Details</h3>
             <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; font-weight:800; margin-bottom:20px;"></p>
-            <input type="text" id="orderName" class="feedback-input" placeholder="আপনার নাম">
-            <input type="text" id="orderAddr" class="feedback-input" placeholder="ডেলিভারি ঠিকানা">
-            <input type="text" id="orderPhone" class="feedback-input" placeholder="ফোন নম্বর">
+            <input type="text" id="orderName" class="input-field" placeholder="আপনার নাম">
+            <input type="text" id="orderAddr" class="input-field" placeholder="ডেলিভারি ঠিকানা">
+            <input type="text" id="orderPhone" class="input-field" placeholder="ফোন নম্বর">
             <button class="action-btn" id="orderSubmitBtn" onclick="sendOrder()">
                 <span>Confirm Order</span>
                 <div class="success-overlay">✅ অর্ডার সফল!</div>
@@ -226,7 +227,7 @@
     </div>
 
     <script>
-        // Init Config
+        // Init Settings
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userAddress').innerText = MY_CONFIG.address;
@@ -262,16 +263,16 @@
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
 
         function updateLabel() {
-            const file = document.getElementById('feedbackFile').files[0];
+            const file = document.getElementById('fbFile').files[0];
             if(file) document.getElementById('fileLabel').innerText = "✅ " + file.name;
         }
 
         async function sendFeedback() {
             const name = document.getElementById('fbName').value;
             const msg = document.getElementById('fbMsg').value;
-            const fileInput = document.getElementById('feedbackFile');
+            const fileInput = document.getElementById('fbFile');
             const btn = document.getElementById('feedbackSubmitBtn');
-            if(!name || !msg) { alert("সবগুলো ঘর পূরণ করুন"); return; }
+            if(!name || !msg) { alert("সব তথ্য দিন"); return; }
             const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${name}\n💬 মেসেজ: ${msg}`;
             try {
                 if(fileInput.files.length > 0) {
@@ -288,7 +289,7 @@
                     btn.classList.remove('btn-active');
                     document.getElementById('fbName').value = "";
                     document.getElementById('fbMsg').value = "";
-                    document.getElementById('feedbackFile').value = "";
+                    document.getElementById('fbFile').value = "";
                     document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> Attach Photo";
                 }, 2500);
             } catch (err) { alert("ত্রুটি হয়েছে!"); }
