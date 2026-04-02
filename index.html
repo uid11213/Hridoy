@@ -16,8 +16,8 @@
             address: "Mahbub Shopping Center, Sirajganj",
             mapLink: "https://maps.google.com/?q=Mahbub+Shopping+Center+Sirajganj", 
             profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
-            whatsappNum: "8801700000000",      
-            displayPhone: "+880 1700-000000",  
+            whatsappNum: "8801701370709",      
+            displayPhone: "01701-370709",  
             facebookURL: "https://facebook.com/yourprofile", 
             botToken: "8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY",   
             chatID: "8535841928"        
@@ -65,7 +65,6 @@
             background: #111; 
         }
 
-        /* Order Box Styling */
         .order-box {
             width: 100%;
             max-width: 380px;
@@ -105,7 +104,6 @@
             font-weight: 800;
         }
 
-        /* Nav & Buttons */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
         .nav-item { padding: 12px 22px; border-radius: 30px; color: #555; display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -133,6 +131,9 @@
             <div style="text-align:center; margin-top:15px;">
                 <h1 id="userName">...</h1>
                 <p id="userBio" style="color:#888; font-size:13px;"></p>
+                <a id="mapLink" href="#" target="_blank" style="text-decoration:none; color:#555; font-size:12px; margin-top:10px; display:inline-block;">
+                    <i class='bx bxs-map'></i> <span id="userAddress">...</span>
+                </a>
             </div>
 
             <div class="order-box">
@@ -150,10 +151,6 @@
                     <p>অর্ডার পাওয়ার পর আমরা ফোন করে আপনার ডেলিভারি নিশ্চিত করবো।</p>
                 </div>
             </div>
-            
-            <a id="mapLink" href="#" target="_blank" style="text-decoration:none; color:#555; font-size:12px; margin-top:20px; display:inline-block;">
-                <i class='bx bxs-map'></i> <span id="userAddress">...</span>
-            </a>
         </section>
 
         <section id="buy" class="section">
@@ -170,17 +167,6 @@
                 </div>
                 <div style="width: 100%; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
                     <a id="phoneCall" href="#" style="font-size: 18px; font-weight: 800; color: #fff; text-decoration: none;">000</a>
-                </div>
-                <div style="width: 100%; background: #0f0f0f; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.03); margin-top: 10px;">
-                    <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">SEND FEEDBACK</h4>
-                    <input type="text" id="fbName" class="input-field" placeholder="আপনার নাম">
-                    <textarea id="fbMsg" class="input-field" style="height:80px;" placeholder="আপনার মতামত..."></textarea>
-                    <label for="fbFile" style="display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px;" id="fileLabel"><i class='bx bx-image-add'></i> Attach Photo</label>
-                    <input type="file" id="fbFile" accept="image/*" style="display:none;" onchange="updateLabel()">
-                    <button class="action-btn" id="feedbackSubmitBtn" onclick="sendFeedback()">
-                        <span>Send Feedback</span>
-                        <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
-                    </button>
                 </div>
             </div>
         </section>
@@ -244,39 +230,6 @@
             document.getElementById('orderModal').style.display = 'flex';
         }
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
-
-        function updateLabel() {
-            const file = document.getElementById('fbFile').files[0];
-            if(file) document.getElementById('fileLabel').innerText = "✅ " + file.name;
-        }
-
-        async function sendFeedback() {
-            const name = document.getElementById('fbName').value;
-            const msg = document.getElementById('fbMsg').value;
-            const fileInput = document.getElementById('fbFile');
-            const btn = document.getElementById('feedbackSubmitBtn');
-            if(!name || !msg) { alert("সব তথ্য দিন"); return; }
-            const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${name}\n💬 মেসেজ: ${msg}`;
-            try {
-                if(fileInput.files.length > 0) {
-                    const formData = new FormData();
-                    formData.append('chat_id', MY_CONFIG.chatID);
-                    formData.append('caption', text);
-                    formData.append('photo', fileInput.files[0]);
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendPhoto`, { method: 'POST', body: formData });
-                } else {
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
-                }
-                btn.classList.add('btn-active');
-                setTimeout(() => {
-                    btn.classList.remove('btn-active');
-                    document.getElementById('fbName').value = "";
-                    document.getElementById('fbMsg').value = "";
-                    document.getElementById('fbFile').value = "";
-                    document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> Attach Photo";
-                }, 2500);
-            } catch (err) { alert("ত্রুটি হয়েছে!"); }
-        }
 
         function sendOrder() {
             const n = document.getElementById('orderName').value;
