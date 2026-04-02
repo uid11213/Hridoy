@@ -3,169 +3,150 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eiroko UI - Premium Design</title>
-    
+    <title>Liquid Glass UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
     <style>
-        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background-color: #f0f2f5;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(200, 215, 255, 0.5) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(255, 220, 230, 0.5) 0px, transparent 50%);
+            background: #f4f7f6;
             height: 100vh;
             display: flex;
-            flex-direction: column;
             justify-content: center;
             align-items: center;
-            overflow: hidden;
+            background-image: radial-gradient(circle at 20% 30%, #e0e7ff 0%, transparent 40%),
+                              radial-gradient(circle at 80% 70%, #ffebf0 0%, transparent 40%);
         }
 
-        /* --- UI Navigation Bar (Image er moto) --- */
-        .glass-nav {
+        /* --- Navbar Container --- */
+        .nav-container {
+            position: relative;
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.3); /* Transparent White */
-            backdrop-filter: blur(15px) saturate(180%);
-            -webkit-backdrop-filter: blur(15px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.5);
-            padding: 8px;
-            border-radius: 60px;
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
-            margin-bottom: 40px;
-            gap: 10px;
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            padding: 10px;
+            border-radius: 50px;
+            border: 1px solid rgba(255, 255, 255, 0.7);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+            z-index: 10;
+        }
+
+        /* --- Liquid Moving Background --- */
+        .nav-indicator {
+            position: absolute;
+            height: calc(100% - 20px);
+            width: 110px; /* Default width for Home */
+            background: #ffffff;
+            border-radius: 40px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55); /* Liquid Motion Physics */
+            z-index: -1;
+            left: 10px;
         }
 
         .nav-item {
             display: flex;
             align-items: center;
             justify-content: center;
-            padding: 12px 18px;
-            border-radius: 50px;
-            color: #444;
-            text-decoration: none;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            padding: 12px 20px;
             cursor: pointer;
+            color: #666;
+            transition: 0.3s;
+            user-select: none;
+            min-width: 65px;
+            position: relative;
         }
 
         .nav-item i {
-            font-size: 24px;
+            font-size: 26px;
+            transition: 0.3s;
         }
 
         .nav-item span {
             font-size: 16px;
             font-weight: 600;
-            margin-left: 10px;
-            display: none; /* Default e text thakbe na */
+            margin-left: 8px;
+            max-width: 0;
+            opacity: 0;
+            overflow: hidden;
+            transition: all 0.4s ease;
+            white-space: nowrap;
         }
 
-        /* --- Active State (Image er moto) --- */
+        /* --- Active States --- */
         .nav-item.active {
-            background: #ffffff;
             color: #000;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
         }
 
         .nav-item.active span {
-            display: inline-block; /* Active thakle "Home" lekha dekhabe */
+            max-width: 100px;
+            opacity: 1;
         }
 
+        /* Hover effect slightly expands the item */
         .nav-item:hover:not(.active) {
-            background: rgba(255, 255, 255, 0.5);
+            color: #111;
         }
 
-        /* --- Hero Content --- */
-        .hero-section {
-            text-align: center;
-            max-width: 600px;
-            padding: 20px;
-        }
-
-        .hero-section h1 {
-            font-size: 3.5rem;
-            font-weight: 800;
-            color: #1a1a1a;
-            margin-bottom: 15px;
-            letter-spacing: -1px;
-        }
-
-        .hero-section p {
-            font-size: 1.1rem;
-            color: #555;
-            line-height: 1.6;
-            margin-bottom: 30px;
-        }
-
-        .cta-button {
-            background: #1a1a1a;
-            color: white;
-            padding: 15px 35px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: 0.3s;
-            display: inline-block;
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
-        }
-
-        .cta-button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
-            background: #000;
-        }
-
-        /* Responsive */
-        @media (max-width: 480px) {
-            .hero-section h1 { font-size: 2.5rem; }
-            .glass-nav { padding: 6px; }
-        }
     </style>
 </head>
 <body>
 
-    <nav class="glass-nav">
-        <a href="#" class="nav-item active">
+    <nav class="nav-container">
+        <div class="nav-indicator" id="indicator"></div>
+
+        <div class="nav-item active" onclick="moveIndicator(this, 0)">
             <i class='bx bx-home-alt-2'></i>
             <span>Home</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class='bx bx-list-ul'></i>
+        </div>
+        <div class="nav-item" onclick="moveIndicator(this, 1)">
+            <i class='bx bx-list-check'></i>
             <span>Tasks</span>
-        </a>
-        <a href="#" class="nav-item">
+        </div>
+        <div class="nav-item" onclick="moveIndicator(this, 2)">
             <i class='bx bx-folder'></i>
             <span>Files</span>
-        </a>
-        <a href="#" class="nav-item">
-            <i class='bx bx-chat'></i>
+        </div>
+        <div class="nav-item" onclick="moveIndicator(this, 3)">
+            <i class='bx bx-message-square-detail'></i>
             <span>Chat</span>
-        </a>
+        </div>
     </nav>
 
-    <section class="hero-section">
-        <h1>Design Simplified.</h1>
-        <p>Apnar image-er concept follow kore ei minimalist glassmorphism UI-ti banano hoyeche. Eta responsive ebong kono dhoroner extra software charai cholbe.</p>
-        <a href="#" class="cta-button">Get Started</a>
-    </section>
-
     <script>
-        // Tab switching logic (Optional)
-        const navItems = document.querySelectorAll('.nav-item');
-        
-        navItems.forEach(item => {
-            item.addEventListener('click', () => {
-                document.querySelector('.nav-item.active').classList.remove('active');
-                item.classList.add('active');
-            });
-        });
+        function moveIndicator(element, index) {
+            const indicator = document.getElementById('indicator');
+            const items = document.querySelectorAll('.nav-item');
+            
+            // Remove active class from all
+            items.forEach(item => item.classList.remove('active'));
+            
+            // Add active class to clicked one
+            element.classList.add('active');
+
+            // Calculate Position & Width for Liquid Effect
+            const rect = element.getBoundingClientRect();
+            const parentRect = element.parentElement.getBoundingClientRect();
+            
+            // Apply new width and position
+            indicator.style.width = element.offsetWidth + 'px';
+            indicator.style.left = (element.offsetLeft) + 'px';
+        }
+
+        // Initialize position on load
+        window.onload = () => {
+            const activeItem = document.querySelector('.nav-item.active');
+            const indicator = document.getElementById('indicator');
+            indicator.style.width = activeItem.offsetWidth + 'px';
+            indicator.style.left = activeItem.offsetLeft + 'px';
+        };
     </script>
 
 </body>
