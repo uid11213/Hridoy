@@ -3,258 +3,267 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium Profile UI</title>
+    <title>Eiroko Premium Shop UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
-            -webkit-font-smoothing: antialiased;
-        }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
 
         body {
-            background: #050708;
+            background: #050505;
             color: white;
             height: 100vh;
             display: flex;
             flex-direction: column;
             overflow: hidden;
-            /* Website Outer Border */
-            border: 12px solid #1a1d21;
-            position: relative;
+            border: 10px solid #111;
         }
 
-        .content-wrapper {
-            flex: 1;
-            position: relative;
-            width: 100%;
-        }
+        .content-wrapper { flex: 1; position: relative; width: 100%; }
 
         .section {
             position: absolute;
             top: 0; left: 0;
-            width: 100%;
-            height: 100%;
-            display: flex;
+            width: 100%; height: 100%;
+            display: none;
             flex-direction: column;
             align-items: center;
-            opacity: 0;
-            visibility: hidden;
-            transform: translate3d(0, 15px, 0);
-            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            padding: 20px;
+            overflow-y: auto;
+            padding-bottom: 100px;
         }
 
-        .section.active {
-            opacity: 1;
-            visibility: visible;
-            transform: translate3d(0, 0, 0);
-        }
+        .section.active { display: flex; animation: fadeIn 0.4s ease; }
 
-        /* --- Facebook Style Profile Header --- */
-        .profile-header {
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- Shop Grid --- */
+        .shop-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
             width: 100%;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-bottom: 60px;
+            max-width: 500px;
+            margin-top: 20px;
         }
 
-        .cover-photo {
-            width: 100%;
-            height: 180px;
-            /* Default Cover Gradient - আপনি চাইলে এখানেও ছবি দিতে পারেন */
-            background: linear-gradient(135deg, #1a1d21 0%, #050708 100%);
-            border-bottom: 1px solid rgba(255,255,255,0.1);
-            position: relative;
-        }
-
-        /* কভার ফটোতে হালকা গ্লাস ইফেক্ট */
-        .cover-photo::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 50%;
-            background: linear-gradient(transparent, rgba(0,0,0,0.5));
-        }
-
-        .profile-img-container {
-            position: relative;
-            margin-top: -55px; /* Profile picture overlap */
-            z-index: 10;
-        }
-
-        .profile-img {
-            width: 110px;
-            height: 110px;
-            border-radius: 50%;
-            border: 4px solid #050708; /* Border around profile pic */
-            object-fit: cover;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-            background: #1a1d21;
-        }
-
-        /* --- Content Styling --- */
-        .section-content {
-            padding: 0 20px;
+        .item-card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 15px;
             text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
         }
 
-        h1 { font-size: 24px; font-weight: 800; margin-bottom: 8px; letter-spacing: -0.5px; }
-        p { color: rgba(255, 255, 255, 0.5); font-size: 14px; max-width: 300px; line-height: 1.6; margin: 0 auto; }
+        .item-card:hover { background: rgba(255, 255, 255, 0.1); border-color: #fff; }
 
-        /* Icons for other sections */
-        .big-icon {
-            font-size: 60px;
-            margin-top: 100px;
-            margin-bottom: 20px;
-            color: rgba(255,255,255,0.9);
-            filter: drop-shadow(0 10px 15px rgba(0,0,0,0.3));
+        .item-img-placeholder {
+            width: 100%;
+            height: 100px;
+            background: #222;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            color: #444;
+        }
+
+        /* --- Order Modal --- */
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.9);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background: #111;
+            padding: 25px;
+            border-radius: 20px;
+            width: 100%;
+            max-width: 350px;
+            border: 1px solid #333;
+        }
+
+        .modal-content h2 { margin-bottom: 15px; font-size: 20px; text-align: center; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: white;
+            border-radius: 10px;
+            outline: none;
+        }
+
+        .buy-btn {
+            width: 100%;
+            padding: 12px;
+            background: #fff;
+            color: #000;
+            border: none;
+            border-radius: 10px;
+            font-weight: 800;
+            cursor: pointer;
         }
 
         /* --- Navigation --- */
         .nav-wrapper {
             position: fixed;
-            bottom: 35px;
-            left: 0; right: 0;
+            bottom: 30px; left: 0; right: 0;
             display: flex; justify-content: center;
             z-index: 1000;
         }
 
         .nav-bar {
-            display: flex;
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            padding: 6px;
-            border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            gap: 4px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            display: flex; background: rgba(20, 20, 20, 0.8);
+            backdrop-filter: blur(20px);
+            padding: 8px; border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
 
         .nav-item {
-            position: relative;
+            padding: 12px 20px; border-radius: 20px;
+            cursor: pointer; color: #666; transition: 0.3s;
             display: flex; align-items: center;
-            padding: 10px 18px;
-            border-radius: 100px;
-            cursor: pointer;
-            color: rgba(255, 255, 255, 0.4);
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            -webkit-tap-highlight-color: transparent;
         }
 
-        .nav-item.active { color: #000; }
-        .nav-item::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: #ffffff;
-            border-radius: 100px;
-            z-index: -1;
-            opacity: 0;
-            transform: scale(0.8);
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .nav-item.active::before {
-            opacity: 1;
-            transform: scale(1);
-        }
-
-        .nav-item i { font-size: 22px; }
-        .nav-item span {
-            font-size: 14px; font-weight: 700;
-            width: 0; opacity: 0; overflow: hidden;
-            transition: all 0.3s ease;
-            white-space: nowrap;
-        }
-
-        .nav-item.active span { width: 45px; margin-left: 8px; opacity: 1; }
-
+        .nav-item.active { color: #fff; background: rgba(255,255,255,0.1); }
+        .nav-item span { display: none; margin-left: 8px; font-weight: 600; }
+        .nav-item.active span { display: inline; }
     </style>
 </head>
 <body>
 
     <div class="content-wrapper">
         <section id="home" class="section active">
-            <div class="profile-header">
-                <div class="cover-photo"></div>
-                <div class="profile-img-container">
-                    <img src="https://i.ibb.co.com/n887bQCt/image.jpg" class="profile-img" alt="Profile Picture">
+            <h1 style="margin-top: 100px;">Welcome Back</h1>
+            <p style="color: #888;">Eiroko Profile UI</p>
+        </section>
+
+        <section id="buy" class="section">
+            <h1 style="margin-top: 20px;">Premium Shop</h1>
+            <p style="color: #888; margin-bottom: 10px;">Select an item to buy</p>
+            
+            <div class="shop-grid">
+                <div class="item-card" onclick="openModal('Item #1')">
+                    <div class="item-img-placeholder"><i class='bx bx-package'></i></div>
+                    <h4>Item 1</h4>
+                    <p style="font-size: 12px; color: #00ff88;">$10.00</p>
+                </div>
+                <div class="item-card" onclick="openModal('Item #2')">
+                    <div class="item-img-placeholder"><i class='bx bx-package'></i></div>
+                    <h4>Item 2</h4>
+                    <p style="font-size: 12px; color: #00ff88;">$15.00</p>
+                </div>
+                <div class="item-card" onclick="openModal('Item #3')">
+                    <div class="item-img-placeholder"><i class='bx bx-package'></i></div>
+                    <h4>Item 3</h4>
+                    <p style="font-size: 12px; color: #00ff88;">$20.00</p>
+                </div>
+                <div class="item-card" onclick="openModal('Item #4')">
+                    <div class="item-img-placeholder"><i class='bx bx-package'></i></div>
+                    <h4>Item 4</h4>
+                    <p style="font-size: 12px; color: #00ff88;">$25.00</p>
+                </div>
+                <div class="item-card" onclick="openModal('Item #5')">
+                    <div class="item-img-placeholder"><i class='bx bx-package'></i></div>
+                    <h4>Item 5</h4>
+                    <p style="font-size: 12px; color: #00ff88;">$30.00</p>
+                </div>
+                <div class="item-card" onclick="openModal('Item #6')">
+                    <div class="item-img-placeholder"><i class='bx bx-package'></i></div>
+                    <h4>Item 6</h4>
+                    <p style="font-size: 12px; color: #00ff88;">$50.00</p>
                 </div>
             </div>
-            <div class="section-content">
-                <h1>Eiroko Profile</h1>
-                <p>আমি একজন ডেভেলপার। আমার এই প্রোফাইলটি সম্পূর্ণ রেসপনসিভ এবং ১২০ এফপিএস এ স্মুদলি কাজ করার জন্য তৈরি।</p>
-            </div>
         </section>
+    </div>
 
-        <section id="exe" class="section">
-            <i class='bx bx-terminal big-icon'></i>
-            <h1>Software EXE</h1>
-            <p>আপনার সকল কম্পিউটার ফাইল এবং স্ক্রিপ্ট এখানে ম্যানেজ করুন।</p>
-        </section>
-
-        <section id="files" class="section">
-            <i class='bx bx-folder big-icon'></i>
-            <h1>File Manager</h1>
-            <p>ক্লাউড স্টোরেজ এবং লোকাল ডাটা অ্যাক্সেস করুন খুব সহজে।</p>
-        </section>
-
-        <section id="chat" class="section">
-            <i class='bx bx-message-square-dots big-icon'></i>
-            <h1>Chat Box</h1>
-            <p>বন্ধুদের সাথে রিয়েল টাইম চ্যাটিং এবং ফাইল শেয়ারিং।</p>
-        </section>
+    <div id="orderModal" class="modal">
+        <div class="modal-content">
+            <h2 id="selectedItemName">Order Form</h2>
+            <input type="text" id="userName" placeholder="আপনার নাম">
+            <input type="text" id="userAddress" placeholder="আপনার ঠিকানা">
+            <input type="text" id="userWhatsapp" placeholder="হোয়াটসঅ্যাপ নাম্বার">
+            <button class="buy-btn" onclick="sendToTelegram()">Confirm Order</button>
+            <button onclick="closeModal()" style="background:transparent; color:#888; border:none; width:100%; margin-top:10px; cursor:pointer;">Cancel</button>
+        </div>
     </div>
 
     <div class="nav-wrapper">
         <nav class="nav-bar">
             <div class="nav-item active" onclick="navTo('home', this)">
-                <i class='bx bx-home-alt-2'></i>
-                <span>Home</span>
+                <i class='bx bx-home-alt'></i><span>Home</span>
             </div>
-            <div class="nav-item" onclick="navTo('exe', this)">
-                <i class='bx bx-terminal'></i>
-                <span>EXE</span>
+            <div class="nav-item" onclick="navTo('buy', this)">
+                <i class='bx bx-shopping-bag'></i><span>Buy</span>
             </div>
-            <div class="nav-item" onclick="navTo('files', this)">
-                <i class='bx bx-folder'></i>
-                <span>Files</span>
+            <div class="nav-item">
+                <i class='bx bx-folder'></i><span>Files</span>
             </div>
-            <div class="nav-item" onclick="navTo('chat', this)">
-                <i class='bx bx-message-square-dots'></i>
-                <span>Chat</span>
+            <div class="nav-item">
+                <i class='bx bx-message-dots'></i><span>Chat</span>
             </div>
         </nav>
     </div>
 
     <script>
+        let currentItem = "";
+
         function navTo(id, el) {
-            const currentNav = document.querySelector('.nav-item.active');
-            const currentSec = document.querySelector('.section.active');
-            const targetSec = document.getElementById(id);
-
-            if (currentNav === el) return;
-
-            // Update Nav Active State
-            currentNav.classList.remove('active');
+            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+            document.getElementById(id).classList.add('active');
             el.classList.add('active');
+        }
 
-            // Switch Sections
-            currentSec.classList.remove('active');
+        function openModal(itemName) {
+            currentItem = itemName;
+            document.getElementById('selectedItemName').innerText = "Order: " + itemName;
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function sendToTelegram() {
+            const name = document.getElementById('userName').value;
+            const address = document.getElementById('userAddress').value;
+            const whatsapp = document.getElementById('userWhatsapp').value;
+
+            if(!name || !address || !whatsapp) {
+                alert("সবগুলো ঘর পূরণ করুন!");
+                return;
+            }
+
+            // Telegram Bot Details (এখানে আপনার তথ্য বসান)
+            const token = "YOUR_BOT_TOKEN"; 
+            const chat_id = "YOUR_CHAT_ID";
             
-            // Small delay to trigger CSS transition smoothly
-            setTimeout(() => {
-                targetSec.classList.add('active');
-            }, 50);
+            const message = `🛍️ *New Order!*%0A%0A📦 Item: ${currentItem}%0A👤 Name: ${name}%0A📍 Address: ${address}%0A📱 WhatsApp: ${whatsapp}`;
+
+            const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${message}&parse_mode=Markdown`;
+
+            fetch(url).then(res => {
+                alert("আপনার অর্ডারটি সফলভাবে পাঠানো হয়েছে!");
+                closeModal();
+            }).catch(err => {
+                alert("অর্ডার পাঠাতে সমস্যা হয়েছে।");
+            });
         }
     </script>
-
 </body>
 </html>
