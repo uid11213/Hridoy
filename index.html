@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>60FPS Smooth UI</title>
+    <title>Premium EXE Software UI</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     <style>
         * {
@@ -15,92 +15,127 @@
         }
 
         body {
-            background: #0f1113; /* Deep Dark */
+            /* Premium Dark Charcoal Background */
+            background: radial-gradient(circle at center, #1a252f 0%, #080a0c 100%);
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
+            overflow: hidden;
         }
 
+        /* --- Highly Optimized Navbar --- */
         .nav-bar {
             display: flex;
             align-items: center;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            padding: 8px;
+            /* Ultra-premium Frosted Dark Glass */
+            background: rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 10px;
             border-radius: 100px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            gap: 4px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            gap: 6px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.6);
+            /* Essential for smooth animation */
+            will-change: transform, backdrop-filter;
         }
 
+        /* --- Nav Item Styling (Base) --- */
         .nav-item {
             position: relative;
             display: flex;
             align-items: center;
-            padding: 12px 20px;
+            padding: 14px 24px;
             border-radius: 100px;
             cursor: pointer;
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.5); /* Dimmed state */
+            text-decoration: none;
+            user-select: none;
             transition: color 0.3s ease;
-            will-change: transform; /* Browser ke prepare rakhe fast action er jonno */
+            /* Smooth transitions hint */
+            will-change: transform;
         }
 
-        /* Active Item er pichone shada layer */
+        /* --- Individual Active Back Layer --- */
         .nav-item::before {
             content: '';
             position: absolute;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: #ffffff;
+            background: #ffffff; /* White background for highlight */
             border-radius: 100px;
             z-index: -1;
             opacity: 0;
-            transform: scale(0.8); /* Choto theke boro hobe transition e */
-            transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), opacity 0.2s ease;
+            /* High-Performance Scaling for smoothness */
+            transform: scale(0.85); 
+            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.25s ease;
+            will-change: transform, opacity;
         }
 
         .nav-item i {
-            font-size: 24px;
+            font-size: 26px;
             transition: transform 0.3s ease;
         }
 
         .nav-item span {
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 700;
             margin-left: 0;
             width: 0;
             overflow: hidden;
             display: inline-block;
-            transition: width 0.3s cubic-bezier(0.34, 1.56, 0.64, 1), margin 0.3s ease, opacity 0.2s ease;
+            transition: width 0.4s cubic-bezier(0.23, 1, 0.32, 1), margin 0.3s ease, opacity 0.2s ease;
             opacity: 0;
             white-space: nowrap;
         }
 
-        /* --- Active State Logic --- */
+        /* --- High-Performance Active States --- */
         .nav-item.active {
-            color: #000;
+            color: #000; /* Contrast text against white bg */
+            will-change: transform;
         }
 
         .nav-item.active::before {
             opacity: 1;
-            transform: scale(1); /* Smoothly scale up hobe */
+            transform: scale(1); /* Dynamic scale-up for premium look */
         }
 
-        .nav-item.active span {
-            width: 55px; /* Text er width fixed kore dilam lag free rakhar jonno */
+        /* Fixed text widths for smoothness */
+        .nav-item.active .home-text {
+            width: 60px;
             margin-left: 10px;
             opacity: 1;
         }
 
-        .nav-item.active i {
-            transform: scale(0.9); /* Halka icon scale down for depth */
+        .nav-item.active .exe-text {
+            width: 50px; /* Specific width for "EXE" to be tight */
+            margin-left: 10px;
+            opacity: 1;
         }
 
-        /* Hover Feedback */
+        .nav-item.active .files-text {
+            width: 60px;
+            margin-left: 10px;
+            opacity: 1;
+        }
+
+        .nav-item.active .chat-text {
+            width: 60px;
+            margin-left: 10px;
+            opacity: 1;
+        }
+
+        /* Subtle depth scaling on icon */
+        .nav-item.active i {
+            transform: scale(0.92);
+        }
+
+        /* Instant Hover Feedback */
         .nav-item:hover:not(.active) {
             color: #fff;
+            background: rgba(255,255,255,0.03);
         }
+
     </style>
 </head>
 <body>
@@ -108,32 +143,36 @@
     <nav class="nav-bar">
         <div class="nav-item active" onclick="switchTab(this)">
             <i class='bx bx-home-alt-2'></i>
-            <span>Home</span>
+            <span class="home-text">Home</span>
         </div>
 
         <div class="nav-item" onclick="switchTab(this)">
-            <i class='bx bx-grid-alt'></i>
-            <span>Apps</span>
+            <i class='bx bx-terminal'></i>
+            <span class="exe-text">EXE</span>
         </div>
 
         <div class="nav-item" onclick="switchTab(this)">
             <i class='bx bx-folder'></i>
-            <span>Files</span>
+            <span class="files-text">Files</span>
         </div>
 
         <div class="nav-item" onclick="switchTab(this)">
             <i class='bx bx-message-square-dots'></i>
-            <span>Chat</span>
+            <span class="chat-text">Chat</span>
         </div>
     </nav>
 
     <script>
+        // High-Performance Tab Switching
         function switchTab(el) {
-            // Instant class toggle
             const currentActive = document.querySelector('.nav-item.active');
+            
+            // Do nothing if same tab is clicked
             if (currentActive === el) return;
 
+            // Instant class removal for responsiveness
             currentActive.classList.remove('active');
+            // Instant class add
             el.classList.add('active');
         }
     </script>
