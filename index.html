@@ -3,164 +3,123 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Devoryn Login Page</title>
+    <title>My Personal Profile</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            height: 100vh;
+            min-height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            /* ব্যাকগ্রাউন্ড ইমেজ (ইমেজটি আপনার ফোল্ডারে থাকলে পাথ বদলে নিন) */
-            background: url('https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80') no-repeat center center/cover;
-            overflow: hidden;
+            background: url('https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=1920&q=80') no-repeat center center/cover;
+            padding: 20px;
         }
 
-        /* মেইন গ্লাস কন্টেইনার */
-        .glass-container {
-            position: relative;
-            width: 450px;
-            padding: 40px;
+        /* মেইন কার্ড ডিজাইন */
+        .profile-card {
+            width: 100%;
+            max-width: 400px;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(15px) saturate(180%);
-            -webkit-backdrop-filter: blur(15px) saturate(180%);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            border-radius: 20px;
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+            backdrop-filter: blur(20px) saturate(180%);
+            -webkit-backdrop-filter: blur(20px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 30px;
+            padding: 40px 30px;
             text-align: center;
             color: #fff;
-            z-index: 1;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.2);
         }
 
-        /* ওয়াটার ড্রপলেটস ইফেক্ট (Pseudo elements) */
-        .glass-container::before {
-            content: '';
-            position: absolute;
-            top: 10%; left: 5%;
-            width: 15px; height: 15px;
-            background: rgba(255, 255, 255, 0.2);
+        /* প্রোফাইল পিকচার */
+        .profile-img {
+            width: 120px;
+            height: 120px;
             border-radius: 50%;
-            filter: blur(2px);
-            box-shadow: inset 2px 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .logo {
-            font-size: 24px;
-            font-weight: bold;
-            letter-spacing: 5px;
-            margin-bottom: 30px;
-            text-transform: uppercase;
-        }
-
-        h2 {
-            font-size: 22px;
-            margin-bottom: 5px;
-            font-weight: 500;
-        }
-
-        p.subtitle {
-            font-size: 12px;
-            margin-bottom: 30px;
-            opacity: 0.8;
-        }
-
-        .input-group {
-            position: relative;
+            border: 4px solid rgba(255, 255, 255, 0.3);
             margin-bottom: 20px;
+            object-fit: cover;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .input-group input {
-            width: 100%;
-            padding: 12px 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1.5px solid rgba(255, 255, 255, 0.3);
-            border-radius: 10px;
-            outline: none;
-            color: #fff;
+        h1 {
+            font-size: 24px;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        p.bio {
             font-size: 14px;
-            transition: 0.3s;
+            opacity: 0.8;
+            margin-bottom: 30px;
         }
 
-        .input-group input:focus {
-            border-color: #00d2ff;
-            background: rgba(255, 255, 255, 0.1);
+        /* কন্টাক্ট লিঙ্ক বাটন */
+        .social-links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
         }
 
-        .input-group input::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
-
-        .login-btn {
-            width: 100%;
+        .link-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
             padding: 12px;
-            margin-top: 10px;
-            background: linear-gradient(90deg, rgba(0,210,255,0.3), rgba(58,123,213,0.3));
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            border-radius: 10px;
-            color: #fff;
-            font-size: 16px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .login-btn:hover {
-            background: rgba(0, 210, 255, 0.5);
-            transform: translateY(-2px);
-        }
-
-        .links {
-            margin-top: 20px;
-            font-size: 13px;
-        }
-
-        .links a {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 15px;
             color: #fff;
             text-decoration: none;
-            opacity: 0.7;
-            transition: 0.3s;
+            font-weight: 500;
+            transition: all 0.3s ease;
         }
 
-        .links a:hover {
-            opacity: 1;
-            text-decoration: underline;
+        .link-item i {
+            font-size: 20px;
         }
 
-        .signup-text {
-            margin-top: 10px;
-            display: block;
+        /* হোভার ইফেক্ট */
+        .link-item:hover {
+            background: rgba(255, 255, 255, 0.25);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
         }
+
+        /* প্রতিটি প্ল্যাটফর্মের জন্য আলাদা টাচ */
+        .whatsapp:hover { border-color: #25D366; color: #25D366; }
+        .telegram:hover { border-color: #0088cc; color: #0088cc; }
+        .facebook:hover { border-color: #1877F2; color: #1877F2; }
+
     </style>
 </head>
 <body>
 
-    <div class="glass-container">
-        <div class="logo">:::DEVORYN</div>
+    <div class="profile-card">
+        <img src="profile.jpg" alt="Your Name" class="profile-img">
         
-        <h2>Please Log In</h2>
-        <p class="subtitle">to your Devoryn Workspace</p>
+        <h1>আপনার নাম এখানে</h1>
+        <p class="bio">Web Developer | Guitarist | Rider</p>
 
-        <form action="#">
-            <div class="input-group">
-                <input type="text" placeholder="Email or Username" required>
-            </div>
-            
-            <div class="input-group">
-                <input type="password" placeholder="Password" required>
-            </div>
+        <div class="social-links">
+            <a href="https://wa.me/YOUR_NUMBER" class="link-item whatsapp" target="_blank">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
 
-            <button type="submit" class="login-btn">Sign In</button>
-        </form>
+            <a href="https://t.me/YOUR_USERNAME" class="link-item telegram" target="_blank">
+                <i class="fab fa-telegram-plane"></i> Telegram
+            </a>
 
-        <div class="links">
-            <a href="#">Forgot Password?</a>
-            <span class="signup-text">Don't have an account? <a href="#">Sign up</a></span>
+            <a href="https://facebook.com/YOUR_PROFILE" class="link-item facebook" target="_blank">
+                <i class="fab fa-facebook-f"></i> Facebook
+            </a>
         </div>
     </div>
 
