@@ -3,35 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eiroko UI Design</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Eiroko UI - Premium Design</title>
+    
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        }
+
+        body {
+            background-color: #f0f2f5;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(200, 215, 255, 0.5) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(255, 220, 230, 0.5) 0px, transparent 50%);
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        /* --- UI Navigation Bar (Image er moto) --- */
+        .glass-nav {
+            display: flex;
+            align-items: center;
+            background: rgba(255, 255, 255, 0.3); /* Transparent White */
+            backdrop-filter: blur(15px) saturate(180%);
+            -webkit-backdrop-filter: blur(15px) saturate(180%);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 8px;
+            border-radius: 60px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+            margin-bottom: 40px;
+            gap: 10px;
+        }
+
+        .nav-item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 50px;
+            color: #444;
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            cursor: pointer;
+        }
+
+        .nav-item i {
+            font-size: 24px;
+        }
+
+        .nav-item span {
+            font-size: 16px;
+            font-weight: 600;
+            margin-left: 10px;
+            display: none; /* Default e text thakbe na */
+        }
+
+        /* --- Active State (Image er moto) --- */
+        .nav-item.active {
+            background: #ffffff;
+            color: #000;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .nav-item.active span {
+            display: inline-block; /* Active thakle "Home" lekha dekhabe */
+        }
+
+        .nav-item:hover:not(.active) {
+            background: rgba(255, 255, 255, 0.5);
+        }
+
+        /* --- Hero Content --- */
+        .hero-section {
+            text-align: center;
+            max-width: 600px;
+            padding: 20px;
+        }
+
+        .hero-section h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: #1a1a1a;
+            margin-bottom: 15px;
+            letter-spacing: -1px;
+        }
+
+        .hero-section p {
+            font-size: 1.1rem;
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            background: #1a1a1a;
+            color: white;
+            padding: 15px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: 0.3s;
+            display: inline-block;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 25px rgba(0, 0, 0, 0.15);
+            background: #000;
+        }
+
+        /* Responsive */
+        @media (max-width: 480px) {
+            .hero-section h1 { font-size: 2.5rem; }
+            .glass-nav { padding: 6px; }
+        }
+    </style>
 </head>
 <body>
 
-    <div class="container">
-        <nav class="navbar">
-            <div class="nav-item active">
-                <i class='bx bx-home-alt-2'></i>
-                <span>Home</span>
-            </div>
-            <div class="nav-item">
-                <i class='bx bx-list-check'></i>
-            </div>
-            <div class="nav-item">
-                <i class='bx bx-folder'></i>
-            </div>
-            <div class="nav-item">
-                <i class='bx bx-message-square-detail'></i>
-            </div>
-        </nav>
+    <nav class="glass-nav">
+        <a href="#" class="nav-item active">
+            <i class='bx bx-home-alt-2'></i>
+            <span>Home</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class='bx bx-list-ul'></i>
+            <span>Tasks</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class='bx bx-folder'></i>
+            <span>Files</span>
+        </a>
+        <a href="#" class="nav-item">
+            <i class='bx bx-chat'></i>
+            <span>Chat</span>
+        </a>
+    </nav>
 
-        <main class="content">
-            <h1>Welcome to <span>Eiroko UI</span></h1>
-            <p>Clean, minimalist, and glassmorphic design for your next project.</p>
-            <button class="btn-primary">Explore More</button>
-        </main>
-    </div>
+    <section class="hero-section">
+        <h1>Design Simplified.</h1>
+        <p>Apnar image-er concept follow kore ei minimalist glassmorphism UI-ti banano hoyeche. Eta responsive ebong kono dhoroner extra software charai cholbe.</p>
+        <a href="#" class="cta-button">Get Started</a>
+    </section>
+
+    <script>
+        // Tab switching logic (Optional)
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        navItems.forEach(item => {
+            item.addEventListener('click', () => {
+                document.querySelector('.nav-item.active').classList.remove('active');
+                item.classList.add('active');
+            });
+        });
+    </script>
 
 </body>
 </html>
