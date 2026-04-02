@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hridoy Music Store | Premium Instruments</title>
+    <title>Hridoy Music Store | Instruments Shop</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
     
     <script>
@@ -12,7 +12,7 @@
         // ==========================================
         const MY_CONFIG = {
             name: "AHMED HRIDOY",                
-            bio: "MUSICAL INSTRUMENTS SHOP", // এই লাইনটি এডিট করা হয়েছে
+            bio: "MUSICAL INSTRUMENTS SHOP", 
             address: "Mahbub Shopping Center, Sirajganj",
             mapLink: "https://maps.google.com/?q=Mahbub+Shopping+Center+Sirajganj", 
             profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
@@ -78,7 +78,7 @@
             background: #111; 
         }
 
-        /* Order Steps Styling */
+        /* Order Steps Point Styling */
         .order-instructions {
             width: 100%;
             max-width: 380px;
@@ -138,11 +138,6 @@
         .btn-active .success-overlay { display: flex; animation: slideUp 0.3s ease; }
         @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
-        /* Shop Grid */
-        .shop-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; margin-top: 25px; }
-        .item-card { background: #0f0f0f; border-radius: 20px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.02); }
-        .item-img { width: 100%; height: 110px; border-radius: 15px; object-fit: cover; }
-
         /* Navigation */
         .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
@@ -184,7 +179,7 @@
                 </div>
                 <div class="step">
                     <div class="step-icon">৪</div>
-                    <p>আমরা আপনার সাথে যোগাযোগ করে ডেলিভারি কনফার্ম করবো।</p>
+                    <p>অর্ডার পাওয়ার পর আমরা দ্রুত আপনার সাথে যোগাযোগ করবো।</p>
                 </div>
             </div>
             
@@ -194,8 +189,8 @@
         </section>
 
         <section id="buy" class="section">
-            <h2 style="margin-top: 30px; font-weight: 800;">Our Store</h2>
-            <div class="shop-grid" id="itemGrid"></div>
+            <h2 style="margin-top: 30px; font-weight: 800; text-align:center;">Our Store</h2>
+            <div class="shop-grid" id="itemGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; margin-top: 25px;"></div>
         </section>
 
         <section id="chat" class="section">
@@ -205,21 +200,15 @@
                     <a id="waBtn" href="#" class="app-btn wa-small"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
                     <a id="fbBtn" href="#" class="app-btn fb-small"><i class='bx bxl-facebook-circle'></i> Facebook</a>
                 </div>
-
                 <div class="phone-mini-card">
                     <a id="phoneCall" href="#" class="phone-number">000</a>
                 </div>
-
                 <div class="feedback-box">
                     <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">SEND FEEDBACK</h4>
                     <input type="text" id="fbName" class="feedback-input" placeholder="আপনার নাম">
                     <textarea id="fbMsg" class="feedback-input" style="height:80px;" placeholder="আপনার মতামত লিখুন..."></textarea>
-                    
-                    <label for="feedbackFile" class="file-label" id="fileLabel">
-                        <i class='bx bx-image-add'></i> Attach Photo (Optional)
-                    </label>
+                    <label for="feedbackFile" class="file-label" id="fileLabel"><i class='bx bx-image-add'></i> Attach Photo (Optional)</label>
                     <input type="file" id="feedbackFile" accept="image/*" onchange="updateLabel()">
-                    
                     <button class="action-btn" id="feedbackSubmitBtn" onclick="sendFeedback()">
                         <span>Send Feedback</span>
                         <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
@@ -236,7 +225,6 @@
             <input type="text" id="orderName" class="feedback-input" placeholder="আপনার নাম">
             <input type="text" id="orderAddr" class="feedback-input" placeholder="ডেলিভারি ঠিকানা">
             <input type="text" id="orderPhone" class="feedback-input" placeholder="ফোন নম্বর">
-            
             <button class="action-btn" id="orderSubmitBtn" onclick="sendOrder()">
                 <span>Confirm Order</span>
                 <div class="success-overlay">✅ অর্ডার সফল!</div>
@@ -269,8 +257,9 @@
         ITEM_LIST.forEach(item => {
             const card = document.createElement('div');
             card.className = 'item-card';
+            card.style = "background: #0f0f0f; border-radius: 20px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.02); cursor: pointer;";
             card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `<img src="${item.img}" class="item-img"><h4 style="font-size:13px; margin-top:8px;">${item.name}</h4><p style="color:#00ff88; font-weight:800;">${item.price} ৳</p>`;
+            card.innerHTML = `<img src="${item.img}" style="width: 100%; height: 110px; border-radius: 15px; object-fit: cover;"><h4 style="font-size:13px; margin-top:8px;">${item.name}</h4><p style="color:#00ff88; font-weight:800;">${item.price} ৳</p>`;
             grid.appendChild(card);
         });
 
@@ -299,11 +288,8 @@
             const msg = document.getElementById('fbMsg').value;
             const fileInput = document.getElementById('feedbackFile');
             const btn = document.getElementById('feedbackSubmitBtn');
-
             if(!name || !msg) { alert("সবগুলো ঘর পূরণ করুন"); return; }
-            
             const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${name}\n💬 মেসেজ: ${msg}`;
-
             try {
                 if(fileInput.files.length > 0) {
                     const formData = new FormData();
@@ -314,7 +300,6 @@
                 } else {
                     await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
                 }
-                
                 btn.classList.add('btn-active');
                 setTimeout(() => {
                     btn.classList.remove('btn-active');
@@ -331,10 +316,8 @@
             const a = document.getElementById('orderAddr').value;
             const p = document.getElementById('orderPhone').value;
             const btn = document.getElementById('orderSubmitBtn');
-
             if(!n || !a || !p) { alert("সব তথ্য দিন"); return; }
             const msg = `🛍️ *নতুন অর্ডার!*\nআইটেম: ${document.getElementById('itemTitle').innerText}\nনাম: ${n}\nঠিকানা: ${a}\nফোন: ${p}`;
-            
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`)
             .then(() => { 
                 btn.classList.add('btn-active');
