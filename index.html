@@ -8,14 +8,14 @@
     
     <script>
         // ==========================================
-        // 🛠️ CONFIGURATION SETUP (আপনার তথ্য এখানে দিন)
+        // 🛠️ CONFIGURATION SETUP
         // ==========================================
         const MY_CONFIG = {
             name: "AHMED HRIDOY",                
             bio: "MUSICAL INSTRUMENTS SHOP", 
             address: "Mahbub Shopping Center, Sirajganj",
             mapLink: "https://maps.google.com/?q=Mahbub+Shopping+Center+Sirajganj", 
-            profilePic: "https://i.ibb.co/n887bQCt/image.jpg", // আপনার প্রোফাইল ছবি
+            profilePic: "https://i.ibb.co/n887bQCt/image.jpg", 
             whatsappNum: "8801701370709",      
             displayPhone: "01701-370709",  
             facebookURL: "https://facebook.com/yourprofile", 
@@ -23,14 +23,14 @@
             chatID: "8535841928"        
         };
 
-        // 🛍️ পণ্য তালিকা (img এর কোটেশনের মাঝখানে ডিরেক্ট লিঙ্ক বসান)
+        // 🛍️ Item List with Direct Image Links
         const ITEM_LIST = [
-            { name: "Signature Guitar s-265", price: "4999", img: "" }, 
-            { name: "AXE 48c Guitar", price: "8500", img: "" },
-            { name: "TGM Guiter", price: "8500", img: "" },
-            { name: "Ukulele 26\"", price: "5000", img: "" },
-            { name: "Ukulele 24\"", price: "4500", img: "" },
-            { name: "Yemaha cm2 Guitar", price: "7500", img: "" }
+            { name: "Signature Guitar s-265", price: "4999", img: "https://i.ibb.co/3ydb90Pn/image.jpg" }, 
+            { name: "AXE 48c Guitar", price: "8500", img: "https://i.ibb.co/v4qZrV3m/image.jpg" },
+            { name: "TGM Guiter", price: "8500", img: "https://i.ibb.co/LXXGZ3xx/image.jpg" },
+            { name: "Ukulele 26\"", price: "5000", img: "https://i.ibb.co/ksW1CqjJ/image.jpg" },
+            { name: "Ukulele 24\"", price: "4500", img: "https://i.ibb.co/ksW1CqjJ/image.jpg" },
+            { name: "Yemaha cm2 Guitar", price: "7500", img: "https://i.ibb.co/ZRKTnhrN/image.jpg" }
         ];
     </script>
 
@@ -46,45 +46,25 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         .header-spacer { 
-            width: 100%; 
-            height: 180px; 
+            width: 100%; height: 180px; 
             background: radial-gradient(circle at top, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 35%, transparent 75%); 
-            position: relative; 
         }
 
-        .profile-pic { 
-            width: 130px; 
-            height: 130px; 
-            border-radius: 50%; 
-            border: 4px solid rgba(255, 255, 255, 0.2); 
-            object-fit: cover; 
-            margin-top: -75px; 
-            position: relative; 
-            z-index: 10; 
-            background: #111; 
-        }
+        .profile-pic { width: 130px; height: 130px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.2); object-fit: cover; margin-top: -75px; z-index: 10; background: #111; }
 
-        .order-box {
-            width: 100%;
-            max-width: 380px;
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 25px;
-        }
+        .order-box { width: 100%; max-width: 380px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 20px; margin-top: 25px; }
         .order-box h3 { font-size: 14px; color: #00ff88; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
         .step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; color: #ccc; font-size: 13px; }
         .step-num { background: rgba(0, 255, 136, 0.1); color: #00ff88; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
 
         .nav-wrapper { position: fixed; bottom: 25px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
-        .nav-item { padding: 12px 20px; border-radius: 30px; color: #666; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
+        .nav-item { padding: 12px 20px; border-radius: 30px; color: #666; display: flex; align-items: center; gap: 8px; cursor: pointer; }
         .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
-        .nav-item span { display: none; font-weight: 700; font-size: 14px; }
+        .nav-item span { display: none; font-weight: 700; }
         .nav-item.active span { display: inline; }
 
-        .item-card { background: #0f0f0f; border-radius: 18px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
+        .item-card { background: #0f0f0f; border-radius: 18px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.03); }
         .item-card img { width: 100%; height: 120px; border-radius: 12px; object-fit: cover; background: #1a1a1a; }
         
         .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 15px; overflow: hidden; }
@@ -101,34 +81,40 @@
     <div class="content-wrapper">
         <section id="home" class="section active">
             <div class="header-spacer"></div>
-            <img id="userPic" src="" class="profile-pic" onerror="this.src='https://via.placeholder.com/150'">
+            <img id="userPic" src="" class="profile-pic">
             <div style="text-align:center; margin-top:15px;">
-                <h1 id="userName" style="font-size: 22px;">Loading...</h1>
-                <p id="userBio" style="color:#888; font-size:13px; margin-top:5px;"></p>
+                <h1 id="userName">Loading...</h1>
+                <p id="userBio" style="color:#888; font-size:13px;"></p>
                 <p style="color:#555; font-size:12px; margin-top:10px;"><i class='bx bxs-map'></i> <span id="userAddress">...</span></p>
             </div>
             <div class="order-box">
                 <h3>নির্দেশিকা</h3>
-                <div class="step"><div class="step-num">১</div><p><b>Shop</b>-এ গিয়ে পছন্দের পণ্যটি বেছে নিন।</p></div>
-                <div class="step"><div class="step-num">২</div><p>অর্ডার বাটনে ক্লিক করে তথ্যগুলো পূরণ করুন।</p></div>
-                <div class="step"><div class="step-num">৩</div><p>আমরা দ্রুত আপনার সাথে যোগাযোগ করবো।</p></div>
+                <div class="step"><div class="step-num">১</div><p>Shop-এ গিয়ে পণ্যটি বেছে নিন।</p></div>
+                <div class="step"><div class="step-num">২</div><p>অর্ডার বাটনে ক্লিক করে তথ্য দিন।</p></div>
             </div>
         </section>
 
         <section id="buy" class="section">
-            <h2 style="margin-top: 30px; font-weight: 800;">Our Collection</h2>
+            <h2 style="margin-top: 30px; font-weight: 800;">Our Store</h2>
             <div id="itemGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; margin-top: 25px;"></div>
         </section>
 
         <section id="chat" class="section">
-            <h2 style="margin-top: 35px; font-weight: 800;">Contact Us</h2>
-            <div style="width: 100%; max-width: 400px; margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
+            <h2 style="margin-top: 35px; font-weight: 800;">Contact & Feedback</h2>
+            <div style="width: 100%; max-width: 400px; margin-top: 20px; display: flex; flex-direction: column; gap: 15px;">
                 <div style="display: flex; gap: 10px;">
-                    <a id="waBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #25D366; color: white; text-decoration: none; font-weight: 700;"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
-                    <a id="fbBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #1877F2; color: white; text-decoration: none; font-weight: 700;"><i class='bx bxl-facebook'></i> Facebook</a>
+                    <a id="waBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #25D366; color: white; text-decoration: none; font-weight: 700;">WhatsApp</a>
+                    <a id="fbBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #1877F2; color: white; text-decoration: none; font-weight: 700;">Facebook</a>
                 </div>
-                <div style="background: #111; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #222;">
-                    <a id="phoneCall" href="#" style="font-size: 18px; font-weight: 800; color: #fff; text-decoration: none;">000</a>
+                
+                <div style="background: #0f0f0f; padding: 20px; border-radius: 20px; border: 1px solid #222;">
+                    <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">মতামত জানান</h4>
+                    <input type="text" id="fbName" class="input-field" placeholder="আপনার নাম">
+                    <textarea id="fbMsg" class="input-field" style="height:70px;" placeholder="আপনার মতামত..."></textarea>
+                    <button class="action-btn" id="fbSubmitBtn" onclick="sendFeedback()">
+                        <span>Send Feedback</span>
+                        <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
+                    </button>
                 </div>
             </div>
         </section>
@@ -136,16 +122,16 @@
 
     <div id="orderModal" class="modal">
         <div class="modal-content">
-            <h3 id="itemTitle" style="text-align:center; margin-bottom:5px;">Product Name</h3>
-            <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; font-weight:800; margin-bottom:20px;"></p>
-            <input type="text" id="orderName" class="input-field" placeholder="আপনার নাম">
+            <h3 id="itemTitle">Product</h3>
+            <p id="itemPriceDisplay" style="color:#00ff88; font-weight:800; margin-bottom:15px;"></p>
+            <input type="text" id="orderName" class="input-field" placeholder="নাম">
             <input type="text" id="orderAddr" class="input-field" placeholder="ঠিকানা">
             <input type="text" id="orderPhone" class="input-field" placeholder="ফোন নম্বর">
             <button class="action-btn" id="orderSubmitBtn" onclick="sendOrder()">
                 <span>Confirm Order</span>
                 <div class="success-overlay">✅ অর্ডার সফল!</div>
             </button>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px;">ফিরে যান</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px;">বন্ধ করুন</button>
         </div>
     </div>
 
@@ -153,36 +139,24 @@
         <nav class="nav-bar">
             <div class="nav-item active" onclick="navTo('home', this)"><i class='bx bx-home-alt-2'></i><span>Home</span></div>
             <div class="nav-item" onclick="navTo('buy', this)"><i class='bx bx-shopping-bag'></i><span>Shop</span></div>
-            <div class="nav-item" onclick="navTo('chat', this)"><i class='bx bx-message-square-dots'></i><span>Contact</span></div>
+            <div class="nav-item" onclick="navTo('chat', this)"><i class='bx bx-message-square-dots'></i><span>Chat</span></div>
         </nav>
     </div>
 
     <script>
-        // Setup Initial Data
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userAddress').innerText = MY_CONFIG.address;
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
         document.getElementById('waBtn').href = `https://wa.me/${MY_CONFIG.whatsappNum}`;
         document.getElementById('fbBtn').href = MY_CONFIG.facebookURL;
-        document.getElementById('phoneCall').innerText = MY_CONFIG.displayPhone;
-        document.getElementById('phoneCall').href = `tel:${MY_CONFIG.whatsappNum}`;
 
-        // Render Shop Items
         const grid = document.getElementById('itemGrid');
         ITEM_LIST.forEach(item => {
             const card = document.createElement('div');
             card.className = "item-card";
             card.onclick = () => openModal(item.name, item.price);
-            
-            // ছবি না থাকলে বা ভুল থাকলে এটি Placeholder দেখাবে
-            const imgPath = item.img && item.img.trim() !== "" ? item.img : "https://via.placeholder.com/300x200/222222/ffffff?text=No+Image";
-            
-            card.innerHTML = `
-                <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x200/222222/ffffff?text=Image+Error'">
-                <h4 style="font-size:13px; margin-top:10px; height: 32px; overflow: hidden;">${item.name}</h4>
-                <p style="color:#00ff88; font-weight:800; margin-top:5px;">${item.price} ৳</p>
-            `;
+            card.innerHTML = `<img src="${item.img}" onerror="this.src='https://via.placeholder.com/150'"><h4 style="font-size:13px; margin-top:8px;">${item.name}</h4><p style="color:#00ff88; font-weight:800;">${item.price} ৳</p>`;
             grid.appendChild(card);
         });
 
@@ -191,7 +165,6 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openModal(n, p) {
@@ -199,30 +172,28 @@
             document.getElementById('itemPriceDisplay').innerText = p + " ৳";
             document.getElementById('orderModal').style.display = 'flex';
         }
-
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
+
+        async function sendFeedback() {
+            const n = document.getElementById('fbName').value;
+            const m = document.getElementById('fbMsg').value;
+            const btn = document.getElementById('fbSubmitBtn');
+            if(!n || !m) return alert("সব তথ্য দিন");
+            const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${n}\n💬 মতামত: ${m}`;
+            await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
+            btn.classList.add('btn-active');
+            setTimeout(() => { btn.classList.remove('btn-active'); document.getElementById('fbName').value = ""; document.getElementById('fbMsg').value = ""; }, 2500);
+        }
 
         function sendOrder() {
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddr').value;
             const p = document.getElementById('orderPhone').value;
             const btn = document.getElementById('orderSubmitBtn');
-            
-            if(!n || !a || !p) { alert("সব ঘর পূরণ করুন!"); return; }
-            
-            const msg = `🛍️ *নতুন অর্ডার!*\n━━━━━━━━━━━━━━\n📦 আইটেম: ${document.getElementById('itemTitle').innerText}\n👤 ক্রেতা: ${n}\n📍 ঠিকানা: ${a}\n📞 ফোন: ${p}`;
-            
+            if(!n || !a || !p) return alert("সব তথ্য দিন");
+            const msg = `🛍️ *নতুন অর্ডার!*\n📦 আইটেম: ${document.getElementById('itemTitle').innerText}\n👤 ক্রেতা: ${n}\n📍 ঠিকানা: ${a}\n📞 ফোন: ${p}`;
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`)
-            .then(() => { 
-                btn.classList.add('btn-active');
-                setTimeout(() => { 
-                    btn.classList.remove('btn-active'); 
-                    closeModal(); 
-                    document.getElementById('orderName').value = "";
-                    document.getElementById('orderAddr').value = "";
-                    document.getElementById('orderPhone').value = "";
-                }, 2000);
-            }).catch(() => alert("অর্ডার পাঠাতে সমস্যা হয়েছে।"));
+            .then(() => { btn.classList.add('btn-active'); setTimeout(() => { btn.classList.remove('btn-active'); closeModal(); }, 2500); });
         }
     </script>
 </body>
