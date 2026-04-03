@@ -8,14 +8,14 @@
     
     <script>
         // ==========================================
-        // 🛠️ CONFIGURATION SETUP
+        // 🛠️ CONFIGURATION SETUP (আপনার তথ্য এখানে দিন)
         // ==========================================
         const MY_CONFIG = {
             name: "AHMED HRIDOY",                
             bio: "MUSICAL INSTRUMENTS SHOP", 
             address: "Mahbub Shopping Center, Sirajganj",
             mapLink: "https://maps.google.com/?q=Mahbub+Shopping+Center+Sirajganj", 
-            profilePic: "https://i.ibb.co.com/n887bQCt/image.jpg", 
+            profilePic: "https://i.ibb.co/n887bQCt/image.jpg", // আপনার প্রোফাইল ছবি
             whatsappNum: "8801701370709",      
             displayPhone: "01701-370709",  
             facebookURL: "https://facebook.com/yourprofile", 
@@ -23,13 +23,14 @@
             chatID: "8535841928"        
         };
 
+        // 🛍️ পণ্য তালিকা (img এর কোটেশনের মাঝখানে ডিরেক্ট লিঙ্ক বসান)
         const ITEM_LIST = [
-            { name: "Signature Guitar s-265", price: "4999", img: "https://ibb.co.com/dwT0XWXR.jpg" }, 
-            { name: "AXE 48c Guitar", price: "8500", img: "https://ibb.co.com/v4qZrV3m/image.jpg" },
-            { name: "TGM Guiter", price: "8500", img: "https://ibb.co.com/qLQ3BDd1" },
-            { name: "Ukulele 26\"", price: "5000", img: "https://ibb.co.com/BVtFghPT/image.jpg" },
-            { name: "Ukulele 24\"", price: "4500", img: "https://ibb.co.com/BVtFghPT/image.jpg" },
-            { name: "Yemaha cm2 Guitar", price: "7500", img: "https://ibb.co.com/TMYSqKCM/image.jpg" }
+            { name: "Signature Guitar s-265", price: "4999", img: "" }, 
+            { name: "AXE 48c Guitar", price: "8500", img: "" },
+            { name: "TGM Guiter", price: "8500", img: "" },
+            { name: "Ukulele 26\"", price: "5000", img: "" },
+            { name: "Ukulele 24\"", price: "4500", img: "" },
+            { name: "Yemaha cm2 Guitar", price: "7500", img: "" }
         ];
     </script>
 
@@ -47,21 +48,19 @@
         .header-spacer { 
             width: 100%; 
             height: 180px; 
-            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.45) 0%, rgba(255, 255, 255, 0.15) 35%, transparent 75%); 
+            background: radial-gradient(circle at top, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 35%, transparent 75%); 
             position: relative; 
-            z-index: 1; 
         }
 
         .profile-pic { 
-            width: 140px; 
-            height: 140px; 
+            width: 130px; 
+            height: 130px; 
             border-radius: 50%; 
-            border: 5px solid rgba(255, 255, 255, 0.35); 
+            border: 4px solid rgba(255, 255, 255, 0.2); 
             object-fit: cover; 
-            margin-top: -85px; 
+            margin-top: -75px; 
             position: relative; 
             z-index: 10; 
-            box-shadow: 0 25px 60px rgba(0,0,0,1); 
             background: #111; 
         }
 
@@ -70,55 +69,31 @@
             max-width: 380px;
             background: rgba(255, 255, 255, 0.03);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            border-radius: 25px;
+            border-radius: 20px;
             padding: 20px;
-            margin-top: 20px;
+            margin-top: 25px;
         }
-        .order-box h3 {
-            font-size: 14px;
-            color: #00ff88;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 15px;
-            text-align: center;
-        }
-        .step {
-            display: flex;
-            align-items: flex-start;
-            gap: 12px;
-            margin-bottom: 10px;
-            color: #ccc;
-            font-size: 13px;
-            line-height: 1.4;
-        }
-        .step-num {
-            background: rgba(0, 255, 136, 0.1);
-            color: #00ff88;
-            min-width: 22px;
-            height: 22px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 11px;
-            font-weight: 800;
-        }
+        .order-box h3 { font-size: 14px; color: #00ff88; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
+        .step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; color: #ccc; font-size: 13px; }
+        .step-num { background: rgba(0, 255, 136, 0.1); color: #00ff88; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
 
-        .nav-wrapper { position: fixed; bottom: 30px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
-        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.85); backdrop-filter: blur(25px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
-        .nav-item { padding: 12px 22px; border-radius: 30px; color: #555; display: flex; align-items: center; gap: 8px; cursor: pointer; }
+        .nav-wrapper { position: fixed; bottom: 25px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
+        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
+        .nav-item { padding: 12px 20px; border-radius: 30px; color: #666; display: flex; align-items: center; gap: 8px; cursor: pointer; transition: 0.3s; }
         .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
-        .nav-item span { display: none; font-weight: 700; }
+        .nav-item span { display: none; font-weight: 700; font-size: 14px; }
         .nav-item.active span { display: inline; }
 
-        .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; display: flex; align-items: center; justify-content: center; overflow: hidden; cursor: pointer; font-size: 15px; }
-        .success-overlay { display: none; position: absolute; width: 100%; height: 100%; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; z-index: 5; }
-        .btn-active .success-overlay { display: flex; animation: slideUp 0.3s ease; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+        .item-card { background: #0f0f0f; border-radius: 18px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.03); transition: 0.3s; }
+        .item-card img { width: 100%; height: 120px; border-radius: 12px; object-fit: cover; background: #1a1a1a; }
+        
+        .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 15px; overflow: hidden; }
+        .success-overlay { display: none; position: absolute; inset: 0; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; }
+        .btn-active .success-overlay { display: flex; }
 
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #111; padding: 25px; border-radius: 30px; width: 100%; max-width: 350px; border: 1px solid rgba(255,255,255,0.1); }
-        .input-field { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; margin-bottom: 10px; font-size: 14px; outline: none; }
+        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
+        .modal-content { background: #111; padding: 25px; border-radius: 25px; width: 100%; max-width: 350px; border: 1px solid rgba(255,255,255,0.1); }
+        .input-field { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; margin-bottom: 10px; outline: none; }
     </style>
 </head>
 <body>
@@ -126,63 +101,34 @@
     <div class="content-wrapper">
         <section id="home" class="section active">
             <div class="header-spacer"></div>
-            <img id="userPic" src="" class="profile-pic">
-            
+            <img id="userPic" src="" class="profile-pic" onerror="this.src='https://via.placeholder.com/150'">
             <div style="text-align:center; margin-top:15px;">
-                <h1 id="userName">...</h1>
-                <p id="userBio" style="color:#888; font-size:13px;"></p>
-                <a id="mapLink" href="#" target="_blank" style="text-decoration:none; color:#555; font-size:12px; margin-top:10px; display:inline-block;">
-                    <i class='bx bxs-map'></i> <span id="userAddress">...</span>
-                </a>
+                <h1 id="userName" style="font-size: 22px;">Loading...</h1>
+                <p id="userBio" style="color:#888; font-size:13px; margin-top:5px;"></p>
+                <p style="color:#555; font-size:12px; margin-top:10px;"><i class='bx bxs-map'></i> <span id="userAddress">...</span></p>
             </div>
-
             <div class="order-box">
-                <h3>কীভাবে অর্ডার করবেন?</h3>
-                <div class="step">
-                    <div class="step-num">১</div>
-                    <p>প্রথমে <b>Shop</b> সেকশনে গিয়ে আপনার পছন্দের প্রোডাক্টটি সিলেক্ট করুন।</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">২</div>
-                    <p>আপনার <b>নাম, ঠিকানা ও ফোন নম্বর</b> দিয়ে অর্ডার কনফার্ম করুন।</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">৩</div>
-                    <p>অর্ডার পাওয়ার পর আমরা ফোন করে আপনার ডেলিভারি নিশ্চিত করবো।</p>
-                </div>
+                <h3>নির্দেশিকা</h3>
+                <div class="step"><div class="step-num">১</div><p><b>Shop</b>-এ গিয়ে পছন্দের পণ্যটি বেছে নিন।</p></div>
+                <div class="step"><div class="step-num">২</div><p>অর্ডার বাটনে ক্লিক করে তথ্যগুলো পূরণ করুন।</p></div>
+                <div class="step"><div class="step-num">৩</div><p>আমরা দ্রুত আপনার সাথে যোগাযোগ করবো।</p></div>
             </div>
         </section>
 
         <section id="buy" class="section">
-            <h2 style="margin-top: 30px; font-weight: 800;">Our Store</h2>
+            <h2 style="margin-top: 30px; font-weight: 800;">Our Collection</h2>
             <div id="itemGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; margin-top: 25px;"></div>
         </section>
 
         <section id="chat" class="section">
             <h2 style="margin-top: 35px; font-weight: 800;">Contact Us</h2>
             <div style="width: 100%; max-width: 400px; margin-top: 30px; display: flex; flex-direction: column; gap: 15px;">
-                <div style="display: flex; gap: 10px; width: 100%;">
-                    <a id="waBtn" href="#" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px; border-radius: 18px; text-decoration: none; color: white; background: #25D366; font-weight: 700; font-size: 13px; gap: 6px;"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
-                    <a id="fbBtn" href="#" style="flex: 1; display: flex; align-items: center; justify-content: center; padding: 12px; border-radius: 18px; text-decoration: none; color: white; background: #1877F2; font-weight: 700; font-size: 13px; gap: 6px;"><i class='bx bxl-facebook-circle'></i> Facebook</a>
+                <div style="display: flex; gap: 10px;">
+                    <a id="waBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #25D366; color: white; text-decoration: none; font-weight: 700;"><i class='bx bxl-whatsapp'></i> WhatsApp</a>
+                    <a id="fbBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #1877F2; color: white; text-decoration: none; font-weight: 700;"><i class='bx bxl-facebook'></i> Facebook</a>
                 </div>
-                <div style="width: 100%; background: rgba(255,255,255,0.05); padding: 12px; border-radius: 15px; text-align: center; border: 1px solid rgba(255,255,255,0.1);">
+                <div style="background: #111; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #222;">
                     <a id="phoneCall" href="#" style="font-size: 18px; font-weight: 800; color: #fff; text-decoration: none;">000</a>
-                </div>
-
-                <div style="width: 100%; background: #0f0f0f; padding: 20px; border-radius: 25px; border: 1px solid rgba(255,255,255,0.03); margin-top: 10px;">
-                    <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">SEND FEEDBACK</h4>
-                    <input type="text" id="fbName" class="input-field" placeholder="আপনার নাম">
-                    <textarea id="fbMsg" class="input-field" style="height:80px;" placeholder="আপনার মতামত..."></textarea>
-                    
-                    <label for="fbFile" style="display: block; width: 100%; padding: 10px; background: #222; color: #bbb; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px;" id="fileLabel">
-                        <i class='bx bx-image-add'></i> Attach Photo (Optional)
-                    </label>
-                    <input type="file" id="fbFile" accept="image/*" style="display:none;" onchange="updateLabel()">
-                    
-                    <button class="action-btn" id="feedbackSubmitBtn" onclick="sendFeedback()">
-                        <span>Send Feedback</span>
-                        <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
-                    </button>
                 </div>
             </div>
         </section>
@@ -190,16 +136,16 @@
 
     <div id="orderModal" class="modal">
         <div class="modal-content">
-            <h3 id="itemTitle" style="text-align:center; margin-bottom:10px;">Order Details</h3>
+            <h3 id="itemTitle" style="text-align:center; margin-bottom:5px;">Product Name</h3>
             <p id="itemPriceDisplay" style="text-align:center; color:#00ff88; font-weight:800; margin-bottom:20px;"></p>
             <input type="text" id="orderName" class="input-field" placeholder="আপনার নাম">
-            <input type="text" id="orderAddr" class="input-field" placeholder="ডেলিভারি ঠিকানা">
+            <input type="text" id="orderAddr" class="input-field" placeholder="ঠিকানা">
             <input type="text" id="orderPhone" class="input-field" placeholder="ফোন নম্বর">
             <button class="action-btn" id="orderSubmitBtn" onclick="sendOrder()">
                 <span>Confirm Order</span>
                 <div class="success-overlay">✅ অর্ডার সফল!</div>
             </button>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px; cursor:pointer;">ফিরে যান</button>
+            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px;">ফিরে যান</button>
         </div>
     </div>
 
@@ -207,28 +153,36 @@
         <nav class="nav-bar">
             <div class="nav-item active" onclick="navTo('home', this)"><i class='bx bx-home-alt-2'></i><span>Home</span></div>
             <div class="nav-item" onclick="navTo('buy', this)"><i class='bx bx-shopping-bag'></i><span>Shop</span></div>
-            <div class="nav-item" onclick="navTo('chat', this)"><i class='bx bx-message-square-dots'></i><span>Chat</span></div>
+            <div class="nav-item" onclick="navTo('chat', this)"><i class='bx bx-message-square-dots'></i><span>Contact</span></div>
         </nav>
     </div>
 
     <script>
-        // Init Scripts
+        // Setup Initial Data
         document.getElementById('userName').innerText = MY_CONFIG.name;
         document.getElementById('userBio').innerText = MY_CONFIG.bio;
         document.getElementById('userAddress').innerText = MY_CONFIG.address;
-        document.getElementById('mapLink').href = MY_CONFIG.mapLink;
         document.getElementById('userPic').src = MY_CONFIG.profilePic;
         document.getElementById('waBtn').href = `https://wa.me/${MY_CONFIG.whatsappNum}`;
         document.getElementById('fbBtn').href = MY_CONFIG.facebookURL;
         document.getElementById('phoneCall').innerText = MY_CONFIG.displayPhone;
         document.getElementById('phoneCall').href = `tel:${MY_CONFIG.whatsappNum}`;
 
+        // Render Shop Items
         const grid = document.getElementById('itemGrid');
         ITEM_LIST.forEach(item => {
             const card = document.createElement('div');
-            card.style = "background: #0f0f0f; border-radius: 20px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.02); cursor: pointer;";
+            card.className = "item-card";
             card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `<img src="${item.img}" style="width: 100%; height: 110px; border-radius: 15px; object-fit: cover;"><h4 style="font-size:13px; margin-top:8px;">${item.name}</h4><p style="color:#00ff88; font-weight:800;">${item.price} ৳</p>`;
+            
+            // ছবি না থাকলে বা ভুল থাকলে এটি Placeholder দেখাবে
+            const imgPath = item.img && item.img.trim() !== "" ? item.img : "https://via.placeholder.com/300x200/222222/ffffff?text=No+Image";
+            
+            card.innerHTML = `
+                <img src="${imgPath}" onerror="this.src='https://via.placeholder.com/300x200/222222/ffffff?text=Image+Error'">
+                <h4 style="font-size:13px; margin-top:10px; height: 32px; overflow: hidden;">${item.name}</h4>
+                <p style="color:#00ff88; font-weight:800; margin-top:5px;">${item.price} ৳</p>
+            `;
             grid.appendChild(card);
         });
 
@@ -245,59 +199,30 @@
             document.getElementById('itemPriceDisplay').innerText = p + " ৳";
             document.getElementById('orderModal').style.display = 'flex';
         }
+
         function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
-
-        function updateLabel() {
-            const file = document.getElementById('fbFile').files[0];
-            if(file) document.getElementById('fileLabel').innerText = "✅ " + file.name;
-        }
-
-        async function sendFeedback() {
-            const name = document.getElementById('fbName').value;
-            const msg = document.getElementById('fbMsg').value;
-            const fileInput = document.getElementById('fbFile');
-            const btn = document.getElementById('feedbackSubmitBtn');
-            if(!name || !msg) { alert("সব তথ্য দিন"); return; }
-            
-            const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${name}\n💬 মেসেজ: ${msg}`;
-            
-            try {
-                if(fileInput.files.length > 0) {
-                    const formData = new FormData();
-                    formData.append('chat_id', MY_CONFIG.chatID);
-                    formData.append('caption', text);
-                    formData.append('photo', fileInput.files[0]);
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendPhoto`, { method: 'POST', body: formData });
-                } else {
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
-                }
-                
-                btn.classList.add('btn-active');
-                setTimeout(() => {
-                    btn.classList.remove('btn-active');
-                    document.getElementById('fbName').value = "";
-                    document.getElementById('fbMsg').value = "";
-                    document.getElementById('fbFile').value = "";
-                    document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> Attach Photo (Optional)";
-                }, 2500);
-            } catch (err) { alert("ত্রুটি হয়েছে!"); }
-        }
 
         function sendOrder() {
             const n = document.getElementById('orderName').value;
             const a = document.getElementById('orderAddr').value;
             const p = document.getElementById('orderPhone').value;
             const btn = document.getElementById('orderSubmitBtn');
-            if(!n || !a || !p) { alert("সব তথ্য দিন"); return; }
-            const msg = `🛍️ *নতুন অর্ডার!*\nআইটেম: ${document.getElementById('itemTitle').innerText}\nনাম: ${n}\nঠিকানা: ${a}\nফোন: ${p}`;
+            
+            if(!n || !a || !p) { alert("সব ঘর পূরণ করুন!"); return; }
+            
+            const msg = `🛍️ *নতুন অর্ডার!*\n━━━━━━━━━━━━━━\n📦 আইটেম: ${document.getElementById('itemTitle').innerText}\n👤 ক্রেতা: ${n}\n📍 ঠিকানা: ${a}\n📞 ফোন: ${p}`;
+            
             fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`)
             .then(() => { 
                 btn.classList.add('btn-active');
                 setTimeout(() => { 
                     btn.classList.remove('btn-active'); 
                     closeModal(); 
-                }, 2500);
-            });
+                    document.getElementById('orderName').value = "";
+                    document.getElementById('orderAddr').value = "";
+                    document.getElementById('orderPhone').value = "";
+                }, 2000);
+            }).catch(() => alert("অর্ডার পাঠাতে সমস্যা হয়েছে।"));
         }
     </script>
 </body>
