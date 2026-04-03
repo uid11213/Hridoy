@@ -44,6 +44,11 @@
         .header-spacer { width: 100%; height: 180px; background: radial-gradient(circle at top, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 35%, transparent 75%); }
         .profile-pic { width: 130px; height: 130px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.2); object-fit: cover; margin-top: -75px; z-index: 10; background: #111; }
 
+        .order-box { width: 100%; max-width: 380px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 20px; margin-top: 25px; }
+        .order-box h3 { font-size: 14px; color: #00ff88; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
+        .step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; color: #ccc; font-size: 13px; }
+        .step-num { background: rgba(0, 255, 136, 0.1); color: #00ff88; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+
         .nav-wrapper { position: fixed; bottom: 25px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
         .nav-bar { display: flex; background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
         .nav-item { padding: 12px 20px; border-radius: 30px; color: #666; display: flex; align-items: center; gap: 8px; cursor: pointer; }
@@ -71,6 +76,22 @@
                 <p id="userBio" style="color:#888; font-size:13px;"></p>
                 <p style="color:#555; font-size:12px; margin-top:10px;"><i class='bx bxs-map'></i> <span id="userAddress">...</span></p>
             </div>
+            
+            <div class="order-box">
+                <h3>কীভাবে অর্ডার করবেন?</h3>
+                <div class="step">
+                    <div class="step-num">১</div>
+                    <p><b>Shop</b> সেকশনে গিয়ে পছন্দের প্রোডাক্টটি সিলেক্ট করুন।</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">২</div>
+                    <p>অর্ডার ফর্মে আপনার <b>নাম, ঠিকানা ও ফোন নম্বর</b> দিয়ে কনফার্ম করুন।</p>
+                </div>
+                <div class="step">
+                    <div class="step-num">৩</div>
+                    <p>আমরা দ্রুত আপনার সাথে যোগাযোগ করে ডেলিভারি নিশ্চিত করবো।</p>
+                </div>
+            </div>
         </section>
 
         <section id="buy" class="section">
@@ -90,7 +111,7 @@
                 </div>
 
                 <div style="background: #0f0f0f; padding: 20px; border-radius: 20px; border: 1px solid #222; margin-top: 10px;">
-                    <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">মতামত বা ছবি পাঠান</h4>
+                    <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">ফিডব্যাক বা ছবি পাঠান</h4>
                     <input type="text" id="fbName" class="input-field" placeholder="আপনার নাম">
                     <textarea id="fbMsg" class="input-field" style="height:70px;" placeholder="মেসেজ..."></textarea>
                     
@@ -112,7 +133,7 @@
         <div class="modal-content">
             <h3 id="itemTitle">Product</h3>
             <p id="itemPriceDisplay" style="color:#00ff88; font-weight:800; margin-bottom:15px;"></p>
-            <input type="text" id="orderName" class="input-field" placeholder="নাম">
+            <input type="text" id="orderName" class="input-field" placeholder="আপনার নাম">
             <input type="text" id="orderAddr" class="input-field" placeholder="ঠিকানা">
             <input type="text" id="orderPhone" class="input-field" placeholder="ফোন নম্বর">
             <button class="action-btn" id="orderSubmitBtn" onclick="sendOrder()">
@@ -155,6 +176,7 @@
             document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
             document.getElementById(id).classList.add('active');
             el.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
         function openModal(n, p) {
@@ -174,7 +196,7 @@
             const m = document.getElementById('fbMsg').value;
             const fileInput = document.getElementById('fbFile');
             const btn = document.getElementById('fbSubmitBtn');
-            if(!n || !m) return alert("নাম এবং মেসেজ লিখুন");
+            if(!n || !m) return alert("সব তথ্য দিন");
 
             const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${n}\n💬 মতামত: ${m}`;
             
@@ -193,9 +215,10 @@
                     btn.classList.remove('btn-active'); 
                     document.getElementById('fbName').value = ""; 
                     document.getElementById('fbMsg').value = "";
+                    document.getElementById('fbFile').value = "";
                     document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> ছবি যুক্ত করুন (ঐচ্ছিক)";
                 }, 2500);
-            } catch (e) { alert("Error sending feedback"); }
+            } catch (e) { alert("ত্রুটি হয়েছে!"); }
         }
 
         function sendOrder() {
