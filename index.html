@@ -3,169 +3,170 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guitar Shop - Strings & Accessories</title>
+    <title>Guitar Shop - Order via Telegram</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
+        body { background-color: #f0f2f5; padding-bottom: 50px; }
+        
+        header { background: #2c3e50; color: white; text-align: center; padding: 30px; margin-bottom: 30px; }
+        
+        .container { max-width: 900px; margin: auto; padding: 0 15px; }
 
-        body {
-            background-color: #f4f4f4;
-            color: #333;
-        }
-
-        /* Header Section */
-        header {
-            background-color: #1a1a1a;
-            color: #fff;
-            padding: 20px 0;
-            text-align: center;
-        }
-
-        header h1 {
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        /* Hero Banner */
-        .hero {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1550985616-10810253b84d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
-            background-size: cover;
-            background-position: center;
-            height: 300px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
-
-        /* Product Section */
-        .container {
-            max-width: 1100px;
-            margin: 40px auto;
-            padding: 0 20px;
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 40px;
-            font-size: 28px;
-            border-bottom: 2px solid #e67e22;
-            display: inline-block;
-            padding-bottom: 5px;
-        }
-
+        /* Grid setup: 2 items per row */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(2, 1fr); /* 2 items per row */
             gap: 20px;
         }
 
         .product-card {
-            background: #fff;
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            display: flex;
+            flex-direction: column;
         }
 
         .product-card img {
-            max-width: 100%;
-            height: 200px;
+            width: 100%;
+            height: 180px;
             object-fit: contain;
             margin-bottom: 15px;
         }
 
-        .product-card h3 {
-            margin-bottom: 10px;
-            font-size: 20px;
+        .product-info h3 { font-size: 18px; margin-bottom: 5px; }
+        .price { color: #e67e22; font-weight: bold; margin-bottom: 15px; display: block; }
+
+        /* Order Form Styling */
+        .order-form {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            border-top: 1px solid #eee;
+            padding-top: 15px;
         }
 
-        .price {
-            color: #e67e22;
-            font-weight: bold;
-            font-size: 18px;
-            display: block;
-            margin-bottom: 15px;
+        .order-form input, .order-form textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
         }
 
-        .buy-btn {
-            background-color: #e67e22;
+        .confirm-btn {
+            background: #27ae60;
             color: white;
             border: none;
-            padding: 10px 20px;
+            padding: 10px;
             border-radius: 5px;
             cursor: pointer;
-            text-decoration: none;
             font-weight: bold;
+            transition: 0.3s;
         }
 
-        .buy-btn:hover {
-            background-color: #d35400;
-        }
+        .confirm-btn:hover { background: #219150; }
 
-        footer {
-            text-align: center;
-            padding: 30px;
-            background: #1a1a1a;
-            color: white;
-            margin-top: 50px;
+        @media (max-width: 600px) {
+            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+            .product-card { padding: 10px; }
+            .product-info h3 { font-size: 15px; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <h1>Guitar Shop</h1>
-        <p>Premium Strings & Guitar Accessories</p>
-    </header>
+<header>
+    <h1>Guitar Shop</h1>
+    <p>Order Your Favorite Strings</p>
+</header>
 
-    <div class="hero">
-        <div>
-            <h2>Best Strings for Your Guitar</h2>
-            <p>Quality sounds start with quality strings.</p>
-        </div>
-    </div>
-
-    <div class="container">
-        <center><h2 class="section-title">Our Products</h2></center>
+<div class="container">
+    <div class="product-grid">
         
-        <div class="product-grid">
-            <div class="product-card">
-                <img src="https://m.media-amazon.com/images/I/71pE7I0V-0L._SL1500_.jpg" alt="Zico Strings">
-                <h3>Zico Acoustic Strings</h3>
-                <span class="price">৳ 350.00</span>
-                <button class="buy-btn">Buy Now</button>
+        <div class="product-card">
+            <img src="https://m.media-amazon.com/images/I/71pE7I0V-0L._SL1500_.jpg" alt="Zico">
+            <div class="product-info">
+                <h3>Zico Strings Set</h3>
+                <span class="price">Price: 350 TK</span>
             </div>
-
-            <div class="product-card">
-                <img src="https://m.media-amazon.com/images/I/61kYmFpDlvL._SL1000_.jpg" alt="Orphee Strings">
-                <h3>Orphee TX620 Strings</h3>
-                <span class="price">৳ 450.00</span>
-                <button class="buy-btn">Buy Now</button>
-            </div>
-
-            <div class="product-card">
-                <img src="https://m.media-amazon.com/images/I/719hZkX8XIL._SL1500_.jpg" alt="Alice Strings">
-                <h3>Alice A406 Strings Set</h3>
-                <span class="price">৳ 280.00</span>
-                <button class="buy-btn">Buy Now</button>
+            <div class="order-form">
+                <input type="text" id="name-zico" placeholder="Apnar Nam" required>
+                <input type="number" id="phone-zico" placeholder="Phone Number" required>
+                <textarea id="address-zico" placeholder="Full Address" rows="2" required></textarea>
+                <button class="confirm-btn" onclick="sendTelegram('Zico Strings Set', 'zico')">Confirm Order</button>
             </div>
         </div>
-    </div>
 
-    <footer>
-        <p>&copy; 2026 Guitar Shop | All Rights Reserved</p>
-    </footer>
+        <div class="product-card">
+            <img src="https://m.media-amazon.com/images/I/61kYmFpDlvL._SL1000_.jpg" alt="Orphee">
+            <div class="product-info">
+                <h3>Orphee Strings Set</h3>
+                <span class="price">Price: 450 TK</span>
+            </div>
+            <div class="order-form">
+                <input type="text" id="name-orphee" placeholder="Apnar Nam" required>
+                <input type="number" id="phone-orphee" placeholder="Phone Number" required>
+                <textarea id="address-orphee" placeholder="Full Address" rows="2" required></textarea>
+                <button class="confirm-btn" onclick="sendTelegram('Orphee Strings Set', 'orphee')">Confirm Order</button>
+            </div>
+        </div>
+
+        <div class="product-card">
+            <img src="https://m.media-amazon.com/images/I/719hZkX8XIL._SL1500_.jpg" alt="Alice">
+            <div class="product-info">
+                <h3>Alice Strings Set</h3>
+                <span class="price">Price: 280 TK</span>
+            </div>
+            <div class="order-form">
+                <input type="text" id="name-alice" placeholder="Apnar Nam" required>
+                <input type="number" id="phone-alice" placeholder="Phone Number" required>
+                <textarea id="address-alice" placeholder="Full Address" rows="2" required></textarea>
+                <button class="confirm-btn" onclick="sendTelegram('Alice Strings Set', 'alice')">Confirm Order</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+    function sendTelegram(productName, idSuffix) {
+        // Ekhane tomar Token ebong Chat ID bosao
+        const token = "YOUR_BOT_TOKEN"; 
+        const chat_id = "YOUR_CHAT_ID";
+
+        const name = document.getElementById('name-' + idSuffix).value;
+        const phone = document.getElementById('phone-' + idSuffix).value;
+        const address = document.getElementById('address-' + idSuffix).value;
+
+        if(name == "" || phone == "" || address == "") {
+            alert("Doya kore shob ghor puron korun!");
+            return;
+        }
+
+        const message = `🔔 *New Order Received!*\n\n🎸 *Product:* ${productName}\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n🏠 *Address:* ${address}`;
+
+        const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
+
+        fetch(url)
+        .then(response => {
+            if(response.ok) {
+                alert("Order Safol bhabe hoyeche! Telegram-e janiye deya hoyeche.");
+                // Form clear kora
+                document.getElementById('name-' + idSuffix).value = "";
+                document.getElementById('phone-' + idSuffix).value = "";
+                document.getElementById('address-' + idSuffix).value = "";
+            } else {
+                alert("Order fail hoyeche. Token ba Chat ID check korun.");
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert("Network error!");
+        });
+    }
+</script>
 
 </body>
 </html>
