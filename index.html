@@ -3,98 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Smart Feed</title>
+    <title>Cyber-Hub | Admin Terminal</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
     <style>
         body {
-            background: radial-gradient(circle at top left, #1e293b, #0f172a);
-            min-height: 100vh;
-            perspective: 1000px;
+            background-color: #050505;
+            font-family: 'Fira Code', monospace;
+            color: #00ff41;
+            overflow-x: hidden;
         }
-        .glass-card {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 25px 45px rgba(0,0,0,0.2);
-            transform-style: preserve-3d;
-            transition: transform 0.5s ease;
+        .cyber-border {
+            border: 1px solid #00ff41;
+            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
         }
-        .glass-card:hover {
-            transform: translateZ(20px) rotateX(2deg);
+        .matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.05;
+            pointer-events: none;
         }
-        .admin-glow {
-            box-shadow: 0 0 20px rgba(59, 130, 246, 0.5);
+        .terminal-text::before {
+            content: "> ";
+            color: #00ff41;
+        }
+        input {
+            background: transparent !important;
+            border-bottom: 1px solid #00ff41 !important;
+            color: #00ff41 !important;
+            outline: none;
+        }
+        .glitch {
+            text-shadow: 2px 0 red, -2px 0 blue;
+            animation: glitch 1s infinite alternate;
+        }
+        @keyframes glitch {
+            0% { transform: skew(0deg); }
+            20% { transform: skew(10deg); }
+            100% { transform: skew(-10deg); }
         }
     </style>
 </head>
 <body x-data="{ 
     isAdmin: false, 
-    showLogin: false, 
+    loginModal: false, 
     pass: '', 
-    posts: [
-        {title: 'Welcome to the Feed', img: 'https://picsum.photos/600/400?random=1'},
-        {title: '3D UI Concept', img: 'https://picsum.photos/600/400?random=2'}
+    tools: [
+        {name: 'IP_SCANNER', status: 'ACTIVE', logs: 'Scanning port 80...'},
+        {name: 'SQL_INJECTOR', status: 'STANDBY', logs: 'Ready for payload...'},
+        {name: 'DDoS_PROTECT', status: 'ONLINE', logs: 'Traffic normal.'}
     ],
-    checkPass() {
-        if(this.pass === '1234') { // Ekhane tomar password daw
-            this.isAdmin = true;
-            this.showLogin = false;
-        } else {
-            alert('Wrong Password!');
-        }
+    addLog(index) {
+        let newLog = prompt('Enter new log/status:');
+        if(newLog) this.tools[index].logs = newLog;
     }
-}" class="text-white font-sans p-4">
+}">
 
-    <nav class="flex justify-between items-center max-w-4xl mx-auto py-6">
-        <h1 class="text-2xl font-bold italic tracking-wider">SMART<span class="text-blue-500">FEED</span></h1>
-        <button @click="showLogin = !showLogin" class="bg-blue-600 px-6 py-2 rounded-full hover:bg-blue-700 transition">
-            <i class="fa-solid fa-user-shield mr-2"></i> Admin Panel
-        </button>
-    </nav>
+    <canvas id="matrix" class="matrix-bg"></canvas>
 
-    <div x-show="showLogin" class="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-        <div class="glass-card p-8 rounded-2xl w-80 text-center">
-            <h2 class="mb-4 font-bold">Admin Password</h2>
-            <input type="password" x-model="pass" class="w-full p-2 rounded bg-gray-800 border border-gray-600 mb-4 focus:outline-none">
-            <div class="flex gap-2">
-                <button @click="checkPass()" class="flex-1 bg-green-600 py-2 rounded hover:bg-green-700">Enter</button>
-                <button @click="showLogin = false" class="flex-1 bg-gray-600 py-2 rounded">Cancel</button>
-            </div>
+    <header class="p-6 border-b border-green-900 flex justify-between items-center">
+        <div class="text-2xl font-bold glitch uppercase tracking-widest">
+            System_Core v3.0
         </div>
-    </div>
+        <div>
+            <button @click="loginModal = true" class="cyber-border px-4 py-1 text-sm hover:bg-green-900 transition">
+                [ AUTH_ROOT ]
+            </button>
+        </div>
+    </header>
 
-    <main class="max-w-xl mx-auto mt-10">
-        
-        <template x-if="isAdmin">
-            <div class="glass-card p-6 rounded-3xl mb-10 admin-glow">
-                <h3 class="text-blue-400 font-bold mb-4">Post Management</h3>
-                <input type="text" placeholder="Post Title" id="postTitle" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
-                <input type="text" placeholder="Image URL" id="postImg" class="w-full bg-gray-800 p-3 rounded-lg mb-3">
-                <button @click="posts.unshift({title: document.getElementById('postTitle').value, img: document.getElementById('postImg').value})" 
-                    class="w-full bg-blue-500 py-3 rounded-lg font-bold hover:bg-blue-400 transition">
-                    Push to Feed
-                </button>
-                <button @click="isAdmin = false" class="text-xs mt-4 text-gray-400 underline">Logout Admin</button>
-            </div>
-        </template>
-
-        <div class="space-y-8">
-            <template x-for="post in posts">
-                <div class="glass-card p-4 rounded-3xl overflow-hidden">
-                    <img :src="post.img" class="w-full h-64 object-cover rounded-2xl mb-4 shadow-lg" alt="feed image">
-                    <div class="px-2">
-                        <p class="text-lg font-medium" x-text="post.title"></p>
-                        <div class="flex gap-4 mt-3 text-gray-400">
-                            <i class="fa-regular fa-heart cursor-pointer hover:text-red-500"></i>
-                            <i class="fa-regular fa-comment cursor-pointer hover:text-blue-500"></i>
-                        </div>
+    <main class="p-8 max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
+            <template x-for="(tool, index) in tools">
+                <div class="cyber-border p-6 bg-black/50 backdrop-blur-sm relative overflow-hidden">
+                    <div class="flex justify-between items-start mb-4">
+                        <h3 class="font-bold text-lg" x-text="tool.name"></h3>
+                        <span class="text-xs px-2 py-1 bg-green-900/30 border border-green-500" x-text="tool.status"></span>
                     </div>
+                    <p class="text-xs text-green-500/70 terminal-text mb-4" x-text="tool.logs"></p>
+                    
+                    <template x-if="isAdmin">
+                        <button @click="addLog(index)" class="w-full text-xs border border-blue-500 text-blue-400 py-1 hover:bg-blue-900/20 transition">
+                            MODIFY_DATA
+                        </button>
+                    </template>
                 </div>
+            </template>
+        </div>
+
+        <div class="cyber-border p-4 bg-black/80 h-64 overflow-y-auto text-sm">
+            <p class="mb-2 opacity-50">[SYSTEM INFO] Initializing cyber-environment...</p>
+            <p class="mb-2 opacity-50">[SECURITY] Firewall active. Monitoring incoming packets...</p>
+            <p class="text-blue-400 terminal-text">Visitor_ID: <span x-text="Math.random().toString(36).substring(7)"></span> connected from Bangladesh.</p>
+            <template x-if="isAdmin">
+                <p class="text-red-500 font-bold mt-4">*** ROOT_ACCESS_GRANTED ***</p>
             </template>
         </div>
     </main>
 
+    <div x-show="loginModal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
+        <div class="cyber-border p-10 bg-black max-w-sm w-full">
+            <h2 class="text-center mb-6 font-bold tracking-widest uppercase">Encryption Key Required</h2>
+            <input type="password" x-model="pass" class="w-full p-2 mb-6 text-center" placeholder="********">
+            <div class="flex gap-4">
+                <button @click="if(pass === 'admin') { isAdmin = true; loginModal = false; } else { alert('ACCESS DENIED'); }" 
+                        class="flex-1 bg-green-900/50 py-2 hover:bg-green-500 hover:text-black transition">DECRYPT</button>
+                <button @click="loginModal = false" class="flex-1 border border-red-900 text-red-500 py-2 hover:bg-red-900/20">ABORT</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix Background Effect
+        const canvas = document.getElementById('matrix');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+        const drops = Array(Math.floor(columns)).fill(1);
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#00ff41';
+            ctx.font = fontSize + 'px monospace';
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+                drops[i]++;
+            }
+        }
+        setInterval(draw, 33);
+    </script>
 </body>
 </html>
