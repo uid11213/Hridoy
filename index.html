@@ -1,236 +1,138 @@
 <!DOCTYPE html>
-<html lang="bn">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hridoy Music Store | Instruments Shop</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
-    
-    <script>
-        const MY_CONFIG = {
-            name: "AHMED HRIDOY",                
-            bio: "MUSICAL INSTRUMENTS SHOP", 
-            address: "Mahbub Shopping Center, Sirajganj",
-            mapLink: "https://maps.google.com/?q=Mahbub+Shopping+Center+Sirajganj", 
-            profilePic: "https://i.ibb.co/n887bQCt/image.jpg", 
-            whatsappNum: "8801701370709",      
-            displayPhone: "01701-370709",  
-            facebookURL: "https://facebook.com/yourprofile", 
-            botToken: "8656077538:AAHk5W9TqlrVNODNALFiO6bGpvkmnTYWYYY",   
-            chatID: "8535841928"        
-        };
-
-        const ITEM_LIST = [
-            { name: "Signature Guitar s-265", price: "4999", img: "https://i.ibb.co/3ydb90Pn/image.jpg" }, 
-            { name: "AXE 48c Guitar", price: "8500", img: "https://i.ibb.co/v4qZrV3m/image.jpg" },
-            { name: "TGM Guiter", price: "8500", img: "https://i.ibb.co/LXXGZ3xx/image.jpg" },
-            { name: "Ukulele 26\"", price: "5000", img: "https://i.ibb.co/ksW1CqjJ/image.jpg" },
-            { name: "Ukulele 24\"", price: "4500", img: "https://i.ibb.co/ksW1CqjJ/image.jpg" },
-            { name: "Yemaha cm2 Guitar", price: "7500", img: "https://i.ibb.co/ZRKTnhrN/image.jpg" }
-        ];
-    </script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>iPhone Lock Screen Clone</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; }
-        html, body { background: #000; color: white; height: 100%; overflow-x: hidden; overflow-y: auto; }
-        body { border: 8px solid #111; min-height: 100vh; display: flex; flex-direction: column; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
 
-        .content-wrapper { flex: 1; width: 100%; padding-bottom: 120px; }
-        .section { display: none; flex-direction: column; align-items: center; width: 100%; padding: 0 15px; }
-        .section.active { display: flex; animation: fadeIn 0.4s ease-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        body, html {
+            height: 100%;
+            overflow: hidden;
+        }
 
-        .header-spacer { width: 100%; height: 180px; background: radial-gradient(circle at top, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.1) 35%, transparent 75%); }
-        .profile-pic { width: 130px; height: 130px; border-radius: 50%; border: 4px solid rgba(255, 255, 255, 0.2); object-fit: cover; margin-top: -75px; z-index: 10; background: #111; }
+        /* Wallpaper Section */
+        .lock-screen {
+            background: url('https://images.unsplash.com/photo-1614850523296-d8c1af93d400?q=80&w=2070&auto=format&fit=crop') no-repeat center center/cover;
+            height: 100vh;
+            width: 100vw;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 60px 20px;
+            color: white;
+            position: relative;
+        }
 
-        .order-box { width: 100%; max-width: 380px; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 20px; padding: 20px; margin-top: 25px; }
-        .order-box h3 { font-size: 14px; color: #00ff88; text-transform: uppercase; margin-bottom: 15px; text-align: center; }
-        .step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; color: #ccc; font-size: 13px; }
-        .step-num { background: rgba(0, 255, 136, 0.1); color: #00ff88; min-width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 800; }
+        /* Clock Style */
+        .time-container {
+            text-align: center;
+        }
 
-        .nav-wrapper { position: fixed; bottom: 25px; left: 0; right: 0; display: flex; justify-content: center; z-index: 1000; }
-        .nav-bar { display: flex; background: rgba(15, 15, 15, 0.8); backdrop-filter: blur(20px); padding: 8px; border-radius: 40px; border: 1px solid rgba(255,255,255,0.08); }
-        .nav-item { padding: 12px 20px; border-radius: 30px; color: #666; display: flex; align-items: center; gap: 8px; cursor: pointer; }
-        .nav-item.active { color: #fff; background: rgba(255, 255, 255, 0.1); }
-        .nav-item span { display: none; font-weight: 700; }
-        .nav-item.active span { display: inline; }
+        #clock {
+            font-size: 80px;
+            font-weight: 600;
+            letter-spacing: -2px;
+        }
 
-        .action-btn { position: relative; width: 100%; height: 50px; background: #fff; color: #000; border: none; border-radius: 15px; font-weight: 800; cursor: pointer; font-size: 15px; overflow: hidden; }
-        .success-overlay { display: none; position: absolute; inset: 0; background: #00ff88; color: #000; align-items: center; justify-content: center; font-weight: 800; }
-        .btn-active .success-overlay { display: flex; }
+        #date {
+            font-size: 18px;
+            font-weight: 500;
+            margin-top: -5px;
+        }
 
-        .input-field { width: 100%; padding: 12px; background: #1a1a1a; border: 1px solid #333; color: white; border-radius: 12px; margin-bottom: 10px; outline: none; }
-        .modal { position: fixed; inset: 0; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #111; padding: 25px; border-radius: 25px; width: 100%; max-width: 350px; border: 1px solid rgba(255,255,255,0.1); }
+        /* Bottom Buttons */
+        .bottom-controls {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            padding: 0 30px 40px 30px;
+            position: absolute;
+            bottom: 0;
+        }
+
+        .icon-btn {
+            width: 50px;
+            height: 50px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(15px);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            cursor: pointer;
+            text-decoration: none;
+            color: white;
+            transition: transform 0.2s;
+        }
+
+        .icon-btn:active {
+            transform: scale(0.9);
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        /* Notification Bar / Home Indicator */
+        .home-indicator {
+            width: 120px;
+            height: 5px;
+            background: white;
+            border-radius: 10px;
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
     </style>
 </head>
 <body>
 
-    <div class="content-wrapper">
-        <section id="home" class="section active">
-            <div class="header-spacer"></div>
-            <img id="userPic" src="" class="profile-pic">
-            <div style="text-align:center; margin-top:15px;">
-                <h1 id="userName">...</h1>
-                <p id="userBio" style="color:#888; font-size:13px;"></p>
-                <p style="color:#555; font-size:12px; margin-top:10px;"><i class='bx bxs-map'></i> <span id="userAddress">...</span></p>
-            </div>
-            
-            <div class="order-box">
-                <h3>কীভাবে অর্ডার করবেন?</h3>
-                <div class="step">
-                    <div class="step-num">১</div>
-                    <p><b>Shop</b> সেকশনে গিয়ে পছন্দের প্রোডাক্টটি সিলেক্ট করুন।</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">২</div>
-                    <p>অর্ডার ফর্মে আপনার <b>নাম, ঠিকানা ও ফোন নম্বর</b> দিয়ে কনফার্ম করুন।</p>
-                </div>
-                <div class="step">
-                    <div class="step-num">৩</div>
-                    <p>আমরা দ্রুত আপনার সাথে যোগাযোগ করে ডেলিভারি নিশ্চিত করবো।</p>
-                </div>
-            </div>
-        </section>
-
-        <section id="buy" class="section">
-            <h2 style="margin-top: 30px; font-weight: 800;">Our Store</h2>
-            <div id="itemGrid" style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; width: 100%; margin-top: 25px;"></div>
-        </section>
-
-        <section id="chat" class="section">
-            <h2 style="margin-top: 35px; font-weight: 800;">Contact Us</h2>
-            <div style="width: 100%; max-width: 400px; margin-top: 25px; display: flex; flex-direction: column; gap: 12px;">
-                <div style="display: flex; gap: 10px;">
-                    <a id="waBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #25D366; color: white; text-decoration: none; font-weight: 700;">WhatsApp</a>
-                    <a id="fbBtn" href="#" style="flex: 1; padding: 15px; border-radius: 15px; text-align: center; background: #1877F2; color: white; text-decoration: none; font-weight: 700;">Facebook</a>
-                </div>
-                <div style="background: #111; padding: 15px; border-radius: 15px; text-align: center; border: 1px solid #222;">
-                    <a id="phoneCall" href="#" style="font-size: 18px; font-weight: 800; color: #fff; text-decoration: none;">000</a>
-                </div>
-
-                <div style="background: #0f0f0f; padding: 20px; border-radius: 20px; border: 1px solid #222; margin-top: 10px;">
-                    <h4 style="font-size:14px; color:#555; text-align:center; margin-bottom:12px;">ফিডব্যাক বা ছবি পাঠান</h4>
-                    <input type="text" id="fbName" class="input-field" placeholder="আপনার নাম">
-                    <textarea id="fbMsg" class="input-field" style="height:70px;" placeholder="মেসেজ..."></textarea>
-                    
-                    <label for="fbFile" style="display: block; width: 100%; padding: 10px; background: #1a1a1a; color: #777; border-radius: 10px; text-align: center; font-size: 12px; cursor: pointer; border: 1px dashed #444; margin-bottom: 15px;" id="fileLabel">
-                        <i class='bx bx-image-add'></i> ছবি যুক্ত করুন (ঐচ্ছিক)
-                    </label>
-                    <input type="file" id="fbFile" accept="image/*" style="display:none;" onchange="updateLabel()">
-                    
-                    <button class="action-btn" id="fbSubmitBtn" onclick="sendFeedback()">
-                        <span>Send Feedback</span>
-                        <div class="success-overlay">✅ পাঠানো হয়েছে!</div>
-                    </button>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <div id="orderModal" class="modal">
-        <div class="modal-content">
-            <h3 id="itemTitle">Product</h3>
-            <p id="itemPriceDisplay" style="color:#00ff88; font-weight:800; margin-bottom:15px;"></p>
-            <input type="text" id="orderName" class="input-field" placeholder="আপনার নাম">
-            <input type="text" id="orderAddr" class="input-field" placeholder="ঠিকানা">
-            <input type="text" id="orderPhone" class="input-field" placeholder="ফোন নম্বর">
-            <button class="action-btn" id="orderSubmitBtn" onclick="sendOrder()">
-                <span>Confirm Order</span>
-                <div class="success-overlay">✅ অর্ডার সফল!</div>
-            </button>
-            <button onclick="closeModal()" style="width:100%; background:none; border:none; color:#555; margin-top:15px;">বন্ধ করুন</button>
+    <div class="lock-screen">
+        <div class="time-container">
+            <div id="date"></div>
+            <div id="clock">00:00</div>
         </div>
-    </div>
 
-    <div class="nav-wrapper">
-        <nav class="nav-bar">
-            <div class="nav-item active" onclick="navTo('home', this)"><i class='bx bx-home-alt-2'></i><span>Home</span></div>
-            <div class="nav-item" onclick="navTo('buy', this)"><i class='bx bx-shopping-bag'></i><span>Shop</span></div>
-            <div class="nav-item" onclick="navTo('chat', this)"><i class='bx bx-message-square-dots'></i><span>Contact</span></div>
-        </nav>
+        <div class="bottom-controls">
+            <a href="https://facebook.com" class="icon-btn">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+
+            <a href="https://wa.me/yournumber" class="icon-btn">
+                <i class="fab fa-whatsapp"></i>
+            </a>
+        </div>
+
+        <div class="home-indicator"></div>
     </div>
 
     <script>
-        document.getElementById('userName').innerText = MY_CONFIG.name;
-        document.getElementById('userBio').innerText = MY_CONFIG.bio;
-        document.getElementById('userAddress').innerText = MY_CONFIG.address;
-        document.getElementById('userPic').src = MY_CONFIG.profilePic;
-        document.getElementById('waBtn').href = `https://wa.me/${MY_CONFIG.whatsappNum}`;
-        document.getElementById('fbBtn').href = MY_CONFIG.facebookURL;
-        document.getElementById('phoneCall').innerText = MY_CONFIG.displayPhone;
-        document.getElementById('phoneCall').href = `tel:${MY_CONFIG.whatsappNum}`;
-
-        const grid = document.getElementById('itemGrid');
-        ITEM_LIST.forEach(item => {
-            const card = document.createElement('div');
-            card.style = "background: #0f0f0f; border-radius: 18px; padding: 12px; text-align: center; border: 1px solid rgba(255,255,255,0.03); cursor: pointer;";
-            card.onclick = () => openModal(item.name, item.price);
-            card.innerHTML = `<img src="${item.img}" onerror="this.src='https://via.placeholder.com/150'" style="width:100%; height:110px; border-radius:12px; object-fit:cover;"><h4 style="font-size:13px; margin-top:8px;">${item.name}</h4><p style="color:#00ff88; font-weight:800;">${item.price} ৳</p>`;
-            grid.appendChild(card);
-        });
-
-        function navTo(id, el) {
-            document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
-            document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-            document.getElementById(id).classList.add('active');
-            el.classList.add('active');
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-
-        function openModal(n, p) {
-            document.getElementById('itemTitle').innerText = n;
-            document.getElementById('itemPriceDisplay').innerText = p + " ৳";
-            document.getElementById('orderModal').style.display = 'flex';
-        }
-        function closeModal() { document.getElementById('orderModal').style.display = 'none'; }
-
-        function updateLabel() {
-            const file = document.getElementById('fbFile').files[0];
-            if(file) document.getElementById('fileLabel').innerText = "✅ " + file.name;
-        }
-
-        async function sendFeedback() {
-            const n = document.getElementById('fbName').value;
-            const m = document.getElementById('fbMsg').value;
-            const fileInput = document.getElementById('fbFile');
-            const btn = document.getElementById('fbSubmitBtn');
-            if(!n || !m) return alert("সব তথ্য দিন");
-
-            const text = `📝 *নতুন ফিডব্যাক!*\n👤 নাম: ${n}\n💬 মতামত: ${m}`;
+        function updateTime() {
+            const now = new Date();
             
-            try {
-                if(fileInput.files.length > 0) {
-                    const formData = new FormData();
-                    formData.append('chat_id', MY_CONFIG.chatID);
-                    formData.append('caption', text);
-                    formData.append('photo', fileInput.files[0]);
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendPhoto`, { method: 'POST', body: formData });
-                } else {
-                    await fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(text)}&parse_mode=Markdown`);
-                }
-                btn.classList.add('btn-active');
-                setTimeout(() => { 
-                    btn.classList.remove('btn-active'); 
-                    document.getElementById('fbName').value = ""; 
-                    document.getElementById('fbMsg').value = "";
-                    document.getElementById('fbFile').value = "";
-                    document.getElementById('fileLabel').innerHTML = "<i class='bx bx-image-add'></i> ছবি যুক্ত করুন (ঐচ্ছিক)";
-                }, 2500);
-            } catch (e) { alert("ত্রুটি হয়েছে!"); }
+            // Time Format
+            let hours = now.getHours();
+            let minutes = now.getMinutes();
+            hours = hours < 10 ? '0' + hours : hours;
+            minutes = minutes < 10 ? '0' + minutes : minutes;
+            document.getElementById('clock').textContent = `${hours}:${minutes}`;
+
+            // Date Format
+            const options = { weekday: 'long', month: 'long', day: 'numeric' };
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', options);
         }
 
-        function sendOrder() {
-            const n = document.getElementById('orderName').value;
-            const a = document.getElementById('orderAddr').value;
-            const p = document.getElementById('orderPhone').value;
-            const btn = document.getElementById('orderSubmitBtn');
-            if(!n || !a || !p) return alert("সব তথ্য দিন");
-            const msg = `🛍️ *নতুন অর্ডার!*\n📦 আইটেম: ${document.getElementById('itemTitle').innerText}\n👤 ক্রেতা: ${n}\n📍 ঠিকানা: ${a}\n📞 ফোন: ${p}`;
-            fetch(`https://api.telegram.org/bot${MY_CONFIG.botToken}/sendMessage?chat_id=${MY_CONFIG.chatID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`)
-            .then(() => { btn.classList.add('btn-active'); setTimeout(() => { btn.classList.remove('btn-active'); closeModal(); }, 2500); });
-        }
+        // Update time every second
+        setInterval(updateTime, 1000);
+        updateTime(); // Initial call
     </script>
 </body>
 </html>
