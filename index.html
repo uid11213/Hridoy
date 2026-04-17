@@ -2,214 +2,214 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Liquid Glass Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Premium 3D Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --glass-bg: rgba(255, 255, 255, 0.08);
-            --glass-border: rgba(255, 255, 255, 0.15);
-            --silver-text: #e0e0e0;
+            --bg: #050505;
+            --card-bg: #111111;
+            --accent: #ffffff;
+            --silver: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            --border: rgba(255, 255, 255, 0.1);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Poppins', sans-serif;
-            -webkit-tap-highlight-color: transparent;
+            font-family: 'Inter', sans-serif;
         }
 
         body {
-            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
-            color: #fff;
-            height: 100vh;
+            background-color: var(--bg);
+            color: white;
             display: flex;
             justify-content: center;
             align-items: center;
-            overflow: hidden; /* No scroll */
+            min-height: 100vh;
+            padding: 20px;
         }
 
-        /* 3D Moving Liquid Orbs */
-        .orb {
-            position: absolute;
-            filter: blur(80px);
-            z-index: -1;
-            border-radius: 50%;
-            opacity: 0.5;
-            animation: float 15s infinite alternate;
-        }
-        .orb-1 { width: 300px; height: 300px; background: #333; top: -10%; left: -10%; }
-        .orb-2 { width: 250px; height: 250px; background: #1a1a1a; bottom: -5%; right: -5%; }
-
-        @keyframes float {
-            0% { transform: translate(0, 0) scale(1); }
-            100% { transform: translate(50px, 50px) scale(1.1); }
+        /* Bento Grid Layout */
+        .bento-container {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: auto;
+            gap: 15px;
+            max-width: 900px;
+            width: 100%;
         }
 
-        /* Main Glass Container */
-        .glass-container {
-            width: 90%;
-            max-width: 400px;
-            height: 90vh; /* Fits perfectly on phone screen */
-            background: var(--glass-bg);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid var(--glass-border);
-            border-radius: 40px;
-            padding: 25px;
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 24px;
+            padding: 20px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-8px) scale(1.02);
+            border-color: rgba(255, 255, 255, 0.3);
+            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
+        }
+
+        /* Profile Section (Big Card) */
+        .profile-card {
+            grid-column: span 2;
+            grid-row: span 2;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
-            box-shadow: 0 40px 60px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
-            position: relative;
-        }
-
-        /* Header & Clock */
-        .header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-        }
-
-        #clock {
-            font-size: 1rem;
-            font-weight: 700;
-            background: rgba(255,255,255,0.1);
-            padding: 8px 15px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            color: var(--silver-text);
-        }
-
-        /* Profile Area */
-        .profile-section {
-            text-align: center;
-            margin-top: -10px;
-        }
-
-        .profile-wrap {
-            position: relative;
-            display: inline-block;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(145deg, #151515, #000);
         }
 
         .profile-img {
-            width: 100px;
-            height: 100px;
-            border-radius: 30px;
-            object-fit: cover;
-            border: 1px solid var(--glass-border);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+            width: 130px;
+            height: 130px;
+            border-radius: 50%;
+            background: var(--silver);
+            padding: 4px;
+            margin-bottom: 15px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
         }
 
-        /* Glass Buttons Grid */
-        .social-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 12px;
+        /* Clock Card */
+        .clock-card {
+            grid-column: span 2;
+            background: var(--silver);
+            color: black;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.5rem;
+            font-weight: 800;
         }
 
-        .glass-btn {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid var(--glass-border);
-            padding: 15px;
-            border-radius: 20px;
+        /* Social Cards */
+        .social-card {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5rem;
             text-decoration: none;
-            color: var(--silver-text);
+            color: white;
+        }
+
+        .social-card.fb { background: #0866FF; }
+        .social-card.wa { background: #25D366; }
+        .social-card.tg { background: #0088cc; }
+        .social-card.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+
+        /* Utility/E-com Section */
+        .help-card {
+            grid-column: span 2;
+            background: rgba(255, 255, 255, 0.05);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .help-card h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
+        .help-card p { font-size: 0.85rem; opacity: 0.7; margin-bottom: 15px; }
+
+        .service-btn {
+            padding: 12px;
+            background: white;
+            color: black;
+            border-radius: 12px;
+            text-align: center;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 0.9rem;
+            transition: 0.3s;
+        }
+
+        .service-btn:hover { background: #ccc; }
+
+        /* Real-time Indicator */
+        .status {
+            position: absolute;
+            top: 15px;
+            left: 15px;
             display: flex;
             align-items: center;
-            justify-content: center;
-            gap: 10px;
-            font-size: 0.9rem;
-            transition: all 0.3s;
+            gap: 6px;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
-        .glass-btn:active {
-            transform: scale(0.95);
-            background: rgba(255,255,255,0.1);
+        .dot {
+            width: 8px;
+            height: 8px;
+            background: #25D366;
+            border-radius: 50%;
+            box-shadow: 0 0 10px #25D366;
+            animation: blink 1.5s infinite;
         }
 
-        .glass-btn i { font-size: 1.2rem; }
-
-        /* Help/Utility Section (The Return Hook) */
-        .utility-box {
-            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
-            border-radius: 25px;
-            padding: 15px;
-            border: 1px solid var(--glass-border);
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
         }
 
-        .utility-box h3 { font-size: 0.85rem; margin-bottom: 5px; color: #fff; }
-        .utility-box p { font-size: 0.75rem; opacity: 0.7; line-height: 1.3; }
-
-        .btn-action {
-            width: 100%;
-            margin-top: 10px;
-            padding: 10px;
-            border-radius: 15px;
-            border: none;
-            background: #fff;
-            color: #000;
-            font-weight: 700;
-            font-size: 0.8rem;
-            cursor: pointer;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .bento-container { grid-template-columns: repeat(2, 1fr); }
+            .profile-card { grid-column: span 2; }
+            .clock-card { grid-column: span 2; font-size: 2rem; }
         }
-
-        /* Status Dot */
-        .status { font-size: 0.7rem; color: #00ff88; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="orb orb-1"></div>
-    <div class="orb orb-2"></div>
-
-    <div class="glass-container">
-        <div class="header">
-            <div id="clock">00:00</div>
-            <div style="font-size: 1.2rem; opacity: 0.5;"><i class="fas fa-ellipsis-v"></i></div>
+    <div class="bento-container">
+        <div class="card profile-card">
+            <div class="status"><div class="dot"></div> Online</div>
+            <img src="https://via.placeholder.com/150" alt="Tarek" class="profile-img">
+            <h2>Tarek</h2>
+            <p style="opacity: 0.6; font-size: 0.9rem;">REDBOT | Creative Lead</p>
         </div>
 
-        <div class="profile-section">
-            <div class="profile-wrap">
-                <img src="https://via.placeholder.com/150" alt="Tarek" class="profile-img">
+        <div class="card clock-card" id="clock">00:00</div>
+
+        <div class="card help-card">
+            <div>
+                <h3><i class="fas fa-bolt"></i> Quick Support</h3>
+                <p>Ami apnader digital branding ar technical somossay sahajjo korte pari. Jono kono proyojone message din.</p>
             </div>
-            <h2 style="margin-top: 10px; letter-spacing: 1px;">REDBOT</h2>
-            <div class="status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> Active Now</div>
+            <a href="#" class="service-btn">Get Help Now</a>
         </div>
 
-        <div class="social-grid">
-            <a href="#" class="glass-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
-            <a href="#" class="glass-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
-            <a href="#" class="glass-btn"><i class="fab fa-telegram-plane"></i> Telegram</a>
-            <a href="#" class="glass-btn"><i class="fab fa-instagram"></i> Instagram</a>
-        </div>
+        <a href="#" class="card social-card fb"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="card social-card wa"><i class="fab fa-whatsapp"></i></a>
+        <a href="#" class="card social-card tg"><i class="fab fa-telegram-plane"></i></a>
+        <a href="#" class="card social-card ig"><i class="fab fa-instagram"></i></a>
 
-        <div class="utility-box">
-            <h3><i class="fas fa-magic"></i> Useful Resources</h3>
-            <p>Ami ekhane protidin premium design tips ar tech help share kori. Kono help lagle click korun.</p>
-            <button class="btn-action">Ask for Help</button>
+        <div class="card" style="grid-column: span 2; display: flex; align-items: center; gap: 15px;">
+            <i class="fas fa-shield-halved" style="font-size: 2rem; color: #silver;"></i>
+            <div>
+                <h4 style="font-size: 0.9rem;">Trusted Services</h4>
+                <p style="font-size: 0.75rem; opacity: 0.6;">100% Secure & Professional Work</p>
+            </div>
         </div>
     </div>
 
     <script>
-        // Real-time Clock
-        function updateTime() {
+        function updateClock() {
             const now = new Date();
             const h = String(now.getHours()).padStart(2, '0');
             const m = String(now.getMinutes()).padStart(2, '0');
             document.getElementById('clock').textContent = `${h}:${m}`;
         }
-        setInterval(updateTime, 1000);
-        updateTime();
-
-        // 3D Tilt Effect on Container
-        const card = document.querySelector('.glass-container');
-        document.addEventListener('mousemove', (e) => {
-            let xAxis = (window.innerWidth / 2 - e.pageX) / 30;
-            let yAxis = (window.innerHeight / 2 - e.pageY) / 30;
-            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
-        });
+        setInterval(updateClock, 1000);
+        updateClock();
     </script>
 </body>
 </html>
