@@ -1,151 +1,171 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="bn">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SRJ SHOP | Buy Best Gadgets</title>
+    <title>Guitar Shop - Strings & Accessories</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: sans-serif; }
-        body { background: #f0f2f5; padding-bottom: 50px; }
-        
-        /* Header */
-        header { background: #0088cc; color: white; padding: 15px; text-align: center; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 5px rgba(0,0,0,0.1); }
-        header h1 { font-size: 20px; text-transform: uppercase; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-        /* Product Grid: 2 per line */
+        body {
+            background-color: #f4f4f4;
+            color: #333;
+        }
+
+        /* Header Section */
+        header {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        header h1 {
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        /* Hero Banner */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1550985616-10810253b84d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        /* Product Section */
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 28px;
+            border-bottom: 2px solid #e67e22;
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
         .product-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 10px;
-            padding: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .product-card {
-            background: white;
+            background: #fff;
             border-radius: 8px;
-            padding: 10px;
+            padding: 20px;
             text-align: center;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
         }
 
-        .product-card img { width: 100%; border-radius: 5px; height: 120px; object-fit: cover; }
-        .product-card h3 { font-size: 14px; margin: 8px 0; color: #333; }
-        .product-card p { color: #ff4757; font-weight: bold; font-size: 14px; margin-bottom: 8px; }
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
 
-        .order-btn {
-            background: #2ed573;
+        .product-card img {
+            max-width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 15px;
+        }
+
+        .product-card h3 {
+            margin-bottom: 10px;
+            font-size: 20px;
+        }
+
+        .price {
+            color: #e67e22;
+            font-weight: bold;
+            font-size: 18px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .buy-btn {
+            background-color: #e67e22;
             color: white;
             border: none;
-            padding: 8px;
-            width: 100%;
-            border-radius: 4px;
+            padding: 10px 20px;
+            border-radius: 5px;
             cursor: pointer;
-            font-size: 12px;
+            text-decoration: none;
             font-weight: bold;
         }
 
-        /* Order Form (Modal) */
-        #orderForm {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: white;
-            padding: 20px;
-            width: 90%;
-            max-width: 350px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.3);
-            z-index: 1001;
+        .buy-btn:hover {
+            background-color: #d35400;
         }
 
-        #orderForm h2 { font-size: 18px; margin-bottom: 15px; text-align: center; }
-        input, textarea { width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 5px; }
-        .confirm-btn { background: #0088cc; color: white; width: 100%; padding: 10px; border: none; border-radius: 5px; cursor: pointer; }
-        .close-btn { background: #ff4757; margin-top: 5px; }
-
-        .overlay { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000; }
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #1a1a1a;
+            color: white;
+            margin-top: 50px;
+        }
     </style>
 </head>
 <body>
 
     <header>
-        <h1>SRJ SHOP</h1>
+        <h1>Guitar Shop</h1>
+        <p>Premium Strings & Guitar Accessories</p>
     </header>
 
-    <div class="product-grid">
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <h3>Gaming Mouse</h3>
-            <p>৳ 850</p>
-            <button class="order-btn" onclick="openOrder('Gaming Mouse', '850')">Order Now</button>
-        </div>
-
-        <div class="product-card">
-            <img src="https://via.placeholder.com/150" alt="Product">
-            <h3>Smart Watch</h3>
-            <p>৳ 1500</p>
-            <button class="order-btn" onclick="openOrder('Smart Watch', '1500')">Order Now</button>
+    <div class="hero">
+        <div>
+            <h2>Best Strings for Your Guitar</h2>
+            <p>Quality sounds start with quality strings.</p>
         </div>
     </div>
 
-    <div class="overlay" id="overlay"></div>
-    <div id="orderForm">
-        <h2 id="formTitle">Order Details</h2>
-        <input type="text" id="wa_id" placeholder="Your WhatsApp Number" required>
-        <textarea id="address" placeholder="Delivery Address" rows="3" required></textarea>
-        <button class="confirm-btn" onclick="sendOrder()">Confirm Order</button>
-        <button class="confirm-btn close-btn" onclick="closeOrder()">Cancel</button>
+    <div class="container">
+        <center><h2 class="section-title">Our Products</h2></center>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/71pE7I0V-0L._SL1500_.jpg" alt="Zico Strings">
+                <h3>Zico Acoustic Strings</h3>
+                <span class="price">৳ 350.00</span>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/61kYmFpDlvL._SL1000_.jpg" alt="Orphee Strings">
+                <h3>Orphee TX620 Strings</h3>
+                <span class="price">৳ 450.00</span>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+
+            <div class="product-card">
+                <img src="https://m.media-amazon.com/images/I/719hZkX8XIL._SL1500_.jpg" alt="Alice Strings">
+                <h3>Alice A406 Strings Set</h3>
+                <span class="price">৳ 280.00</span>
+                <button class="buy-btn">Buy Now</button>
+            </div>
+        </div>
     </div>
 
-    <script>
-        let selectedProduct = "";
-        let selectedPrice = "";
+    <footer>
+        <p>&copy; 2026 Guitar Shop | All Rights Reserved</p>
+    </footer>
 
-        // Bot Configuration
-        const botToken = "YOUR_BOT_TOKEN"; // BotFather theke pawa token ekhane din
-        const chatId = "YOUR_CHAT_ID";     // Apnar Chat ID ekhane din
-
-        function openOrder(name, price) {
-            selectedProduct = name;
-            selectedPrice = price;
-            document.getElementById('formTitle').innerText = "Order: " + name;
-            document.getElementById('orderForm').style.display = 'block';
-            document.getElementById('overlay').style.display = 'block';
-        }
-
-        function closeOrder() {
-            document.getElementById('orderForm').style.display = 'none';
-            document.getElementById('overlay').style.display = 'none';
-        }
-
-        function sendOrder() {
-            const wa = document.getElementById('wa_id').value;
-            const addr = document.getElementById('address').value;
-
-            if(wa == "" || addr == "") {
-                alert("Please fill all details");
-                return;
-            }
-
-            const message = `🛍️ *New Order Received!*\n\n` +
-                            `📦 *Product:* ${selectedProduct}\n` +
-                            `💰 *Price:* ৳${selectedPrice}\n` +
-                            `📱 *WhatsApp:* ${wa}\n` +
-                            `📍 *Address:* ${addr}`;
-
-            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
-
-            fetch(url).then(res => {
-                if(res.ok) {
-                    alert("Order Confirmed! Check Telegram.");
-                    closeOrder();
-                } else {
-                    alert("Error sending order.");
-                }
-            });
-        }
-    </script>
 </body>
 </html>
