@@ -3,213 +3,239 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium 3D Hub</title>
+    <title>Futuristic Liquid 3D Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --bg: #050505;
-            --card-bg: #111111;
-            --accent: #ffffff;
-            --silver: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
-            --border: rgba(255, 255, 255, 0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Inter', sans-serif;
+            font-family: 'Poppins', sans-serif;
         }
 
         body {
-            background-color: var(--bg);
-            color: white;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            padding: 20px;
         }
 
-        /* Bento Grid Layout */
-        .bento-container {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            grid-template-rows: auto;
-            gap: 15px;
-            max-width: 900px;
+        /* Moving Liquid Background */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+            z-index: -1;
         }
 
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            padding: 20px;
+        /* 3D Dashboard Wrapper */
+        .wrapper {
+            width: 95%;
+            max-width: 1100px;
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 20px;
+            perspective: 1000px;
+        }
+
+        /* Sidebar Card */
+        .sidebar {
+            background: linear-gradient(145deg, #111, #050505);
+            border: 1px solid #333;
+            border-radius: 30px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: 10px 10px 30px rgba(0,0,0,0.8);
+            transform: rotateY(10deg);
+        }
+
+        .profile-pic {
+            width: 150px;
+            height: 150px;
+            border-radius: 25px;
+            background: #222;
+            margin: 0 auto 20px;
+            border: 2px solid #555;
+            box-shadow: 0 0 20px rgba(255,255,255,0.05);
+            transition: 0.5s;
+        }
+
+        .profile-pic:hover {
+            transform: scale(1.05) rotate(5deg);
+            border-color: #fff;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: grid;
+            grid-template-rows: auto 1fr;
+            gap: 20px;
+        }
+
+        /* Top Header (Clock & Status) */
+        .header-bar {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .clock-3d {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #e0e0e0;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+        }
+
+        /* Interactive Grid */
+        .action-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .action-card {
+            background: #0a0a0a;
+            border: 1px solid #222;
+            border-radius: 20px;
+            padding: 25px;
+            text-decoration: none;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            transition: 0.4s;
             position: relative;
             overflow: hidden;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
-        .card:hover {
-            transform: translateY(-8px) scale(1.02);
-            border-color: rgba(255, 255, 255, 0.3);
-            box-shadow: 0 20px 40px rgba(255, 255, 255, 0.05);
+        .action-card:hover {
+            background: #fff;
+            color: #000;
+            transform: translateY(-10px);
         }
 
-        /* Profile Section (Big Card) */
-        .profile-card {
-            grid-column: span 2;
-            grid-row: span 2;
+        .action-card i { font-size: 2rem; }
+
+        /* Help Center / Return Trigger */
+        .help-center {
+            grid-column: 1 / -1;
+            background: linear-gradient(90deg, #111, #222);
+            border-radius: 25px;
+            padding: 30px;
+            border-left: 5px solid #fff;
             display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background: linear-gradient(145deg, #151515, #000);
-        }
-
-        .profile-img {
-            width: 130px;
-            height: 130px;
-            border-radius: 50%;
-            background: var(--silver);
-            padding: 4px;
-            margin-bottom: 15px;
-            box-shadow: 0 0 30px rgba(255,255,255,0.1);
-        }
-
-        /* Clock Card */
-        .clock-card {
-            grid-column: span 2;
-            background: var(--silver);
-            color: black;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-        }
-
-        /* Social Cards */
-        .social-card {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 1.5rem;
-            text-decoration: none;
-            color: white;
-        }
-
-        .social-card.fb { background: #0866FF; }
-        .social-card.wa { background: #25D366; }
-        .social-card.tg { background: #0088cc; }
-        .social-card.ig { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-
-        /* Utility/E-com Section */
-        .help-card {
-            grid-column: span 2;
-            background: rgba(255, 255, 255, 0.05);
-            display: flex;
-            flex-direction: column;
             justify-content: space-between;
+            align-items: center;
         }
 
-        .help-card h3 { color: #fff; margin-bottom: 10px; font-size: 1.2rem; }
-        .help-card p { font-size: 0.85rem; opacity: 0.7; margin-bottom: 15px; }
-
-        .service-btn {
-            padding: 12px;
-            background: white;
-            color: black;
-            border-radius: 12px;
-            text-align: center;
-            text-decoration: none;
+        .daily-tip-box h4 { color: #888; text-transform: uppercase; font-size: 0.8rem; }
+        
+        .btn-interact {
+            padding: 12px 25px;
+            background: #fff;
+            color: #000;
+            border-radius: 50px;
             font-weight: 700;
-            font-size: 0.9rem;
+            text-decoration: none;
             transition: 0.3s;
         }
 
-        .service-btn:hover { background: #ccc; }
-
-        /* Real-time Indicator */
-        .status {
-            position: absolute;
-            top: 15px;
-            left: 15px;
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-size: 0.7rem;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            background: #25D366;
-            border-radius: 50%;
-            box-shadow: 0 0 10px #25D366;
-            animation: blink 1.5s infinite;
-        }
-
-        @keyframes blink {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.3; }
-        }
+        .btn-interact:hover { letter-spacing: 1px; box-shadow: 0 0 20px #fff; }
 
         /* Responsive */
-        @media (max-width: 768px) {
-            .bento-container { grid-template-columns: repeat(2, 1fr); }
-            .profile-card { grid-column: span 2; }
-            .clock-card { grid-column: span 2; font-size: 2rem; }
+        @media (max-width: 900px) {
+            .wrapper { grid-template-columns: 1fr; }
+            .sidebar { transform: none; }
         }
     </style>
 </head>
 <body>
 
-    <div class="bento-container">
-        <div class="card profile-card">
-            <div class="status"><div class="dot"></div> Online</div>
-            <img src="https://via.placeholder.com/150" alt="Tarek" class="profile-img">
-            <h2>Tarek</h2>
-            <p style="opacity: 0.6; font-size: 0.9rem;">REDBOT | Creative Lead</p>
-        </div>
+    <div class="liquid-bg"></div>
 
-        <div class="card clock-card" id="clock">00:00</div>
-
-        <div class="card help-card">
-            <div>
-                <h3><i class="fas fa-bolt"></i> Quick Support</h3>
-                <p>Ami apnader digital branding ar technical somossay sahajjo korte pari. Jono kono proyojone message din.</p>
+    <div class="wrapper">
+        <aside class="sidebar">
+            <div class="profile-pic">
+                <img src="https://via.placeholder.com/150" alt="Profile" style="width:100%; height:100%; border-radius:22px; object-fit:cover;">
             </div>
-            <a href="#" class="service-btn">Get Help Now</a>
-        </div>
-
-        <a href="#" class="card social-card fb"><i class="fab fa-facebook-f"></i></a>
-        <a href="#" class="card social-card wa"><i class="fab fa-whatsapp"></i></a>
-        <a href="#" class="card social-card tg"><i class="fab fa-telegram-plane"></i></a>
-        <a href="#" class="card social-card ig"><i class="fab fa-instagram"></i></a>
-
-        <div class="card" style="grid-column: span 2; display: flex; align-items: center; gap: 15px;">
-            <i class="fas fa-shield-halved" style="font-size: 2rem; color: #silver;"></i>
-            <div>
-                <h4 style="font-size: 0.9rem;">Trusted Services</h4>
-                <p style="font-size: 0.75rem; opacity: 0.6;">100% Secure & Professional Work</p>
+            <h2 style="letter-spacing: 2px;">YOUR NAME</h2>
+            <p style="color: #666; font-size: 0.9rem; margin: 10px 0 25px;">Creative Developer</p>
+            <div style="text-align: left; border-top: 1px solid #222; padding-top: 20px;">
+                <p style="font-size: 0.8rem; color: #888;"><i class="fas fa-location-dot"></i> Sirajganj, BD</p>
+                <p style="font-size: 0.8rem; color: #888; margin-top: 5px;"><i class="fas fa-envelope"></i> contact@yourweb.com</p>
             </div>
-        </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="header-bar">
+                <div class="clock-3d" id="realtime-clock">00:00:00</div>
+                <div style="font-size: 0.8rem; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 50px;">
+                    <i class="fas fa-circle" style="color: #00ff00; font-size: 0.6rem;"></i> System Active
+                </div>
+            </header>
+
+            <div class="action-grid">
+                <a href="#" class="action-card">
+                    <i class="fab fa-whatsapp"></i>
+                    <span>WhatsApp</span>
+                    <small>Direct Message</small>
+                </a>
+                <a href="#" class="action-card">
+                    <i class="fab fa-facebook"></i>
+                    <span>Facebook</span>
+                    <small>Follow Profile</small>
+                </a>
+                <a href="#" class="action-card">
+                    <i class="fab fa-telegram"></i>
+                    <span>Telegram</span>
+                    <small>Join Channel</small>
+                </a>
+                <a href="#" class="action-card">
+                    <i class="fab fa-instagram"></i>
+                    <span>Instagram</span>
+                    <small>Latest Updates</small>
+                </a>
+
+                <section class="help-center">
+                    <div class="daily-tip-box">
+                        <h4>Daily Tech Tip</h4>
+                        <p id="tip-text" style="margin-top: 10px; font-weight: 500;">Loading awesome tip...</p>
+                    </div>
+                    <a href="#" class="btn-interact">Get Support</a>
+                </section>
+            </div>
+        </main>
     </div>
 
     <script>
-        function updateClock() {
+        // Real-time Clock
+        function updateTime() {
             const now = new Date();
-            const h = String(now.getHours()).padStart(2, '0');
-            const m = String(now.getMinutes()).padStart(2, '0');
-            document.getElementById('clock').textContent = `${h}:${m}`;
+            document.getElementById('realtime-clock').innerText = now.toLocaleTimeString();
         }
-        setInterval(updateClock, 1000);
-        updateClock();
+        setInterval(updateTime, 1000);
+        updateTime();
+
+        // Daily Tips System (To keep people coming back)
+        const tips = [
+            "Use 2FA to keep your social accounts secure!",
+            "Optimize your images before uploading for 2x speed.",
+            "Dark mode reduces eye strain during long coding sessions.",
+            "Always back up your important project files weekly.",
+            "Glassmorphism is the trend for 2026 UI designs."
+        ];
+        document.getElementById('tip-text').innerText = tips[Math.floor(Math.random() * tips.length)];
     </script>
 </body>
 </html>
