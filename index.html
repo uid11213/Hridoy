@@ -2,240 +2,214 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Futuristic Liquid 3D Hub</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Liquid Glass Hub</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        :root {
+            --glass-bg: rgba(255, 255, 255, 0.08);
+            --glass-border: rgba(255, 255, 255, 0.15);
+            --silver-text: #e0e0e0;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
             font-family: 'Poppins', sans-serif;
+            -webkit-tap-highlight-color: transparent;
         }
 
         body {
-            background: #000;
+            background: radial-gradient(circle at center, #1a1a1a 0%, #000 100%);
             color: #fff;
-            overflow-x: hidden;
+            height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 100vh;
+            overflow: hidden; /* No scroll */
         }
 
-        /* Moving Liquid Background */
-        .liquid-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% 50%, #1a1a1a 0%, #000 100%);
+        /* 3D Moving Liquid Orbs */
+        .orb {
+            position: absolute;
+            filter: blur(80px);
             z-index: -1;
+            border-radius: 50%;
+            opacity: 0.5;
+            animation: float 15s infinite alternate;
+        }
+        .orb-1 { width: 300px; height: 300px; background: #333; top: -10%; left: -10%; }
+        .orb-2 { width: 250px; height: 250px; background: #1a1a1a; bottom: -5%; right: -5%; }
+
+        @keyframes float {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, 50px) scale(1.1); }
         }
 
-        /* 3D Dashboard Wrapper */
-        .wrapper {
-            width: 95%;
-            max-width: 1100px;
-            display: grid;
-            grid-template-columns: 300px 1fr;
-            gap: 20px;
-            perspective: 1000px;
-        }
-
-        /* Sidebar Card */
-        .sidebar {
-            background: linear-gradient(145deg, #111, #050505);
-            border: 1px solid #333;
-            border-radius: 30px;
-            padding: 30px;
-            text-align: center;
-            box-shadow: 10px 10px 30px rgba(0,0,0,0.8);
-            transform: rotateY(10deg);
-        }
-
-        .profile-pic {
-            width: 150px;
-            height: 150px;
-            border-radius: 25px;
-            background: #222;
-            margin: 0 auto 20px;
-            border: 2px solid #555;
-            box-shadow: 0 0 20px rgba(255,255,255,0.05);
-            transition: 0.5s;
-        }
-
-        .profile-pic:hover {
-            transform: scale(1.05) rotate(5deg);
-            border-color: #fff;
-        }
-
-        /* Main Content */
-        .main-content {
-            display: grid;
-            grid-template-rows: auto 1fr;
-            gap: 20px;
-        }
-
-        /* Top Header (Clock & Status) */
-        .header-bar {
-            background: rgba(255, 255, 255, 0.03);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 20px;
-            padding: 15px 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .clock-3d {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #e0e0e0;
-            text-shadow: 0 0 10px rgba(255,255,255,0.3);
-        }
-
-        /* Interactive Grid */
-        .action-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
-        }
-
-        .action-card {
-            background: #0a0a0a;
-            border: 1px solid #222;
-            border-radius: 20px;
+        /* Main Glass Container */
+        .glass-container {
+            width: 90%;
+            max-width: 400px;
+            height: 90vh; /* Fits perfectly on phone screen */
+            background: var(--glass-bg);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            border: 1px solid var(--glass-border);
+            border-radius: 40px;
             padding: 25px;
-            text-decoration: none;
-            color: #fff;
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            transition: 0.4s;
+            justify-content: space-between;
+            box-shadow: 0 40px 60px rgba(0,0,0,0.5), inset 0 0 20px rgba(255,255,255,0.05);
             position: relative;
-            overflow: hidden;
         }
 
-        .action-card:hover {
-            background: #fff;
-            color: #000;
-            transform: translateY(-10px);
-        }
-
-        .action-card i { font-size: 2rem; }
-
-        /* Help Center / Return Trigger */
-        .help-center {
-            grid-column: 1 / -1;
-            background: linear-gradient(90deg, #111, #222);
-            border-radius: 25px;
-            padding: 30px;
-            border-left: 5px solid #fff;
+        /* Header & Clock */
+        .header {
             display: flex;
             justify-content: space-between;
-            align-items: center;
+            align-items: flex-start;
         }
 
-        .daily-tip-box h4 { color: #888; text-transform: uppercase; font-size: 0.8rem; }
-        
-        .btn-interact {
-            padding: 12px 25px;
+        #clock {
+            font-size: 1rem;
+            font-weight: 700;
+            background: rgba(255,255,255,0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            color: var(--silver-text);
+        }
+
+        /* Profile Area */
+        .profile-section {
+            text-align: center;
+            margin-top: -10px;
+        }
+
+        .profile-wrap {
+            position: relative;
+            display: inline-block;
+        }
+
+        .profile-img {
+            width: 100px;
+            height: 100px;
+            border-radius: 30px;
+            object-fit: cover;
+            border: 1px solid var(--glass-border);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        /* Glass Buttons Grid */
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .glass-btn {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            padding: 15px;
+            border-radius: 20px;
+            text-decoration: none;
+            color: var(--silver-text);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+
+        .glass-btn:active {
+            transform: scale(0.95);
+            background: rgba(255,255,255,0.1);
+        }
+
+        .glass-btn i { font-size: 1.2rem; }
+
+        /* Help/Utility Section (The Return Hook) */
+        .utility-box {
+            background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.02));
+            border-radius: 25px;
+            padding: 15px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .utility-box h3 { font-size: 0.85rem; margin-bottom: 5px; color: #fff; }
+        .utility-box p { font-size: 0.75rem; opacity: 0.7; line-height: 1.3; }
+
+        .btn-action {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 15px;
+            border: none;
             background: #fff;
             color: #000;
-            border-radius: 50px;
             font-weight: 700;
-            text-decoration: none;
-            transition: 0.3s;
+            font-size: 0.8rem;
+            cursor: pointer;
         }
 
-        .btn-interact:hover { letter-spacing: 1px; box-shadow: 0 0 20px #fff; }
-
-        /* Responsive */
-        @media (max-width: 900px) {
-            .wrapper { grid-template-columns: 1fr; }
-            .sidebar { transform: none; }
-        }
+        /* Status Dot */
+        .status { font-size: 0.7rem; color: #00ff88; margin-top: 5px; }
     </style>
 </head>
 <body>
 
-    <div class="liquid-bg"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
 
-    <div class="wrapper">
-        <aside class="sidebar">
-            <div class="profile-pic">
-                <img src="https://via.placeholder.com/150" alt="Profile" style="width:100%; height:100%; border-radius:22px; object-fit:cover;">
+    <div class="glass-container">
+        <div class="header">
+            <div id="clock">00:00</div>
+            <div style="font-size: 1.2rem; opacity: 0.5;"><i class="fas fa-ellipsis-v"></i></div>
+        </div>
+
+        <div class="profile-section">
+            <div class="profile-wrap">
+                <img src="https://via.placeholder.com/150" alt="Tarek" class="profile-img">
             </div>
-            <h2 style="letter-spacing: 2px;">YOUR NAME</h2>
-            <p style="color: #666; font-size: 0.9rem; margin: 10px 0 25px;">Creative Developer</p>
-            <div style="text-align: left; border-top: 1px solid #222; padding-top: 20px;">
-                <p style="font-size: 0.8rem; color: #888;"><i class="fas fa-location-dot"></i> Sirajganj, BD</p>
-                <p style="font-size: 0.8rem; color: #888; margin-top: 5px;"><i class="fas fa-envelope"></i> contact@yourweb.com</p>
-            </div>
-        </aside>
+            <h2 style="margin-top: 10px; letter-spacing: 1px;">REDBOT</h2>
+            <div class="status"><i class="fas fa-circle" style="font-size: 0.5rem;"></i> Active Now</div>
+        </div>
 
-        <main class="main-content">
-            <header class="header-bar">
-                <div class="clock-3d" id="realtime-clock">00:00:00</div>
-                <div style="font-size: 0.8rem; background: rgba(255,255,255,0.1); padding: 5px 15px; border-radius: 50px;">
-                    <i class="fas fa-circle" style="color: #00ff00; font-size: 0.6rem;"></i> System Active
-                </div>
-            </header>
+        <div class="social-grid">
+            <a href="#" class="glass-btn"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+            <a href="#" class="glass-btn"><i class="fab fa-facebook-f"></i> Facebook</a>
+            <a href="#" class="glass-btn"><i class="fab fa-telegram-plane"></i> Telegram</a>
+            <a href="#" class="glass-btn"><i class="fab fa-instagram"></i> Instagram</a>
+        </div>
 
-            <div class="action-grid">
-                <a href="#" class="action-card">
-                    <i class="fab fa-whatsapp"></i>
-                    <span>WhatsApp</span>
-                    <small>Direct Message</small>
-                </a>
-                <a href="#" class="action-card">
-                    <i class="fab fa-facebook"></i>
-                    <span>Facebook</span>
-                    <small>Follow Profile</small>
-                </a>
-                <a href="#" class="action-card">
-                    <i class="fab fa-telegram"></i>
-                    <span>Telegram</span>
-                    <small>Join Channel</small>
-                </a>
-                <a href="#" class="action-card">
-                    <i class="fab fa-instagram"></i>
-                    <span>Instagram</span>
-                    <small>Latest Updates</small>
-                </a>
-
-                <section class="help-center">
-                    <div class="daily-tip-box">
-                        <h4>Daily Tech Tip</h4>
-                        <p id="tip-text" style="margin-top: 10px; font-weight: 500;">Loading awesome tip...</p>
-                    </div>
-                    <a href="#" class="btn-interact">Get Support</a>
-                </section>
-            </div>
-        </main>
+        <div class="utility-box">
+            <h3><i class="fas fa-magic"></i> Useful Resources</h3>
+            <p>Ami ekhane protidin premium design tips ar tech help share kori. Kono help lagle click korun.</p>
+            <button class="btn-action">Ask for Help</button>
+        </div>
     </div>
 
     <script>
         // Real-time Clock
         function updateTime() {
             const now = new Date();
-            document.getElementById('realtime-clock').innerText = now.toLocaleTimeString();
+            const h = String(now.getHours()).padStart(2, '0');
+            const m = String(now.getMinutes()).padStart(2, '0');
+            document.getElementById('clock').textContent = `${h}:${m}`;
         }
         setInterval(updateTime, 1000);
         updateTime();
 
-        // Daily Tips System (To keep people coming back)
-        const tips = [
-            "Use 2FA to keep your social accounts secure!",
-            "Optimize your images before uploading for 2x speed.",
-            "Dark mode reduces eye strain during long coding sessions.",
-            "Always back up your important project files weekly.",
-            "Glassmorphism is the trend for 2026 UI designs."
-        ];
-        document.getElementById('tip-text').innerText = tips[Math.floor(Math.random() * tips.length)];
+        // 3D Tilt Effect on Container
+        const card = document.querySelector('.glass-container');
+        document.addEventListener('mousemove', (e) => {
+            let xAxis = (window.innerWidth / 2 - e.pageX) / 30;
+            let yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+            card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+        });
     </script>
 </body>
 </html>
