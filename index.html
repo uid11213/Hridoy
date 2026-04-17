@@ -3,75 +3,102 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Guitar Shop - Order via Telegram</title>
+    <title>Guitar Shop - Strings Store</title>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Arial', sans-serif; }
-        body { background-color: #f0f2f5; padding-bottom: 50px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', sans-serif; }
+        body { background-color: #f8f9fa; color: #333; }
         
-        header { background: #2c3e50; color: white; text-align: center; padding: 30px; margin-bottom: 30px; }
-        
-        .container { max-width: 900px; margin: auto; padding: 0 15px; }
+        header { background: #1a1a1a; color: white; text-align: center; padding: 25px; }
+        .container { max-width: 1000px; margin: 30px auto; padding: 0 15px; }
 
-        /* Grid setup: 2 items per row */
+        /* Grid: 2 items per row */
         .product-grid {
             display: grid;
-            grid-template-columns: repeat(2, 1fr); /* 2 items per row */
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
         .product-card {
             background: white;
-            border-radius: 12px;
-            padding: 15px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card img {
-            width: 100%;
-            height: 180px;
-            object-fit: contain;
-            margin-bottom: 15px;
-        }
-
-        .product-info h3 { font-size: 18px; margin-bottom: 5px; }
-        .price { color: #e67e22; font-weight: bold; margin-bottom: 15px; display: block; }
-
-        /* Order Form Styling */
-        .order-form {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            border-top: 1px solid #eee;
-            padding-top: 15px;
-        }
-
-        .order-form input, .order-form textarea {
-            width: 100%;
-            padding: 8px;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
             border: 1px solid #ddd;
-            border-radius: 5px;
-            font-size: 14px;
         }
 
-        .confirm-btn {
-            background: #27ae60;
+        .product-card img { width: 100%; height: 180px; object-fit: contain; margin-bottom: 10px; }
+        .product-card h3 { font-size: 18px; margin-bottom: 8px; }
+        .price { color: #d35400; font-weight: bold; font-size: 20px; display: block; margin-bottom: 15px; }
+
+        .order-btn {
+            background: #e67e22;
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px 25px;
             border-radius: 5px;
             cursor: pointer;
             font-weight: bold;
-            transition: 0.3s;
+            width: 100%;
         }
 
-        .confirm-btn:hover { background: #219150; }
+        /* Modal (Order Box) Styling */
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.7);
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            width: 90%;
+            max-width: 400px;
+            position: relative;
+        }
+
+        .modal-content h2 { margin-bottom: 15px; font-size: 22px; color: #2c3e50; }
+        
+        .order-inputs { display: flex; flex-direction: column; gap: 12px; }
+        .order-inputs input, .order-inputs textarea {
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 15px;
+        }
+
+        .submit-btn {
+            background: #27ae60;
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 6px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 25px;
+            cursor: pointer;
+            color: #888;
+        }
 
         @media (max-width: 600px) {
             .product-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .product-card { padding: 10px; }
-            .product-info h3 { font-size: 15px; }
+            .product-card h3 { font-size: 15px; }
         }
     </style>
 </head>
@@ -79,92 +106,100 @@
 
 <header>
     <h1>Guitar Shop</h1>
-    <p>Order Your Favorite Strings</p>
+    <p>Get the best strings for your guitar</p>
 </header>
 
 <div class="container">
     <div class="product-grid">
-        
         <div class="product-card">
             <img src="https://m.media-amazon.com/images/I/71pE7I0V-0L._SL1500_.jpg" alt="Zico">
-            <div class="product-info">
-                <h3>Zico Strings Set</h3>
-                <span class="price">Price: 350 TK</span>
-            </div>
-            <div class="order-form">
-                <input type="text" id="name-zico" placeholder="Apnar Nam" required>
-                <input type="number" id="phone-zico" placeholder="Phone Number" required>
-                <textarea id="address-zico" placeholder="Full Address" rows="2" required></textarea>
-                <button class="confirm-btn" onclick="sendTelegram('Zico Strings Set', 'zico')">Confirm Order</button>
-            </div>
+            <h3>Zico Strings Set</h3>
+            <span class="price">350 TK</span>
+            <button class="order-btn" onclick="openOrderModal('Zico Strings Set')">Order Now</button>
         </div>
 
         <div class="product-card">
             <img src="https://m.media-amazon.com/images/I/61kYmFpDlvL._SL1000_.jpg" alt="Orphee">
-            <div class="product-info">
-                <h3>Orphee Strings Set</h3>
-                <span class="price">Price: 450 TK</span>
-            </div>
-            <div class="order-form">
-                <input type="text" id="name-orphee" placeholder="Apnar Nam" required>
-                <input type="number" id="phone-orphee" placeholder="Phone Number" required>
-                <textarea id="address-orphee" placeholder="Full Address" rows="2" required></textarea>
-                <button class="confirm-btn" onclick="sendTelegram('Orphee Strings Set', 'orphee')">Confirm Order</button>
-            </div>
+            <h3>Orphee TX620</h3>
+            <span class="price">450 TK</span>
+            <button class="order-btn" onclick="openOrderModal('Orphee TX620')">Order Now</button>
         </div>
 
         <div class="product-card">
             <img src="https://m.media-amazon.com/images/I/719hZkX8XIL._SL1500_.jpg" alt="Alice">
-            <div class="product-info">
-                <h3>Alice Strings Set</h3>
-                <span class="price">Price: 280 TK</span>
-            </div>
-            <div class="order-form">
-                <input type="text" id="name-alice" placeholder="Apnar Nam" required>
-                <input type="number" id="phone-alice" placeholder="Phone Number" required>
-                <textarea id="address-alice" placeholder="Full Address" rows="2" required></textarea>
-                <button class="confirm-btn" onclick="sendTelegram('Alice Strings Set', 'alice')">Confirm Order</button>
-            </div>
+            <h3>Alice A406 Set</h3>
+            <span class="price">280 TK</span>
+            <button class="order-btn" onclick="openOrderModal('Alice A406 Set')">Order Now</button>
         </div>
+    </div>
+</div>
 
+<div id="orderModal" class="modal">
+    <div class="modal-content">
+        <span class="close-btn" onclick="closeModal()">&times;</span>
+        <h2 id="modalProductName">Confirm Order</h2>
+        <div class="order-inputs">
+            <input type="text" id="custName" placeholder="Apnar Nam" required>
+            <input type="number" id="custPhone" placeholder="Phone Number" required>
+            <textarea id="custAddress" placeholder="Full Address" rows="3" required></textarea>
+            <button class="submit-btn" onclick="submitOrder()">Submit Order</button>
+        </div>
     </div>
 </div>
 
 <script>
-    function sendTelegram(productName, idSuffix) {
-        // Ekhane tomar Token ebong Chat ID bosao
-        const token = "YOUR_BOT_TOKEN"; 
-        const chat_id = "YOUR_CHAT_ID";
+    let selectedProduct = "";
 
-        const name = document.getElementById('name-' + idSuffix).value;
-        const phone = document.getElementById('phone-' + idSuffix).value;
-        const address = document.getElementById('address-' + idSuffix).value;
+    // Order Box Open Kora
+    function openOrderModal(productName) {
+        selectedProduct = productName;
+        document.getElementById('modalProductName').innerText = productName;
+        document.getElementById('orderModal').style.display = "flex";
+    }
 
-        if(name == "" || phone == "" || address == "") {
+    // Order Box Close Kora
+    function closeModal() {
+        document.getElementById('orderModal').style.display = "none";
+    }
+
+    // Telegram-e Order Pathano
+    function submitOrder() {
+        const token = "YOUR_BOT_TOKEN"; // Ekhane Bot Token bosao
+        const chat_id = "YOUR_CHAT_ID";   // Ekhane Chat ID bosao
+
+        const name = document.getElementById('custName').value;
+        const phone = document.getElementById('custPhone').value;
+        const address = document.getElementById('custAddress').value;
+
+        if(!name || !phone || !address) {
             alert("Doya kore shob ghor puron korun!");
             return;
         }
 
-        const message = `🔔 *New Order Received!*\n\n🎸 *Product:* ${productName}\n👤 *Customer:* ${name}\n📞 *Phone:* ${phone}\n🏠 *Address:* ${address}`;
+        const message = `🛒 *New Order!*\n\n🎸 *Product:* ${selectedProduct}\n👤 *Name:* ${name}\n📞 *Phone:* ${phone}\n🏠 *Address:* ${address}`;
 
         const url = `https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(message)}&parse_mode=Markdown`;
 
         fetch(url)
-        .then(response => {
-            if(response.ok) {
-                alert("Order Safol bhabe hoyeche! Telegram-e janiye deya hoyeche.");
-                // Form clear kora
-                document.getElementById('name-' + idSuffix).value = "";
-                document.getElementById('phone-' + idSuffix).value = "";
-                document.getElementById('address-' + idSuffix).value = "";
+        .then(res => {
+            if(res.ok) {
+                alert("Dhonnobad! Apnar order ti Telegram-e pathano hoyeche.");
+                closeModal();
+                // Form Reset
+                document.getElementById('custName').value = "";
+                document.getElementById('custPhone').value = "";
+                document.getElementById('custAddress').value = "";
             } else {
-                alert("Order fail hoyeche. Token ba Chat ID check korun.");
+                alert("Somossya hoyeche! Bot details check korun.");
             }
-        })
-        .catch(error => {
-            console.error('Error:', error);
-            alert("Network error!");
         });
+    }
+
+    // Modal-er baire click korle close hobe
+    window.onclick = function(event) {
+        if (event.target == document.getElementById('orderModal')) {
+            closeModal();
+        }
     }
 </script>
 
