@@ -3,145 +3,189 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyber-Hub | Admin Terminal</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;700&display=swap" rel="stylesheet">
+    <title>REDBOT Shop | Modern E-commerce</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            background-color: #050505;
-            font-family: 'Fira Code', monospace;
-            color: #00ff41;
-            overflow-x: hidden;
+            background-color: #f4f4f9;
+            color: #333;
         }
-        .cyber-border {
-            border: 1px solid #00ff41;
-            box-shadow: 0 0 15px rgba(0, 255, 65, 0.2);
-        }
-        .matrix-bg {
-            position: fixed;
+
+        /* Navigation */
+        nav {
+            background: #222;
+            color: white;
+            padding: 15px 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
             top: 0;
-            left: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #ff4757;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://images.unsplash.com/photo-1550745165-9bc0b252726f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+            background-size: cover;
+            background-position: center;
+            height: 60vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero h1 { font-size: 3rem; margin-bottom: 10px; }
+        .hero p { font-size: 1.2rem; margin-bottom: 20px; }
+
+        /* Product Section */
+        .container {
+            padding: 50px 10%;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+            font-size: 28px;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+
+        .product-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .product-img {
             width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.05;
-            pointer-events: none;
+            height: 200px;
+            background: #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
-        .terminal-text::before {
-            content: "> ";
-            color: #00ff41;
+
+        .product-info {
+            padding: 20px;
+            text-align: center;
         }
-        input {
-            background: transparent !important;
-            border-bottom: 1px solid #00ff41 !important;
-            color: #00ff41 !important;
-            outline: none;
+
+        .price {
+            color: #ff4757;
+            font-size: 20px;
+            font-weight: bold;
+            margin: 10px 0;
         }
-        .glitch {
-            text-shadow: 2px 0 red, -2px 0 blue;
-            animation: glitch 1s infinite alternate;
+
+        .buy-btn {
+            background: #2ed573;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-weight: bold;
         }
-        @keyframes glitch {
-            0% { transform: skew(0deg); }
-            20% { transform: skew(10deg); }
-            100% { transform: skew(-10deg); }
+
+        /* Footer */
+        footer {
+            background: #222;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            margin-top: 50px;
         }
     </style>
 </head>
-<body x-data="{ 
-    isAdmin: false, 
-    loginModal: false, 
-    pass: '', 
-    tools: [
-        {name: 'IP_SCANNER', status: 'ACTIVE', logs: 'Scanning port 80...'},
-        {name: 'SQL_INJECTOR', status: 'STANDBY', logs: 'Ready for payload...'},
-        {name: 'DDoS_PROTECT', status: 'ONLINE', logs: 'Traffic normal.'}
-    ],
-    addLog(index) {
-        let newLog = prompt('Enter new log/status:');
-        if(newLog) this.tools[index].logs = newLog;
-    }
-}">
+<body>
 
-    <canvas id="matrix" class="matrix-bg"></canvas>
-
-    <header class="p-6 border-b border-green-900 flex justify-between items-center">
-        <div class="text-2xl font-bold glitch uppercase tracking-widest">
-            System_Core v3.0
-        </div>
+    <nav>
+        <div class="logo">REDBOT SHOP</div>
         <div>
-            <button @click="loginModal = true" class="cyber-border px-4 py-1 text-sm hover:bg-green-900 transition">
-                [ AUTH_ROOT ]
-            </button>
+            <i class="fas fa-shopping-cart"></i>
         </div>
+    </nav>
+
+    <header class="hero">
+        <h1>Exclusive Gadgets Collection</h1>
+        <p>Best products at the most affordable price in Bangladesh.</p>
+        <a href="#products" class="buy-btn" style="background: #ff4757;">Shop Now</a>
     </header>
 
-    <main class="p-8 max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-            <template x-for="(tool, index) in tools">
-                <div class="cyber-border p-6 bg-black/50 backdrop-blur-sm relative overflow-hidden">
-                    <div class="flex justify-between items-start mb-4">
-                        <h3 class="font-bold text-lg" x-text="tool.name"></h3>
-                        <span class="text-xs px-2 py-1 bg-green-900/30 border border-green-500" x-text="tool.status"></span>
-                    </div>
-                    <p class="text-xs text-green-500/70 terminal-text mb-4" x-text="tool.logs"></p>
-                    
-                    <template x-if="isAdmin">
-                        <button @click="addLog(index)" class="w-full text-xs border border-blue-500 text-blue-400 py-1 hover:bg-blue-900/20 transition">
-                            MODIFY_DATA
-                        </button>
-                    </template>
+    <div class="container" id="products">
+        <h2 class="section-title">Feature Products</h2>
+        
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="product-img">
+                    <i class="fas fa-headphones fa-4x" style="color: #555;"></i>
                 </div>
-            </template>
-        </div>
+                <div class="product-info">
+                    <h3>Wireless Headphone</h3>
+                    <p class="price">1,250 BDT</p>
+                    <a href="https://wa.me/8801XXXXXXXXX?text=I%20want%20to%20buy%20Wireless%20Headphone" class="buy-btn">
+                        <i class="fab fa-whatsapp"></i> Order Now
+                    </a>
+                </div>
+            </div>
 
-        <div class="cyber-border p-4 bg-black/80 h-64 overflow-y-auto text-sm">
-            <p class="mb-2 opacity-50">[SYSTEM INFO] Initializing cyber-environment...</p>
-            <p class="mb-2 opacity-50">[SECURITY] Firewall active. Monitoring incoming packets...</p>
-            <p class="text-blue-400 terminal-text">Visitor_ID: <span x-text="Math.random().toString(36).substring(7)"></span> connected from Bangladesh.</p>
-            <template x-if="isAdmin">
-                <p class="text-red-500 font-bold mt-4">*** ROOT_ACCESS_GRANTED ***</p>
-            </template>
-        </div>
-    </main>
+            <div class="product-card">
+                <div class="product-img">
+                    <i class="fas fa-watch fa-4x" style="color: #555;"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Smart Watch V8</h3>
+                    <p class="price">1,800 BDT</p>
+                    <a href="#" class="buy-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
+                </div>
+            </div>
 
-    <div x-show="loginModal" class="fixed inset-0 bg-black/90 flex items-center justify-center z-50 p-4">
-        <div class="cyber-border p-10 bg-black max-w-sm w-full">
-            <h2 class="text-center mb-6 font-bold tracking-widest uppercase">Encryption Key Required</h2>
-            <input type="password" x-model="pass" class="w-full p-2 mb-6 text-center" placeholder="********">
-            <div class="flex gap-4">
-                <button @click="if(pass === 'admin') { isAdmin = true; loginModal = false; } else { alert('ACCESS DENIED'); }" 
-                        class="flex-1 bg-green-900/50 py-2 hover:bg-green-500 hover:text-black transition">DECRYPT</button>
-                <button @click="loginModal = false" class="flex-1 border border-red-900 text-red-500 py-2 hover:bg-red-900/20">ABORT</button>
+            <div class="product-card">
+                <div class="product-img">
+                    <i class="fas fa-mouse fa-4x" style="color: #555;"></i>
+                </div>
+                <div class="product-info">
+                    <h3>Gaming Mouse</h3>
+                    <p class="price">850 BDT</p>
+                    <a href="#" class="buy-btn"><i class="fab fa-whatsapp"></i> Order Now</a>
+                </div>
             </div>
         </div>
     </div>
 
-    <script>
-        // Matrix Background Effect
-        const canvas = document.getElementById('matrix');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*()';
-        const fontSize = 16;
-        const columns = canvas.width / fontSize;
-        const drops = Array(Math.floor(columns)).fill(1);
+    <footer>
+        <p>&copy; 2026 REDBOT Shop. All rights reserved.</p>
+    </footer>
 
-        function draw() {
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#00ff41';
-            ctx.font = fontSize + 'px monospace';
-            for (let i = 0; i < drops.length; i++) {
-                const text = letters.charAt(Math.floor(Math.random() * letters.length));
-                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
-                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
-                drops[i]++;
-            }
-        }
-        setInterval(draw, 33);
-    </script>
 </body>
 </html>
