@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Sensi Finder | Real-Time Search</title>
+    <title>Global FF Sensi Finder</title>
     <style>
         body {
-            background-color: #0b0b0b;
-            color: #dcdcdc;
-            font-family: 'Arial', sans-serif;
+            background-color: #0d0d0d;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Arial, sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,9 +19,9 @@
 
         .container {
             width: 100%;
-            max-width: 580px;
+            max-width: 550px;
             background: #111;
-            padding: 20px;
+            padding: 25px;
             border-radius: 8px;
             border: 1px solid #222;
         }
@@ -32,7 +32,7 @@
             margin-bottom: 20px;
         }
 
-        /* Real-Time Search UI */
+        /* Online Search Style */
         .search-box {
             position: relative;
             margin-bottom: 25px;
@@ -52,7 +52,7 @@
 
         #phoneInput:focus { border-color: #ff9900; }
 
-        .suggestions {
+        #suggestions {
             position: absolute;
             top: 100%;
             left: 0;
@@ -63,20 +63,19 @@
             overflow-y: auto;
             z-index: 999;
             display: none;
-            border-radius: 0 0 5px 5px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.8);
         }
 
-        .suggestions div {
+        .suggestion-item {
             padding: 12px;
             cursor: pointer;
             border-bottom: 1px solid #282828;
-            font-size: 15px;
+            transition: 0.2s;
         }
 
-        .suggestions div:hover { background: #ff9900; color: #000; }
+        .suggestion-item:hover { background: #ff9900; color: #000; }
 
-        /* FF Realistic Design (Image Based) */
+        /* FF Reality UI (image_0.png style) */
         .sensi-box { border: 1px solid #222; background: #0c0c0c; }
 
         .row {
@@ -87,15 +86,15 @@
         }
 
         .active-row {
-            outline: 2px solid #ff990044;
+            outline: 2px solid #ff990055;
             background: rgba(255, 153, 0, 0.05);
         }
 
-        .label { flex: 2; font-size: 14px; color: #bbb; text-transform: capitalize; }
+        .label { flex: 2; font-size: 14px; color: #bbb; text-transform: uppercase; letter-spacing: 1px; }
         .val { flex: 0.5; text-align: right; padding-right: 15px; font-weight: bold; font-size: 20px; color: #fff; }
 
         .slider { flex: 3; display: flex; align-items: center; gap: 8px; }
-        .sq { width: 22px; height: 22px; background: #222; border: 1px solid #444; display: flex; justify-content: center; align-items: center; }
+        .sq { width: 22px; height: 22px; background: #222; border: 1px solid #444; display: flex; justify-content: center; align-items: center; color: #fff; }
         .bar { flex-grow: 1; height: 4px; background: #333; position: relative; }
         .fill { height: 100%; background: #ff9900; position: absolute; }
         .dot { width: 8px; height: 18px; background: #fff; position: absolute; top: -7px; border: 1px solid #000; }
@@ -105,64 +104,56 @@
 
 <div class="container">
     <div class="header">
-        <h2 style="color: #ff9900; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase;">Sensitivity</h2>
+        <h2 style="color: #ff9900; letter-spacing: 2px; margin-bottom: 10px;">SENSITIVITY</h2>
     </div>
 
     <div class="search-box">
-        <input type="text" id="phoneInput" placeholder="Enter Phone Model..." onkeyup="searchModel()">
-        <div id="suggestions" class="suggestions"></div>
+        <input type="text" id="phoneInput" placeholder="Search any phone model..." autocomplete="off">
+        <div id="suggestions"></div>
     </div>
 
     <div id="result" class="sensi-box" style="display: none;"></div>
 </div>
 
 <script>
-    // Huge Database for Real-Time Search
-    const fullModels = [
-        "iPhone 7", "iPhone 7 Plus", "iPhone 8", "iPhone 8 Plus", "iPhone X", "iPhone XR", "iPhone XS", "iPhone XS Max", "iPhone 11", "iPhone 11 Pro", "iPhone 12", "iPhone 12 Pro Max", "iPhone 13", "iPhone 13 Pro", "iPhone 14 Pro Max", "iPhone 15 Pro",
-        "Samsung S10", "Samsung S20 FE", "Samsung S21 Ultra", "Samsung S22", "Samsung S23 Ultra", "Samsung S24", "Samsung A10", "Samsung A12", "Samsung A20", "Samsung A30", "Samsung A50", "Samsung A51", "Samsung A52", "Samsung A53", "Samsung A54", "Samsung M11", "Samsung M21", "Samsung M31", "Samsung M32",
-        "Redmi Note 7", "Redmi Note 8 Pro", "Redmi Note 9", "Redmi Note 10 Pro", "Redmi Note 11", "Redmi Note 12", "Redmi Note 13", "Redmi 9", "Redmi 10", "Poco F1", "Poco X3 Pro", "Poco X5 Pro", "Poco F5", "Xiaomi 11T Pro", "Xiaomi 12 Pro", "Xiaomi 13 Ultra",
-        "Realme 5 Pro", "Realme 6i", "Realme 7", "Realme 8 Pro", "Realme 9", "Realme 10 Pro", "Realme 11 Pro+", "Realme C11", "Realme C21", "Realme C25s", "Realme C35", "Realme C55", "Realme GT Neo 3",
-        "Vivo Y11", "Vivo Y12", "Vivo Y15", "Vivo Y20", "Vivo Y21", "Vivo Y33s", "Vivo Y51", "Vivo V20", "Vivo V23", "Vivo V25", "Vivo V27", "Vivo V29", "iQOO Neo 6", "iQOO Z7",
-        "Oppo A3s", "Oppo A5s", "Oppo A15", "Oppo A16", "Oppo A54", "Oppo A57", "Oppo A78", "Oppo F11", "Oppo F17 Pro", "Oppo F19 Pro", "Oppo F21 Pro", "Oppo Reno 8", "Oppo Reno 10",
-        "Infinix Hot 8", "Infinix Hot 9", "Infinix Hot 10", "Infinix Hot 11s", "Infinix Hot 12", "Infinix Note 10 Pro", "Infinix Note 12", "Infinix Note 30 Pro", "Infinix Zero Ultra",
-        "Tecno Spark 5", "Tecno Spark 6", "Tecno Spark 7 Pro", "Tecno Spark 8 Pro", "Tecno Pova 2", "Tecno Pova 3", "Tecno Pova 4", "Tecno Camon 19 Pro", "Tecno Camon 20",
-        "Symphony Z30", "Symphony Z40", "Symphony Z60", "Walton Primo GH10", "Walton Primo RX8", "OnePlus 7", "OnePlus 8T", "OnePlus 9R", "OnePlus 11"
-    ];
+    const input = document.getElementById('phoneInput');
+    const suggBox = document.getElementById('suggestions');
 
-    function searchModel() {
-        const input = document.getElementById('phoneInput').value.toLowerCase();
-        const suggBox = document.getElementById('suggestions');
-        suggBox.innerHTML = '';
+    // Online Global Search Logic (Using JSONP for Google Autocomplete)
+    input.addEventListener('input', function() {
+        const query = this.value;
+        if (query.length < 2) {
+            suggBox.style.display = 'none';
+            return;
+        }
 
-        if (input.length > 0) {
-            const filtered = fullModels.filter(m => m.toLowerCase().includes(input));
-            if (filtered.length > 0) {
-                suggBox.style.display = 'block';
-                filtered.slice(0, 15).forEach(m => { // Show top 15 results
-                    const d = document.createElement('div');
-                    d.innerHTML = m;
-                    d.onclick = () => selectModel(m);
-                    suggBox.appendChild(d);
-                });
-            } else {
-                // If not in list, still show the text to generate
-                suggBox.style.display = 'block';
+        const script = document.createElement('script');
+        script.src = `https://suggestqueries.google.com/complete/search?client=firefox&q=${encodeURIComponent(query + ' phone sensitivity')}&callback=handleSuggest`;
+        document.body.appendChild(script);
+        document.body.removeChild(script);
+    });
+
+    window.handleSuggest = function(data) {
+        const results = data[1];
+        if (results.length > 0) {
+            suggBox.innerHTML = '';
+            suggBox.style.display = 'block';
+            results.slice(0, 10).forEach(item => {
+                const cleanName = item.replace(' phone sensitivity', '').replace(' sensitivity', '');
                 const d = document.createElement('div');
-                d.innerHTML = `Search for "${input}"`;
-                d.onclick = () => selectModel(input);
+                d.className = 'suggestion-item';
+                d.innerText = cleanName;
+                d.onclick = () => {
+                    input.value = cleanName;
+                    suggBox.style.display = 'none';
+                    showSensi(cleanName);
+                };
                 suggBox.appendChild(d);
-            }
+            });
         } else {
             suggBox.style.display = 'none';
         }
-    }
-
-    function selectModel(model) {
-        document.getElementById('phoneInput').value = model;
-        document.getElementById('suggestions').style.display = 'none';
-        showSensi(model);
-    }
+    };
 
     function showSensi(model) {
         const resDiv = document.getElementById('result');
@@ -173,16 +164,17 @@
             hash = model.charCodeAt(i) + ((hash << 5) - hash);
         }
 
-        const isIphone = model.toLowerCase().includes("iphone");
+        const isIphone = model.toLowerCase().includes("iphone") || model.toLowerCase().includes("apple");
         const getVal = (seed, min, max) => Math.floor(Math.abs(Math.sin(hash + seed) * (max - min) + min));
 
+        // Scale 1 to 200 logic
         const settings = [
-            { name: "General", val: isIphone ? getVal(10, 80, 130) : getVal(10, 185, 200) },
-            { name: "Red Dot", val: getVal(20, 175, 198) },
+            { name: "General", val: isIphone ? getVal(10, 80, 140) : getVal(10, 185, 200) },
+            { name: "Red Dot", val: getVal(20, 170, 198) },
             { name: "2x Scope", val: getVal(30, 160, 195) },
             { name: "4x Scope", val: getVal(40, 150, 190) },
-            { name: "Sniper Scope", val: getVal(50, 60, 110) },
-            { name: "Free Look", val: getVal(60, 100, 180) }
+            { name: "Sniper Scope", val: getVal(50, 60, 120) },
+            { name: "Free Look", val: getVal(60, 110, 190) }
         ];
 
         resDiv.innerHTML = '';
@@ -195,13 +187,22 @@
                 <div class="val">${s.val}</div>
                 <div class="slider">
                     <div class="sq">-</div>
-                    <div class="bar"><div class="fill" style="width: ${progress}%"></div><div class="dot" style="left: ${progress}%"></div></div>
+                    <div class="bar">
+                        <div class="fill" style="width: ${progress}%"></div>
+                        <div class="dot" style="left: ${progress}%"></div>
+                    </div>
                     <div class="sq">+</div>
                 </div>
             `;
             resDiv.appendChild(row);
         });
     }
+
+    // Hide suggestions when clicking away
+    document.addEventListener('click', (e) => {
+        if (e.target !== input) suggBox.style.display = 'none';
+    });
 </script>
+
 </body>
 </html>
