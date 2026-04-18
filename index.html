@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Sensi Finder - Select Model</title>
+    <title>FF Realistic Sensi Finder | Search Model</title>
     <style>
         body {
             background-color: #0d0d0d;
@@ -14,77 +14,88 @@
             align-items: center;
             min-height: 100vh;
             margin: 0;
+            padding: 20px;
         }
 
         .container {
-            width: 95%;
-            max-width: 600px;
+            width: 100%;
+            max-width: 550px;
             background: #151515;
             padding: 25px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.8);
         }
 
         .header-section {
             text-align: center;
-            margin-bottom: 25px;
-            border-bottom: 1px solid #333;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #ffae00;
             padding-bottom: 10px;
         }
 
-        .selection-area {
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-            margin-bottom: 30px;
+        /* Search Box Design */
+        .search-container {
+            position: relative;
+            margin-bottom: 20px;
         }
 
-        label { font-size: 14px; color: #888; margin-bottom: -10px; }
-
-        select {
-            padding: 14px;
-            background: #1e1e1e;
-            border: 1px solid #ffae00;
+        #searchInput {
+            width: 100%;
+            padding: 15px;
+            background: #222;
+            border: 1px solid #444;
             color: white;
-            border-radius: 6px;
+            border-radius: 8px;
+            box-sizing: border-box;
             outline: none;
             font-size: 16px;
         }
 
-        /* FF Realistic Row Design */
+        #searchInput:focus { border-color: #ffae00; }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            border-radius: 0 0 8px 8px;
+            max-height: 200px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+
+        .suggestions div {
+            padding: 12px;
+            cursor: pointer;
+            border-bottom: 1px solid #222;
+        }
+
+        .suggestions div:hover { background: #ffae00; color: #000; }
+
+        /* Sensi Row Design (As per your Image) */
         .sensi-container {
             border: 1px solid #222;
             background: #111;
+            margin-top: 20px;
         }
 
         .sensi-row {
             display: flex;
             align-items: center;
-            padding: 15px;
+            padding: 12px 15px;
             border-bottom: 1px solid #222;
         }
 
         .sensi-row.active {
-            outline: 2px solid #ffae00;
-            background: rgba(255, 174, 0, 0.05);
-            position: relative;
-            z-index: 10;
+            outline: 1.5px solid #ffae00;
+            background: rgba(255, 174, 0, 0.08);
         }
 
-        .label-text {
-            flex: 2;
-            font-size: 16px;
-            font-weight: 500;
-        }
-
-        .num-val {
-            flex: 0.5;
-            text-align: right;
-            font-family: 'Courier New', monospace;
-            font-size: 20px;
-            padding-right: 20px;
-            color: #fff;
-        }
+        .label-text { flex: 2; font-size: 15px; }
+        .num-val { flex: 0.5; text-align: right; padding-right: 15px; font-weight: bold; font-family: monospace; font-size: 18px; }
 
         .slider-box {
             flex: 3;
@@ -94,61 +105,31 @@
         }
 
         .sq-btn {
-            width: 28px;
-            height: 28px;
+            width: 24px;
+            height: 24px;
             background: #2a2a2a;
-            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
             border: 1px solid #444;
-            font-weight: bold;
+            font-size: 18px;
         }
 
-        .track-bg {
-            flex-grow: 1;
-            height: 5px;
-            background: #333;
-            position: relative;
-        }
-
-        .track-fill {
-            height: 100%;
-            background: #ffae00;
-            position: absolute;
-        }
-
-        .slider-thumb {
-            width: 8px;
-            height: 18px;
-            background: #fff;
-            position: absolute;
-            top: -6px;
-            border: 1px solid #000;
-        }
+        .track-bg { flex-grow: 1; height: 4px; background: #333; position: relative; }
+        .track-fill { height: 100%; background: #ffae00; position: absolute; }
+        .slider-thumb { width: 8px; height: 16px; background: #fff; position: absolute; top: -6px; border: 1px solid #000; }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header-section">
-        <h2 style="color: #ffae00; margin: 0; letter-spacing: 3px;">SENSITIVITY</h2>
+        <h2 style="color: #ffae00; margin: 0; letter-spacing: 2px; text-transform: uppercase;">Sensitivity</h2>
     </div>
 
-    <div class="selection-area">
-        <label>Select Brand</label>
-        <select id="brandSelect" onchange="updateModels()">
-            <option value="">-- Choose Brand --</option>
-            <option value="iphone">Apple (iPhone)</option>
-            <option value="samsung">Samsung</option>
-            <option value="xiaomi">Xiaomi / Poco</option>
-            <option value="realme">Realme</option>
-        </select>
-
-        <label>Select Model</label>
-        <select id="modelSelect" onchange="showSensi()">
-            <option value="">-- Select Model --</option>
-        </select>
+    <div class="search-container">
+        <input type="text" id="searchInput" placeholder="Search phone model... (e.g. iPhone, Redmi, Samsung)" onkeyup="searchModel()">
+        <div id="suggestions" class="suggestions"></div>
     </div>
 
     <div id="sensiDisplay" class="sensi-container" style="display: none;">
@@ -156,42 +137,49 @@
 </div>
 
 <script>
-    // Database of Models
-    const deviceData = {
-        iphone: ["iPhone 11", "iPhone 12", "iPhone 13 Pro", "iPhone 14 Pro Max", "iPhone 15"],
-        samsung: ["Galaxy S21", "Galaxy S22 Ultra", "Galaxy A54", "Galaxy M32", "Galaxy S23"],
-        xiaomi: ["Redmi Note 10", "Redmi Note 12", "Poco X3 Pro", "Poco F5", "Xiaomi 13T"],
-        realme: ["Realme GT Neo 3", "Realme 9 Pro", "Realme C55", "Realme 11 Pro+"]
-    };
+    // Huge list of models (Tumi ekhane joto khushi model add korte paro)
+    const phoneModels = [
+        "iPhone 11", "iPhone 12", "iPhone 13 Pro", "iPhone 14 Pro Max", "iPhone 15",
+        "Samsung S21", "Samsung S22 Ultra", "Samsung A54", "Samsung M32", "Samsung S23",
+        "Redmi Note 10", "Redmi Note 12", "Poco X3 Pro", "Poco F5", "Xiaomi 13T",
+        "Realme GT Neo 3", "Realme 9 Pro", "Realme C55", "Realme 11 Pro+",
+        "Vivo V27", "Vivo Y20", "Oppo Reno 8", "OnePlus 11", "Infinix Note 30"
+    ];
 
-    function updateModels() {
-        const brand = document.getElementById('brandSelect').value;
-        const modelSelect = document.getElementById('modelSelect');
-        const sensiDisplay = document.getElementById('sensiDisplay');
-        
-        modelSelect.innerHTML = '<option value="">-- Select Model --</option>';
-        sensiDisplay.style.display = 'none';
+    function searchModel() {
+        const input = document.getElementById('searchInput').value.toLowerCase();
+        const suggBox = document.getElementById('suggestions');
+        suggBox.innerHTML = '';
 
-        if (brand && deviceData[brand]) {
-            deviceData[brand].forEach(model => {
-                let opt = document.createElement('option');
-                opt.value = model;
-                opt.innerHTML = model;
-                modelSelect.appendChild(opt);
-            });
+        if (input.length > 0) {
+            const filtered = phoneModels.filter(m => m.toLowerCase().includes(input));
+            
+            if (filtered.length > 0) {
+                suggBox.style.display = 'block';
+                filtered.forEach(model => {
+                    const div = document.createElement('div');
+                    div.innerHTML = model;
+                    div.onclick = () => selectModel(model);
+                    suggBox.appendChild(div);
+                });
+            } else {
+                suggBox.style.display = 'none';
+            }
+        } else {
+            suggBox.style.display = 'none';
         }
     }
 
-    function showSensi() {
-        const model = document.getElementById('modelSelect').value;
+    function selectModel(model) {
+        document.getElementById('searchInput').value = model;
+        document.getElementById('suggestions').style.display = 'none';
+        showSensi(model);
+    }
+
+    function showSensi(model) {
         const display = document.getElementById('sensiDisplay');
-
-        if (!model) {
-            display.style.display = 'none';
-            return;
-        }
-
-        // Consistent Random Logic (Same model = Same result)
+        
+        // Algorithm: Same model always gives same result
         let hash = 0;
         for (let i = 0; i < model.length; i++) {
             hash = model.charCodeAt(i) + ((hash << 5) - hash);
@@ -203,12 +191,12 @@
         };
 
         const settings = [
-            { name: "General", val: getVal(10, 95, 100) },
-            { name: "Red Dot", val: getVal(20, 90, 98) },
-            { name: "2x Scope", val: getVal(30, 85, 95) },
-            { name: "4x Scope", val: getVal(40, 80, 92) },
-            { name: "Sniper Scope", val: getVal(50, 45, 65) },
-            { name: "Free Camera Button", val: getVal(60, 50, 90) }
+            { name: "General", val: getVal(11, 95, 100) },
+            { name: "Red Dot", val: getVal(22, 90, 99) },
+            { name: "2x Scope", val: getVal(33, 85, 96) },
+            { name: "4x Scope", val: getVal(44, 80, 94) },
+            { name: "Sniper Scope", val: getVal(55, 40, 60) },
+            { name: "Free Camera Button", val: getVal(66, 50, 90) }
         ];
 
         display.innerHTML = '';
