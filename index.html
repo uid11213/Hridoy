@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Realistic Sensi Finder</title>
+    <title>FF Sensi Finder - Select Model</title>
     <style>
         body {
-            background-color: #0a0a0a;
+            background-color: #0d0d0d;
             color: #e0e0e0;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -19,115 +19,112 @@
         .container {
             width: 95%;
             max-width: 600px;
-            background: #121212;
-            padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+            background: #151515;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.7);
         }
 
         .header-section {
             text-align: center;
             margin-bottom: 25px;
+            border-bottom: 1px solid #333;
+            padding-bottom: 10px;
         }
 
-        .input-group {
+        .selection-area {
             display: flex;
             flex-direction: column;
-            gap: 10px;
-            margin-bottom: 20px;
+            gap: 15px;
+            margin-bottom: 30px;
         }
 
-        input, select {
-            padding: 12px;
+        label { font-size: 14px; color: #888; margin-bottom: -10px; }
+
+        select {
+            padding: 14px;
             background: #1e1e1e;
-            border: 1px solid #333;
+            border: 1px solid #ffae00;
             color: white;
-            border-radius: 4px;
+            border-radius: 6px;
             outline: none;
+            font-size: 16px;
         }
 
-        button {
-            padding: 12px;
-            background: #ffae00;
-            border: none;
-            font-weight: bold;
-            cursor: pointer;
-            border-radius: 4px;
-            transition: 0.3s;
-        }
-
-        button:hover { background: #e69d00; }
-
-        /* Realistic Sensi Row Styles */
+        /* FF Realistic Row Design */
         .sensi-container {
             border: 1px solid #222;
+            background: #111;
         }
 
         .sensi-row {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
+            padding: 15px;
             border-bottom: 1px solid #222;
-            background: rgba(255, 255, 255, 0.02);
         }
 
         .sensi-row.active {
-            border: 1.5px solid #ffae0088;
+            outline: 2px solid #ffae00;
             background: rgba(255, 174, 0, 0.05);
+            position: relative;
+            z-index: 10;
         }
 
-        .label {
+        .label-text {
             flex: 2;
             font-size: 16px;
             font-weight: 500;
         }
 
-        .value {
+        .num-val {
             flex: 0.5;
             text-align: right;
-            font-family: monospace;
-            font-size: 18px;
-            padding-right: 15px;
+            font-family: 'Courier New', monospace;
+            font-size: 20px;
+            padding-right: 20px;
+            color: #fff;
         }
 
         .slider-box {
             flex: 3;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
         }
 
-        .btn-sq {
-            width: 25px;
-            height: 25px;
-            background: #333;
+        .sq-btn {
+            width: 28px;
+            height: 28px;
+            background: #2a2a2a;
+            color: #fff;
             display: flex;
             justify-content: center;
             align-items: center;
+            border: 1px solid #444;
             font-weight: bold;
-            font-size: 18px;
         }
 
-        .track {
+        .track-bg {
             flex-grow: 1;
-            height: 4px;
+            height: 5px;
             background: #333;
             position: relative;
         }
 
-        .fill {
+        .track-fill {
             height: 100%;
             background: #ffae00;
             position: absolute;
         }
 
-        .thumb {
+        .slider-thumb {
             width: 8px;
-            height: 16px;
-            background: white;
+            height: 18px;
+            background: #fff;
             position: absolute;
             top: -6px;
-            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+            border: 1px solid #000;
         }
     </style>
 </head>
@@ -135,28 +132,66 @@
 
 <div class="container">
     <div class="header-section">
-        <h2 style="color: #ffae00; letter-spacing: 2px;">SENSITIVITY</h2>
+        <h2 style="color: #ffae00; margin: 0; letter-spacing: 3px;">SENSITIVITY</h2>
     </div>
 
-    <div class="input-group">
-        <input type="text" id="modelName" placeholder="Enter Phone Model (e.g. iPhone 13)">
-        <button onclick="generateSensi()">GET SETTINGS</button>
+    <div class="selection-area">
+        <label>Select Brand</label>
+        <select id="brandSelect" onchange="updateModels()">
+            <option value="">-- Choose Brand --</option>
+            <option value="iphone">Apple (iPhone)</option>
+            <option value="samsung">Samsung</option>
+            <option value="xiaomi">Xiaomi / Poco</option>
+            <option value="realme">Realme</option>
+        </select>
+
+        <label>Select Model</label>
+        <select id="modelSelect" onchange="showSensi()">
+            <option value="">-- Select Model --</option>
+        </select>
     </div>
 
-    <div id="displayArea" style="display: none;" class="sensi-container">
+    <div id="sensiDisplay" class="sensi-container" style="display: none;">
         </div>
 </div>
 
 <script>
-    function generateSensi() {
-        const model = document.getElementById('modelName').value.trim().toLowerCase();
+    // Database of Models
+    const deviceData = {
+        iphone: ["iPhone 11", "iPhone 12", "iPhone 13 Pro", "iPhone 14 Pro Max", "iPhone 15"],
+        samsung: ["Galaxy S21", "Galaxy S22 Ultra", "Galaxy A54", "Galaxy M32", "Galaxy S23"],
+        xiaomi: ["Redmi Note 10", "Redmi Note 12", "Poco X3 Pro", "Poco F5", "Xiaomi 13T"],
+        realme: ["Realme GT Neo 3", "Realme 9 Pro", "Realme C55", "Realme 11 Pro+"]
+    };
+
+    function updateModels() {
+        const brand = document.getElementById('brandSelect').value;
+        const modelSelect = document.getElementById('modelSelect');
+        const sensiDisplay = document.getElementById('sensiDisplay');
+        
+        modelSelect.innerHTML = '<option value="">-- Select Model --</option>';
+        sensiDisplay.style.display = 'none';
+
+        if (brand && deviceData[brand]) {
+            deviceData[brand].forEach(model => {
+                let opt = document.createElement('option');
+                opt.value = model;
+                opt.innerHTML = model;
+                modelSelect.appendChild(opt);
+            });
+        }
+    }
+
+    function showSensi() {
+        const model = document.getElementById('modelSelect').value;
+        const display = document.getElementById('sensiDisplay');
+
         if (!model) {
-            alert("Please enter a phone model!");
+            display.style.display = 'none';
             return;
         }
 
-        // Logic to keep the sensitivity SAME for the same model name
-        // Hash function converts string to a consistent number
+        // Consistent Random Logic (Same model = Same result)
         let hash = 0;
         for (let i = 0; i < model.length; i++) {
             hash = model.charCodeAt(i) + ((hash << 5) - hash);
@@ -168,34 +203,33 @@
         };
 
         const settings = [
-            { name: "General", val: getVal(1, 90, 100) },
-            { name: "Red Dot", val: getVal(2, 85, 98) },
-            { name: "2x Scope", val: getVal(3, 80, 95) },
-            { name: "4x Scope", val: getVal(4, 75, 92) },
-            { name: "Sniper Scope", val: getVal(5, 40, 60) },
-            { name: "Free Camera Button", val: getVal(6, 50, 80) }
+            { name: "General", val: getVal(10, 95, 100) },
+            { name: "Red Dot", val: getVal(20, 90, 98) },
+            { name: "2x Scope", val: getVal(30, 85, 95) },
+            { name: "4x Scope", val: getVal(40, 80, 92) },
+            { name: "Sniper Scope", val: getVal(50, 45, 65) },
+            { name: "Free Camera Button", val: getVal(60, 50, 90) }
         ];
 
-        const displayArea = document.getElementById('displayArea');
-        displayArea.innerHTML = '';
-        displayArea.style.display = 'block';
+        display.innerHTML = '';
+        display.style.display = 'block';
 
         settings.forEach((s, index) => {
             const row = document.createElement('div');
             row.className = `sensi-row ${index === 0 ? 'active' : ''}`;
             row.innerHTML = `
-                <div class="label">${s.name}</div>
-                <div class="value">${s.val}</div>
+                <div class="label-text">${s.name}</div>
+                <div class="num-val">${s.val}</div>
                 <div class="slider-box">
-                    <div class="btn-sq">-</div>
-                    <div class="track">
-                        <div class="fill" style="width: ${s.val}%"></div>
-                        <div class="thumb" style="left: ${s.val}%"></div>
+                    <div class="sq-btn">-</div>
+                    <div class="track-bg">
+                        <div class="track-fill" style="width: ${s.val}%"></div>
+                        <div class="slider-thumb" style="left: ${s.val}%"></div>
                     </div>
-                    <div class="btn-sq">+</div>
+                    <div class="sq-btn">+</div>
                 </div>
             `;
-            displayArea.appendChild(row);
+            display.appendChild(row);
         });
     }
 </script>
