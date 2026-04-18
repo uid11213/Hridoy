@@ -3,23 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Sensi Finder | Get Best Sensitivity</title>
-    <link rel="stylesheet" href="style.css">
+    <title>FF Sensi Finder | One-Tap Headshot Settings</title>
+    
+    <style>
+        body {
+            background: #0f0c29;
+            background: linear-gradient(to bottom, #0f0c29, #302b63, #24243e);
+            color: white;
+            font-family: 'Poppins', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 40px 20px;
+            border-radius: 25px;
+            backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
+        }
+
+        h1 { font-size: 28px; margin-bottom: 10px; }
+        .highlight { color: #ff4b2b; text-shadow: 0 0 10px #ff4b2b; }
+        p { font-size: 14px; color: #bbb; margin-bottom: 30px; }
+
+        .search-box select {
+            width: 100%;
+            padding: 15px;
+            border-radius: 12px;
+            background: #1a1a2e;
+            color: white;
+            border: 2px solid #ff4b2b;
+            font-size: 16px;
+            cursor: pointer;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .result-card {
+            margin-top: 30px;
+            animation: fadeIn 0.5s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .sensi-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .sensi-item {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 12px;
+            border-bottom: 3px solid #ff4b2b;
+            transition: 0.3s;
+        }
+
+        .sensi-item:hover {
+            background: rgba(255, 75, 43, 0.1);
+            transform: scale(1.05);
+        }
+
+        .sensi-item span {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #ff4b2b;
+            margin-bottom: 5px;
+        }
+
+        .sensi-item b { font-size: 24px; font-weight: bold; }
+
+        .footer-text {
+            margin-top: 25px;
+            font-size: 11px;
+            color: #777;
+        }
+    </style>
 </head>
 <body>
+
     <div class="container">
-        <h1>FF Sensi <span class="highlight">Finder</span></h1>
-        <p>Select your phone model to get the best headshot sensitivity.</p>
+        <h1>FF SENSI <span class="highlight">FINDER</span></h1>
+        <p>Apurbo headshot-er jonno phone select koro</p>
 
         <div class="search-box">
             <select id="phoneBrand" onchange="getSensi()">
-                <option value="">Select Phone Brand</option>
-                <option value="iphone">iPhone (All Models)</option>
-                <option value="samsung">Samsung</option>
-                <option value="xiaomi">Xiaomi / Poco</option>
-                <option value="vivo">Vivo / Oppo</option>
-                <option value="realme">Realme</option>
-                <option value="lowend">2GB/3GB RAM Phone</option>
+                <option value="">-- Phone Model Bachai Koro --</option>
+                <option value="iphone">iPhone (Pro/Max/Normal)</option>
+                <option value="samsung">Samsung (S/A/M Series)</option>
+                <option value="xiaomi">Xiaomi / Poco / Redmi</option>
+                <option value="vivo">Vivo / Oppo / IQOO</option>
+                <option value="realme">Realme (All Series)</option>
+                <option value="lowend">Low RAM (2GB/3GB/4GB)</option>
+                <option value="rog">Gaming Phone (ROG/BlackShark)</option>
             </select>
         </div>
 
@@ -32,10 +122,40 @@
                 <div class="sensi-item"><span>Sniper</span> <b id="sniper">0</b></div>
                 <div class="sensi-item"><span>Free Look</span> <b id="free">0</b></div>
             </div>
-            <button class="btn-copy" onclick="copyAlert()">Copy Settings</button>
+            <p class="footer-text">Note: Settings apply korar por phone restart koro.</p>
         </div>
     </div>
 
-    <script src="script.js"></script>
+    <script>
+        const sensitivityData = {
+            iphone: { gen: 92, red: 88, s2: 85, s4: 80, snp: 45, free: 50 },
+            samsung: { gen: 100, red: 95, s2: 90, s4: 85, snp: 50, free: 70 },
+            xiaomi: { gen: 98, red: 94, s2: 88, s4: 82, snp: 55, free: 65 },
+            vivo: { gen: 100, red: 90, s2: 85, s4: 80, snp: 40, free: 60 },
+            realme: { gen: 97, red: 92, s2: 89, s4: 81, snp: 48, free: 66 },
+            lowend: { gen: 100, red: 100, s2: 100, s4: 100, snp: 50, free: 100 },
+            rog: { gen: 85, red: 80, s2: 75, s4: 70, snp: 30, free: 40 }
+        };
+
+        function getSensi() {
+            const brand = document.getElementById("phoneBrand").value;
+            const resultDiv = document.getElementById("result");
+            
+            if (brand) {
+                resultDiv.style.display = "block";
+                const values = sensitivityData[brand];
+                
+                document.getElementById("gen").innerText = values.gen;
+                document.getElementById("red").innerText = values.red;
+                document.getElementById("scope2").innerText = values.s2;
+                document.getElementById("scope4").innerText = values.s4;
+                document.getElementById("sniper").innerText = values.snp;
+                document.getElementById("free").innerText = values.free;
+            } else {
+                resultDiv.style.display = "none";
+            }
+        }
+    </script>
+
 </body>
 </html>
