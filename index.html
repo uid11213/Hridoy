@@ -3,32 +3,34 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Pro Sensi Finder | 200 Max</title>
+    <title>FF Sensi Finder Pro | Intelligent Search</title>
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+
         body {
             background-color: #0d0d0d;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', sans-serif;
+            color: #dcdcdc;
+            font-family: 'Roboto', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 20px;
+            padding: 15px;
         }
 
         .container {
             width: 100%;
-            max-width: 550px;
-            background: #151515;
-            padding: 25px;
-            border-radius: 12px;
+            max-width: 580px;
+            background: #111;
+            padding: 20px;
+            border-radius: 8px;
             border: 1px solid #222;
         }
 
         .header {
             text-align: center;
-            border-bottom: 2px solid #ffae00;
+            border-bottom: 2px solid #ff9900;
             margin-bottom: 20px;
         }
 
@@ -37,62 +39,78 @@
             margin-bottom: 25px;
         }
 
-        input {
+        #phoneInput {
             width: 100%;
-            padding: 15px;
-            background: #222;
+            padding: 14px;
+            background: #1e1e1e;
             border: 1px solid #444;
             color: white;
-            border-radius: 5px;
-            outline: none;
-            box-sizing: border-box;
+            border-radius: 4px;
             font-size: 16px;
+            box-sizing: border-box;
+            outline: none;
         }
 
-        input:focus { border-color: #ffae00; }
+        #phoneInput:focus { border-color: #ff9900; }
 
         .suggestions {
             position: absolute;
             top: 100%;
             left: 0;
             right: 0;
-            background: #1e1e1e;
+            background: #1a1a1a;
             border: 1px solid #333;
-            max-height: 150px;
+            max-height: 250px;
             overflow-y: auto;
-            z-index: 10;
+            z-index: 100;
             display: none;
-            border-radius: 0 0 8px 8px;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.5);
         }
 
         .suggestions div {
-            padding: 10px;
+            padding: 12px;
             cursor: pointer;
-            border-bottom: 1px solid #222;
+            border-bottom: 1px solid #282828;
+            transition: 0.2s;
         }
 
-        .suggestions div:hover { background: #ffae00; color: #000; }
+        .suggestions div:hover { background: #ff9900; color: #000; }
 
-        /* Sensi UI Layout */
+        /* FF Realistic Design (Copy of image_0.png) */
         .sensi-box {
             border: 1px solid #222;
-            background: #111;
+            background: #0f0f0f;
         }
 
         .row {
             display: flex;
             align-items: center;
-            padding: 12px 15px;
+            padding: 10px 15px;
             border-bottom: 1px solid #222;
         }
 
         .active-row {
-            outline: 1.5px solid #ffae00;
-            background: rgba(255, 174, 0, 0.05);
+            outline: 2px solid #ff990055;
+            background: rgba(255, 153, 0, 0.05);
         }
 
-        .label { flex: 2; font-size: 14px; }
-        .val { flex: 0.5; text-align: right; padding-right: 15px; font-weight: bold; color: #fff; font-size: 18px; }
+        .label {
+            flex: 2;
+            font-size: 14px;
+            font-weight: 500;
+            color: #d0d0d0;
+            text-transform: capitalize;
+        }
+
+        .val {
+            flex: 0.5;
+            text-align: right;
+            padding-right: 15px;
+            font-weight: bold;
+            color: #fff;
+            font-size: 18px;
+        }
 
         .slider {
             flex: 3;
@@ -101,21 +119,52 @@
             gap: 8px;
         }
 
-        .sq { width: 22px; height: 22px; background: #2a2a2a; display: flex; justify-content: center; align-items: center; border: 1px solid #444; }
-        .bar { flex-grow: 1; height: 4px; background: #333; position: relative; }
-        .fill { height: 100%; background: #ffae00; position: absolute; }
-        .dot { width: 8px; height: 16px; background: #fff; position: absolute; top: -6px; border: 1px solid #000; }
+        .sq {
+            width: 20px;
+            height: 20px;
+            background: #2a2a2a;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: 1px solid #444;
+            color: white;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .bar {
+            flex-grow: 1;
+            height: 3px;
+            background: #333;
+            position: relative;
+        }
+
+        .fill {
+            height: 100%;
+            background: #ff9900;
+            position: absolute;
+        }
+
+        .dot {
+            width: 8px;
+            height: 16px;
+            background: #fff;
+            position: absolute;
+            top: -6px;
+            border: 1px solid #000;
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <div class="header">
-        <h2 style="color: #ffae00; letter-spacing: 2px; margin-bottom: 10px;">SENSITIVITY</h2>
+        <h2 style="color: #ff9900; letter-spacing: 2px; margin-bottom: 10px; text-transform: uppercase;">Sensitivity</h2>
     </div>
 
     <div class="search-container">
-        <input type="text" id="phoneInput" placeholder="Search phone (e.g. iPhone X, Redmi Note 12)" onkeyup="searchModel()">
+        <input type="text" id="phoneInput" placeholder="Search phone (e.g. iPhone 13, Redmi Note 12)" onkeyup="searchModel()">
         <div id="suggestions" class="suggestions"></div>
     </div>
 
@@ -124,13 +173,18 @@
 </div>
 
 <script>
-    // List of some popular models for live search
-    const models = [
-        "iPhone X", "iPhone 11", "iPhone 12", "iPhone 13 Pro", "iPhone 14 Pro Max", "iPhone 15",
-        "Samsung S22 Ultra", "Samsung A54", "Samsung M32", "Samsung S23",
-        "Redmi Note 10", "Redmi Note 12", "Poco X3 Pro", "Poco F5", "Xiaomi 13T",
-        "Realme GT Neo 3", "Realme 9 Pro", "Realme C55", "Realme 11 Pro+",
-        "Vivo V27", "Vivo Y20", "Oppo Reno 8", "OnePlus 11", "Infinix Note 30"
+    // Bifol Database of Phones
+    const phoneList = [
+        "iPhone X", "iPhone XR", "iPhone XS", "iPhone XS Max", "iPhone 11", "iPhone 11 Pro", "iPhone 11 Pro Max", "iPhone SE (2nd gen)", "iPhone 12 Mini", "iPhone 12", "iPhone 12 Pro", "iPhone 12 Pro Max", "iPhone 13 Mini", "iPhone 13", "iPhone 13 Pro", "iPhone 13 Pro Max", "iPhone 14", "iPhone 14 Plus", "iPhone 14 Pro", "iPhone 14 Pro Max", "iPhone 15", "iPhone 15 Plus", "iPhone 15 Pro", "iPhone 15 Pro Max", "iPhone SE (3rd gen)",
+        "Samsung S20", "Samsung S20 Ultra", "Samsung S21 FE", "Samsung S21 Ultra", "Samsung S22 FE", "Samsung S22 Ultra", "Samsung S23 FE", "Samsung S23 Ultra", "Samsung S24 Ultra", "Samsung A10", "Samsung A12", "Samsung A13", "Samsung A14", "Samsung A15", "Samsung A20", "Samsung A22", "Samsung A23", "Samsung A24", "Samsung A25", "Samsung A30", "Samsung A32", "Samsung A33", "Samsung A34", "Samsung A35", "Samsung A50", "Samsung A51", "Samsung A52", "Samsung A53", "Samsung A54", "Samsung A55", "Samsung A70", "Samsung A72", "Samsung A73", "Samsung M10", "Samsung M12", "Samsung M13", "Samsung M14", "Samsung M20", "Samsung M22", "Samsung M23", "Samsung M30", "Samsung M32", "Samsung M33", "Samsung M34", "Samsung M51", "Samsung M52", "Samsung M53", "Samsung M54",
+        "Redmi Note 7", "Redmi Note 8", "Redmi Note 9", "Redmi Note 10", "Redmi Note 11", "Redmi Note 12", "Redmi Note 13", "Redmi 9", "Redmi 10", "Redmi 11", "Redmi 12", "Redmi 13", "Redmi K40", "Redmi K50", "Redmi K60", "Redmi K70", "Poco X2", "Poco X3", "Poco X3 Pro", "Poco X4 Pro", "Poco X5 Pro", "Poco X6 Pro", "Poco F1", "Poco F2 Pro", "Poco F3", "Poco F4 GT", "Poco F5", "Poco F6 Pro", "Poco M3", "Poco M4 Pro", "Poco M5", "Poco M6 Pro", "Xiaomi Mi 10", "Xiaomi Mi 11 Ultra", "Xiaomi 12T Pro", "Xiaomi 13 Ultra", "Xiaomi 14 Ultra",
+        "Realme 5", "Realme 6", "Realme 7", "Realme 8", "Realme 9", "Realme 10", "Realme 11", "Realme 12", "Realme C1", "Realme C2", "Realme C3", "Realme C5", "Realme C11", "Realme C12", "Realme C15", "Realme C21", "Realme C25", "Realme C30", "Realme C33", "Realme C35", "Realme C51", "Realme C53", "Realme C55", "Realme C67", "Realme C65", "Realme GT Master Edition", "Realme GT Neo 2", "Realme GT Neo 3", "Realme GT Neo 5", "Realme GT 5G", "Realme X3 SuperZoom", "Realme X7 Pro",
+        "Vivo Y10", "Vivo Y12", "Vivo Y15", "Vivo Y16", "Vivo Y17", "Vivo Y19", "Vivo Y20", "Vivo Y21", "Vivo Y22", "Vivo Y27", "Vivo Y28", "Vivo Y30", "Vivo Y31", "Vivo Y33s", "Vivo Y35", "Vivo Y36", "Vivo Y50", "Vivo Y51", "Vivo Y53s", "Vivo Y73", "Vivo Y75", "Vivo Y91", "Vivo Y93", "Vivo Y95", "Vivo V15", "Vivo V17 Pro", "Vivo V19", "Vivo V20", "Vivo V21", "Vivo V23", "Vivo V25 Pro", "Vivo V27 Pro", "Vivo V29 Pro", "Vivo V30 Pro", "Vivo T1", "Vivo T2 Pro", "Vivo T3", "iQOO Neo 6", "iQOO Neo 7", "iQOO 9 Pro", "iQOO 11 Pro", "iQOO 12 Pro", "iQOO Z7 Pro", "iQOO Z9",
+        "Oppo A1k", "Oppo A3s", "Oppo A5s", "Oppo A7", "Oppo A9 2020", "Oppo A12", "Oppo A15", "Oppo A16", "Oppo A17", "Oppo A18", "Oppo A31", "Oppo A53", "Oppo A54", "Oppo A55", "Oppo A57", "Oppo A58", "Oppo A59", "Oppo A74", "Oppo A76", "Oppo A77s", "Oppo A78", "Oppo F7", "Oppo F9 Pro", "Oppo F11 Pro", "Oppo F15", "Oppo F17 Pro", "Oppo F19 Pro+", "Oppo F21 Pro", "Oppo F23 Pro", "Oppo F25 Pro", "Oppo Reno 3 Pro", "Oppo Reno 5 Pro", "Oppo Reno 6 Pro", "Oppo Reno 7 Pro", "Oppo Reno 8 Pro", "Oppo Reno 10 Pro", "Oppo Reno 11 Pro",
+        "OnePlus 6", "OnePlus 7 Pro", "OnePlus 8 Pro", "OnePlus 9 Pro", "OnePlus 10 Pro", "OnePlus 11 Pro", "OnePlus 12", "OnePlus Nord", "OnePlus Nord CE", "OnePlus Nord CE 2", "OnePlus Nord CE 3", "OnePlus Nord CE 4", "OnePlus Nord 2T", "OnePlus Nord 3",
+        "Infinix Smart 3", "Infinix Smart 4", "Infinix Smart 5", "Infinix Smart 6", "Infinix Smart 7", "Infinix Hot 8", "Infinix Hot 9", "Infinix Hot 10", "Infinix Hot 11", "Infinix Hot 12", "Infinix Hot 20", "Infinix Hot 30", "Infinix Hot 40 Pro", "Infinix Note 7", "Infinix Note 8", "Infinix Note 10 Pro", "Infinix Note 11 Pro", "Infinix Note 12 Pro", "Infinix Note 30 Pro", "Infinix Zero Ultra", "Infinix GT 10 Pro",
+        "Tecno Spark 4", " Tecno Spark 5 Pro", "Tecno Spark 6 Air", "Tecno Spark 7 Pro", "Tecno Spark 8 Pro", "Tecno Spark 9 Pro", "Tecno Spark 10 Pro", "Tecno Spark 20 Pro+", "Tecno Camon 15", "Tecno Camon 16 Premier", "Tecno Camon 17 Pro", "Tecno Camon 18 Premier", "Tecno Camon 19 Pro", "Tecno Camon 20 Pro", "Tecno Camon 30 Pro", "Tecno Pova 2", "Tecno Pova 3", "Tecno Pova 4 Pro", "Tecno Pova 5 Pro", "Tecno Pova 6 Pro",
+        "Motorola Moto G6", "Motorola G8 Power Lite", "Motorola G9 Plus", "Motorola G10 Power", "Motorola G14", "Motorola G22", "Motorola G30", "Motorola G31", "Motorola G32", "Motorola G34", "Motorola G40 Fusion", "Motorola G42", "Motorola G51", "Motorola G52", "Motorola G54", "Motorola G60", "Motorola G62", "Motorola G64", "Motorola G71", "Motorola G72", "Motorola G73", "Motorola G82", "Motorola G84", "Motorola Edge 20 Fusion", "Motorola Edge 30 Fusion", "Motorola Edge 40 Neo", "Motorola Edge 50 Pro"
     ];
 
     function searchModel() {
@@ -139,28 +193,31 @@
         suggBox.innerHTML = '';
 
         if (input.length > 0) {
-            const filtered = models.filter(m => m.toLowerCase().includes(input));
+            const filtered = phoneList.filter(m => m.toLowerCase().includes(input));
+            
             if (filtered.length > 0) {
                 suggBox.style.display = 'block';
-                filtered.forEach(m => {
-                    const d = document.createElement('div');
-                    d.innerHTML = m;
-                    d.onclick = () => {
-                        document.getElementById('phoneInput').value = m;
-                        suggBox.style.display = 'none';
-                        showSensi(m);
-                    };
-                    suggBox.appendChild(d);
+                filtered.forEach(model => {
+                    const div = document.createElement('div');
+                    div.innerHTML = model;
+                    div.onclick = () => selectModel(model);
+                    suggBox.appendChild(div);
                 });
             } else {
-                // Jodi list-e na thake tobuo type korle result dekhabe
                 suggBox.style.display = 'none';
+                // Even if not in list, auto-sensi
                 showSensi(input);
             }
         } else {
             suggBox.style.display = 'none';
             document.getElementById('result').style.display = 'none';
         }
+    }
+
+    function selectModel(model) {
+        document.getElementById('phoneInput').value = model;
+        document.getElementById('suggestions').style.display = 'none';
+        showSensi(model);
     }
 
     function showSensi(model) {
@@ -179,21 +236,20 @@
             return Math.floor(val);
         };
 
-        // Settings updated for 1-200 scale
+        // 1-200 Scale Logic (iPhone General is Lower)
         const settings = [
-            { name: "General", val: isIphone ? getVal(1, 100, 150) : getVal(1, 185, 200) },
-            { name: "Red Dot", val: getVal(2, 170, 195) },
-            { name: "2x Scope", val: getVal(3, 160, 190) },
-            { name: "4x Scope", val: getVal(4, 150, 185) },
-            { name: "Sniper Scope", val: getVal(5, 80, 130) },
-            { name: "Free Camera Button", val: getVal(6, 100, 180) }
+            { name: "General", val: isIphone ? getVal(10, 100, 150) : getVal(10, 185, 200) },
+            { name: "Red Dot", val: getVal(20, 175, 198) },
+            { name: "2x Scope", val: getVal(30, 165, 195) },
+            { name: "4x Scope", val: getVal(40, 155, 190) },
+            { name: "Sniper Scope", val: getVal(50, 80, 130) },
+            { name: "Free Look Button", val: getVal(60, 100, 180) }
         ];
 
         resDiv.innerHTML = '';
         settings.forEach((s, i) => {
             const row = document.createElement('div');
             row.className = `row ${i === 0 ? 'active-row' : ''}`;
-            // Progress percentage for 200 scale is (val/200)*100
             const progress = (s.val / 200) * 100;
             row.innerHTML = `
                 <div class="label">${s.name}</div>
