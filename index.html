@@ -3,12 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Pro Sensi Finder</title>
+    <title>FF Pro Sensi Finder | 200 Max</title>
     <style>
         body {
             background-color: #0d0d0d;
             color: #e0e0e0;
-            font-family: 'Arial', sans-serif;
+            font-family: 'Segoe UI', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -32,7 +32,7 @@
             margin-bottom: 20px;
         }
 
-        .search-area {
+        .search-container {
             position: relative;
             margin-bottom: 25px;
         }
@@ -46,9 +46,32 @@
             border-radius: 5px;
             outline: none;
             box-sizing: border-box;
+            font-size: 16px;
         }
 
         input:focus { border-color: #ffae00; }
+
+        .suggestions {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: #1e1e1e;
+            border: 1px solid #333;
+            max-height: 150px;
+            overflow-y: auto;
+            z-index: 10;
+            display: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .suggestions div {
+            padding: 10px;
+            cursor: pointer;
+            border-bottom: 1px solid #222;
+        }
+
+        .suggestions div:hover { background: #ffae00; color: #000; }
 
         /* Sensi UI Layout */
         .sensi-box {
@@ -68,7 +91,7 @@
             background: rgba(255, 174, 0, 0.05);
         }
 
-        .label { flex: 2; font-size: 15px; text-transform: capitalize; }
+        .label { flex: 2; font-size: 14px; }
         .val { flex: 0.5; text-align: right; padding-right: 15px; font-weight: bold; color: #fff; font-size: 18px; }
 
         .slider {
@@ -91,8 +114,9 @@
         <h2 style="color: #ffae00; letter-spacing: 2px; margin-bottom: 10px;">SENSITIVITY</h2>
     </div>
 
-    <div class="search-area">
-        <input type="text" id="phoneInput" placeholder="Type Phone Model (e.g. iPhone X, Vivo Y20)" oninput="handleSensi()">
+    <div class="search-container">
+        <input type="text" id="phoneInput" placeholder="Search phone (e.g. iPhone X, Redmi Note 12)" onkeyup="searchModel()">
+        <div id="suggestions" class="suggestions"></div>
     </div>
 
     <div id="result" class="sensi-box" style="display: none;">
@@ -100,18 +124,49 @@
 </div>
 
 <script>
-    function handleSensi() {
-        const model = document.getElementById('phoneInput').value.trim();
-        const resDiv = document.getElementById('result');
+    // List of some popular models for live search
+    const models = [
+        "iPhone X", "iPhone 11", "iPhone 12", "iPhone 13 Pro", "iPhone 14 Pro Max", "iPhone 15",
+        "Samsung S22 Ultra", "Samsung A54", "Samsung M32", "Samsung S23",
+        "Redmi Note 10", "Redmi Note 12", "Poco X3 Pro", "Poco F5", "Xiaomi 13T",
+        "Realme GT Neo 3", "Realme 9 Pro", "Realme C55", "Realme 11 Pro+",
+        "Vivo V27", "Vivo Y20", "Oppo Reno 8", "OnePlus 11", "Infinix Note 30"
+    ];
 
-        if (model.length < 2) {
-            resDiv.style.display = 'none';
-            return;
+    function searchModel() {
+        const input = document.getElementById('phoneInput').value.toLowerCase();
+        const suggBox = document.getElementById('suggestions');
+        suggBox.innerHTML = '';
+
+        if (input.length > 0) {
+            const filtered = models.filter(m => m.toLowerCase().includes(input));
+            if (filtered.length > 0) {
+                suggBox.style.display = 'block';
+                filtered.forEach(m => {
+                    const d = document.createElement('div');
+                    d.innerHTML = m;
+                    d.onclick = () => {
+                        document.getElementById('phoneInput').value = m;
+                        suggBox.style.display = 'none';
+                        showSensi(m);
+                    };
+                    suggBox.appendChild(d);
+                });
+            } else {
+                // Jodi list-e na thake tobuo type korle result dekhabe
+                suggBox.style.display = 'none';
+                showSensi(input);
+            }
+        } else {
+            suggBox.style.display = 'none';
+            document.getElementById('result').style.display = 'none';
         }
+    }
 
+    function showSensi(model) {
+        const resDiv = document.getElementById('result');
         resDiv.style.display = 'block';
 
-        // Hash system for consistency
         let hash = 0;
         for (let i = 0; i < model.length; i++) {
             hash = model.charCodeAt(i) + ((hash << 5) - hash);
@@ -124,28 +179,30 @@
             return Math.floor(val);
         };
 
-        // iPhone er General 50-80, baki gulo normal
+        // Settings updated for 1-200 scale
         const settings = [
-            { name: "General", val: isIphone ? getVal(1, 50, 80) : getVal(1, 95, 100) },
-            { name: "Red Dot", val: getVal(2, 85, 98) },
-            { name: "2x Scope", val: getVal(3, 80, 95) },
-            { name: "4x Scope", val: getVal(4, 75, 92) },
-            { name: "Sniper Scope", val: getVal(5, 40, 60) },
-            { name: "Free Camera Button", val: getVal(6, 50, 90) }
+            { name: "General", val: isIphone ? getVal(1, 100, 150) : getVal(1, 185, 200) },
+            { name: "Red Dot", val: getVal(2, 170, 195) },
+            { name: "2x Scope", val: getVal(3, 160, 190) },
+            { name: "4x Scope", val: getVal(4, 150, 185) },
+            { name: "Sniper Scope", val: getVal(5, 80, 130) },
+            { name: "Free Camera Button", val: getVal(6, 100, 180) }
         ];
 
         resDiv.innerHTML = '';
         settings.forEach((s, i) => {
             const row = document.createElement('div');
             row.className = `row ${i === 0 ? 'active-row' : ''}`;
+            // Progress percentage for 200 scale is (val/200)*100
+            const progress = (s.val / 200) * 100;
             row.innerHTML = `
                 <div class="label">${s.name}</div>
                 <div class="val">${s.val}</div>
                 <div class="slider">
                     <div class="sq">-</div>
                     <div class="bar">
-                        <div class="fill" style="width: ${s.val}%"></div>
-                        <div class="dot" style="left: ${s.val}%"></div>
+                        <div class="fill" style="width: ${progress}%"></div>
+                        <div class="dot" style="left: ${progress}%"></div>
                     </div>
                     <div class="sq">+</div>
                 </div>
