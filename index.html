@@ -3,36 +3,36 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FF Sensi Finder | Global Search</title>
+    <title>FF Sensi Finder | Real-Time Search</title>
     <style>
         body {
-            background-color: #0d0d0d;
+            background-color: #0b0b0b;
             color: #dcdcdc;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Arial', sans-serif;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             margin: 0;
-            padding: 15px;
+            padding: 20px;
         }
 
         .container {
             width: 100%;
-            max-width: 550px;
+            max-width: 580px;
             background: #111;
             padding: 20px;
-            border-radius: 10px;
+            border-radius: 8px;
             border: 1px solid #222;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 20px;
             border-bottom: 2px solid #ff9900;
+            margin-bottom: 20px;
         }
 
-        /* Smart Search Box */
+        /* Real-Time Search UI */
         .search-box {
             position: relative;
             margin-bottom: 25px;
@@ -41,10 +41,10 @@
         #phoneInput {
             width: 100%;
             padding: 15px;
-            background: #1e1e1e;
-            border: 1px solid #444;
-            color: white;
-            border-radius: 5px;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #fff;
+            border-radius: 4px;
             font-size: 16px;
             outline: none;
             box-sizing: border-box;
@@ -57,12 +57,13 @@
             top: 100%;
             left: 0;
             right: 0;
-            background: #1a1a1a;
+            background: #1e1e1e;
             border: 1px solid #333;
-            max-height: 200px;
+            max-height: 300px;
             overflow-y: auto;
-            z-index: 1000;
+            z-index: 999;
             display: none;
+            border-radius: 0 0 5px 5px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
         }
 
@@ -70,14 +71,13 @@
             padding: 12px;
             cursor: pointer;
             border-bottom: 1px solid #282828;
-            font-size: 14px;
-            color: #bbb;
+            font-size: 15px;
         }
 
         .suggestions div:hover { background: #ff9900; color: #000; }
 
-        /* FF Realistic Design */
-        .sensi-box { border: 1px solid #222; background: #0f0f0f; }
+        /* FF Realistic Design (Image Based) */
+        .sensi-box { border: 1px solid #222; background: #0c0c0c; }
 
         .row {
             display: flex;
@@ -87,18 +87,18 @@
         }
 
         .active-row {
-            outline: 2px solid #ff990066;
+            outline: 2px solid #ff990044;
             background: rgba(255, 153, 0, 0.05);
         }
 
-        .label { flex: 2; font-size: 14px; color: #ccc; }
-        .val { flex: 0.5; text-align: right; padding-right: 15px; font-weight: bold; font-size: 18px; color: #fff; }
+        .label { flex: 2; font-size: 14px; color: #bbb; text-transform: capitalize; }
+        .val { flex: 0.5; text-align: right; padding-right: 15px; font-weight: bold; font-size: 20px; color: #fff; }
 
         .slider { flex: 3; display: flex; align-items: center; gap: 8px; }
-        .sq { width: 22px; height: 22px; background: #2a2a2a; border: 1px solid #444; display: flex; justify-content: center; align-items: center; }
+        .sq { width: 22px; height: 22px; background: #222; border: 1px solid #444; display: flex; justify-content: center; align-items: center; }
         .bar { flex-grow: 1; height: 4px; background: #333; position: relative; }
         .fill { height: 100%; background: #ff9900; position: absolute; }
-        .dot { width: 8px; height: 16px; background: #fff; position: absolute; top: -6px; border: 1px solid #000; }
+        .dot { width: 8px; height: 18px; background: #fff; position: absolute; top: -7px; border: 1px solid #000; }
     </style>
 </head>
 <body>
@@ -109,51 +109,62 @@
     </div>
 
     <div class="search-box">
-        <input type="text" id="phoneInput" placeholder="Type model (e.g. iPhone, Samsung, Redmi)" autocomplete="off">
+        <input type="text" id="phoneInput" placeholder="Enter Phone Model..." onkeyup="searchModel()">
         <div id="suggestions" class="suggestions"></div>
     </div>
 
-    <div id="result" class="sensi-box" style="display: none;">
-        </div>
+    <div id="result" class="sensi-box" style="display: none;"></div>
 </div>
 
 <script>
-    const phoneInput = document.getElementById('phoneInput');
-    const suggestionsBox = document.getElementById('suggestions');
+    // Huge Database for Real-Time Search
+    const fullModels = [
+        "iPhone 7", "iPhone 7 Plus", "iPhone 8", "iPhone 8 Plus", "iPhone X", "iPhone XR", "iPhone XS", "iPhone XS Max", "iPhone 11", "iPhone 11 Pro", "iPhone 12", "iPhone 12 Pro Max", "iPhone 13", "iPhone 13 Pro", "iPhone 14 Pro Max", "iPhone 15 Pro",
+        "Samsung S10", "Samsung S20 FE", "Samsung S21 Ultra", "Samsung S22", "Samsung S23 Ultra", "Samsung S24", "Samsung A10", "Samsung A12", "Samsung A20", "Samsung A30", "Samsung A50", "Samsung A51", "Samsung A52", "Samsung A53", "Samsung A54", "Samsung M11", "Samsung M21", "Samsung M31", "Samsung M32",
+        "Redmi Note 7", "Redmi Note 8 Pro", "Redmi Note 9", "Redmi Note 10 Pro", "Redmi Note 11", "Redmi Note 12", "Redmi Note 13", "Redmi 9", "Redmi 10", "Poco F1", "Poco X3 Pro", "Poco X5 Pro", "Poco F5", "Xiaomi 11T Pro", "Xiaomi 12 Pro", "Xiaomi 13 Ultra",
+        "Realme 5 Pro", "Realme 6i", "Realme 7", "Realme 8 Pro", "Realme 9", "Realme 10 Pro", "Realme 11 Pro+", "Realme C11", "Realme C21", "Realme C25s", "Realme C35", "Realme C55", "Realme GT Neo 3",
+        "Vivo Y11", "Vivo Y12", "Vivo Y15", "Vivo Y20", "Vivo Y21", "Vivo Y33s", "Vivo Y51", "Vivo V20", "Vivo V23", "Vivo V25", "Vivo V27", "Vivo V29", "iQOO Neo 6", "iQOO Z7",
+        "Oppo A3s", "Oppo A5s", "Oppo A15", "Oppo A16", "Oppo A54", "Oppo A57", "Oppo A78", "Oppo F11", "Oppo F17 Pro", "Oppo F19 Pro", "Oppo F21 Pro", "Oppo Reno 8", "Oppo Reno 10",
+        "Infinix Hot 8", "Infinix Hot 9", "Infinix Hot 10", "Infinix Hot 11s", "Infinix Hot 12", "Infinix Note 10 Pro", "Infinix Note 12", "Infinix Note 30 Pro", "Infinix Zero Ultra",
+        "Tecno Spark 5", "Tecno Spark 6", "Tecno Spark 7 Pro", "Tecno Spark 8 Pro", "Tecno Pova 2", "Tecno Pova 3", "Tecno Pova 4", "Tecno Camon 19 Pro", "Tecno Camon 20",
+        "Symphony Z30", "Symphony Z40", "Symphony Z60", "Walton Primo GH10", "Walton Primo RX8", "OnePlus 7", "OnePlus 8T", "OnePlus 9R", "OnePlus 11"
+    ];
 
-    // Online Simulation: User type korle dynamic list show korbe
-    phoneInput.addEventListener('input', async (e) => {
-        const query = e.target.value;
-        if (query.length < 1) {
-            suggestionsBox.style.display = 'none';
-            return;
+    function searchModel() {
+        const input = document.getElementById('phoneInput').value.toLowerCase();
+        const suggBox = document.getElementById('suggestions');
+        suggBox.innerHTML = '';
+
+        if (input.length > 0) {
+            const filtered = fullModels.filter(m => m.toLowerCase().includes(input));
+            if (filtered.length > 0) {
+                suggBox.style.display = 'block';
+                filtered.slice(0, 15).forEach(m => { // Show top 15 results
+                    const d = document.createElement('div');
+                    d.innerHTML = m;
+                    d.onclick = () => selectModel(m);
+                    suggBox.appendChild(d);
+                });
+            } else {
+                // If not in list, still show the text to generate
+                suggBox.style.display = 'block';
+                const d = document.createElement('div');
+                d.innerHTML = `Search for "${input}"`;
+                d.onclick = () => selectModel(input);
+                suggBox.appendChild(d);
+            }
+        } else {
+            suggBox.style.display = 'none';
         }
+    }
 
-        // Simulating an Online Search Logic
-        // Real-time suggest korar jonno amra popular brand names use korchi
-        const commonModels = ["iPhone 11", "iPhone 12", "iPhone 13", "iPhone 14", "iPhone 15 Pro", "Samsung S23", "Samsung A54", "Redmi Note 12", "Poco X5", "Realme GT", "Vivo V29", "Oppo Reno 10"];
-        
-        const filtered = commonModels.filter(m => m.toLowerCase().includes(query.toLowerCase()));
-        
-        // Jodi amader list-e na thake, tobe Google style search simulate hobe
-        let displayList = filtered.length > 0 ? filtered : [query];
+    function selectModel(model) {
+        document.getElementById('phoneInput').value = model;
+        document.getElementById('suggestions').style.display = 'none';
+        showSensi(model);
+    }
 
-        suggestionsBox.innerHTML = '';
-        suggestionsBox.style.display = 'block';
-
-        displayList.forEach(model => {
-            const div = document.createElement('div');
-            div.innerText = model;
-            div.onclick = () => {
-                phoneInput.value = model;
-                suggestionsBox.style.display = 'none';
-                generateSensi(model);
-            };
-            suggestionsBox.appendChild(div);
-        });
-    });
-
-    function generateSensi(model) {
+    function showSensi(model) {
         const resDiv = document.getElementById('result');
         resDiv.style.display = 'block';
 
@@ -163,19 +174,15 @@
         }
 
         const isIphone = model.toLowerCase().includes("iphone");
-
-        const getVal = (seed, min, max) => {
-            const val = Math.abs(Math.sin(hash + seed) * (max - min) + min);
-            return Math.floor(val);
-        };
+        const getVal = (seed, min, max) => Math.floor(Math.abs(Math.sin(hash + seed) * (max - min) + min));
 
         const settings = [
-            { name: "General", val: isIphone ? getVal(10, 100, 140) : getVal(10, 180, 200) },
-            { name: "Red Dot", val: getVal(20, 170, 195) },
-            { name: "2x Scope", val: getVal(30, 160, 190) },
-            { name: "4x Scope", val: getVal(40, 150, 185) },
-            { name: "Sniper Scope", val: getVal(50, 70, 120) },
-            { name: "Free Camera Button", val: getVal(60, 100, 180) }
+            { name: "General", val: isIphone ? getVal(10, 80, 130) : getVal(10, 185, 200) },
+            { name: "Red Dot", val: getVal(20, 175, 198) },
+            { name: "2x Scope", val: getVal(30, 160, 195) },
+            { name: "4x Scope", val: getVal(40, 150, 190) },
+            { name: "Sniper Scope", val: getVal(50, 60, 110) },
+            { name: "Free Look", val: getVal(60, 100, 180) }
         ];
 
         resDiv.innerHTML = '';
@@ -188,22 +195,13 @@
                 <div class="val">${s.val}</div>
                 <div class="slider">
                     <div class="sq">-</div>
-                    <div class="bar">
-                        <div class="fill" style="width: ${progress}%"></div>
-                        <div class="dot" style="left: ${progress}%"></div>
-                    </div>
+                    <div class="bar"><div class="fill" style="width: ${progress}%"></div><div class="dot" style="left: ${progress}%"></div></div>
                     <div class="sq">+</div>
                 </div>
             `;
             resDiv.appendChild(row);
         });
     }
-
-    // Close suggestions on click outside
-    document.addEventListener('click', (e) => {
-        if (e.target !== phoneInput) suggestionsBox.style.display = 'none';
-    });
 </script>
-
 </body>
 </html>
