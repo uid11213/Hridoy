@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premium IPTV - FIFA+ Matrix</title>
+    <title>Premium IPTV - FIFA+ Player</title>
     <!-- Firebase Core Services -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -18,6 +18,7 @@
             --bg-panel: #141416;
             --text-main: #f4f4f5;
             --text-muted: #a1a1aa;
+            --border-color: #27272a;
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
         body { background-color: var(--bg-dark); color: var(--text-main); min-height: 100vh; overflow-x: hidden; }
@@ -26,7 +27,7 @@
         .app-container { display: flex; flex-direction: column; width: 100vw; height: 100vh; }
         
         /* Navbar Layout */
-        .navbar { display: flex; justify-content: space-between; align-items: center; background: var(--bg-panel); padding: 12px 24px; border-bottom: 1px solid #27272a; flex-shrink: 0; }
+        .navbar { display: flex; justify-content: space-between; align-items: center; background: var(--bg-panel); padding: 12px 24px; border-bottom: 1px solid var(--border-color); flex-shrink: 0; }
         .navbar h3 { font-size: 18px; color: var(--primary); font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .nav-right-zone { display: flex; align-items: center; gap: 15px; }
 
@@ -35,12 +36,12 @@
         .profile-trigger-btn img { width: 100%; height: 100%; object-fit: cover; }
 
         /* Workspace Grid Frame */
-        .main-content { display: flex; flex-direction: column; flex: 1; overflow-y: auto; padding: 20px; gap: 15px; align-items: center; }
+        .main-content { display: flex; flex-direction: column; flex: 1; overflow-y: auto; padding: 15px; gap: 15px; align-items: center; width: 100%; }
         
         /* THEATER PLAYER STUDIO */
-        .player-panel { width: 100%; max-width: 1140px; display: flex; flex-direction: column; align-items: center; position: relative; }
+        .player-panel { width: 100%; max-width: 1280px; display: flex; flex-direction: column; align-items: center; position: relative; }
         
-        /* Interactive Video Wrapper & Cursor Logic */
+        /* Interactive Video Wrapper */
         .video-wrapper { 
             width: 100%; aspect-ratio: 16/9; background: #000; border-radius: 14px; 
             overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.9); border: 1px solid #232326; 
@@ -48,52 +49,55 @@
             transition: cursor 0.3s;
         }
         
-        /* Hide mouse cursor when '.hide-ui' is activated */
+        @media (max-width: 768px) {
+            .video-wrapper { aspect-ratio: 16/10; border-radius: 8px; }
+            .main-content { padding: 8px; }
+        }
+        
         .video-wrapper.hide-ui { cursor: none; }
         
-        video { width: 100%; height: 100%; background: #000; object-fit: contain; pointer-events: none; display: block; position: absolute; top: 0; left: 0; z-index: 1; } 
+        video { width: 100%; height: 100%; background: #000; object-fit: cover; display: block; position: absolute; top: 0; left: 0; z-index: 1; } 
         
-        /* 🎛️ YOUTUBE STYLE OVERLAY INTERFACES */
+        /* OVERLAY INTERFACES */
         .server-overlay-zone, .player-controls-bar {
             position: absolute; left: 0; width: 100%; z-index: 10;
             transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), opacity 0.4s ease;
             opacity: 0; pointer-events: none;
         }
 
-        /* 🌌 100% TRANSPARENT SERVER BOXES TOP BAR */
+        /* Server top overlay slider */
         .server-overlay-zone {
-            top: 0; padding: 20px 24px; display: flex; justify-content: center; gap: 15px;
-            transform: translateY(-20px);
+            top: 0; padding: 16px 20px; display: flex; justify-content: center; gap: 15px; flex-wrap: wrap;
+            transform: translateY(-100%);
+            background: linear-gradient(to bottom, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0) 100%);
         }
         
-        /* 🕹️ BOTTOM FIXED PLAYER CONTROLS */
         .player-controls-bar {
             bottom: 0; height: 55px; display: flex; justify-content: space-between; 
             align-items: center; background: linear-gradient(to top, rgba(0,0,0,0.85) 60%, rgba(0,0,0,0) 100%); 
-            padding: 0 24px; transform: translateY(20px);
+            padding: 0 24px; transform: translateY(100%);
         }
 
-        /* Active Display State when User is Interaction-Active */
         .video-wrapper.show-ui .server-overlay-zone { transform: translateY(0); opacity: 1; pointer-events: auto; }
         .video-wrapper.show-ui .player-controls-bar { transform: translateY(0); opacity: 1; pointer-events: auto; }
 
-        /* ✨ EXTREMELY CLEAN TRANSPARENT SERVER CARDS (NO BACKGROUND) */
+        /* SERVER CARDS (No Blur - Solid look) */
         .server-card-node {
-            flex: 1; max-width: 220px; display: flex; align-items: center; 
-            padding: 8px 14px; background: rgba(255, 255, 255, 0.07); 
-            backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            flex: 1; min-width: 140px; max-width: 220px; display: flex; align-items: center; 
+            padding: 8px 14px; 
+            background: rgba(14, 14, 16, 0.75); 
+            backdrop-filter: none !important; -webkit-backdrop-filter: none !important; 
             border: 1.5px solid rgba(255, 255, 255, 0.15); border-radius: 10px; 
             cursor: pointer; transition: all 0.25s ease;
         }
-        .server-card-node:hover { border-color: rgba(255,255,255,0.4); background: rgba(255,255,255,0.15); }
-        .server-card-node.active { border-color: var(--primary); background: rgba(229, 9, 20, 0.15); box-shadow: 0 0 15px rgba(229,9,20,0.4); }
+        .server-card-node:hover { border-color: rgba(255,255,255,0.35); background: rgba(255,255,255,0.08); }
+        .server-card-node.active { border-color: var(--primary); background: rgba(229, 9, 20, 0.25); box-shadow: 0 0 15px rgba(229,9,20,0.3); }
 
-        .server-icon-frame { width: 32px; height: 32px; border-radius: 6px; background: rgba(229, 9, 20, 0.85); display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: bold; color: #fff; font-size: 13px; }
+        .server-icon-frame { width: 32px; height: 32px; border-radius: 6px; background: rgba(229, 9, 20, 0.95); display: flex; align-items: center; justify-content: center; margin-right: 12px; font-weight: bold; color: #fff; font-size: 13px; flex-shrink: 0; }
         .server-meta { display: flex; flex-direction: column; overflow: hidden; }
         .server-title { font-size: 13px; font-weight: 700; color: #fff; text-overflow: ellipsis; white-space: nowrap; overflow: hidden; }
         .server-status { font-size: 11px; color: #2ecc71; font-weight: 600; display: flex; align-items: center; gap: 4px; }
 
-        /* Controls Assets styling */
         .controls-left, .controls-right { display: flex; align-items: center; gap: 18px; }
         .control-btn { background: none; border: none; color: var(--text-main); font-size: 18px; cursor: pointer; transition: 0.2s; }
         .control-btn:hover { color: var(--primary); }
@@ -104,20 +108,24 @@
         
         .playing-bar { width: 100%; padding: 12px 20px; background: var(--bg-panel); border-radius: 8px; border: 1px solid #232326; font-weight: 600; display: flex; align-items: center; gap: 10px; margin-top: 10px; }
 
-        /* Profile Modal Panel */
-        .profile-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); backdrop-filter: blur(4px); display: flex; justify-content: center; align-items: center; z-index: 9999; }
-        .profile-card { background: #18181c; border: 1px solid #2d2d35; width: 340px; border-radius: 16px; padding: 25px; text-align: center; position: relative; box-shadow: 0 20px 40px rgba(0,0,0,0.6); }
-        .close-modal-btn { position: absolute; top: 15px; right: 15px; background: none; border: none; color: var(--text-muted); font-size: 18px; cursor: pointer; }
-        .close-modal-btn:hover { color: var(--primary); }
-        .card-avatar { width: 90px; height: 90px; border-radius: 50%; border: 3px solid var(--primary); margin: 0 auto 15px auto; overflow: hidden; background: #27272a; }
+        /* PROFILE MODAL POPUP DASHBOARD (Styled based on image_6e1542.png specs) */
+        .profile-modal-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); display: flex; justify-content: center; align-items: center; z-index: 9999; animation: fadeIn 0.3s ease; }
+        .profile-card { background: #141416; border: 1px solid #232326; width: 350px; border-radius: 16px; padding: 30px 24px; text-align: center; position: relative; box-shadow: 0 25px 50px rgba(0,0,0,0.8); }
+        .close-modal-btn { position: absolute; top: 16px; right: 18px; background: none; border: none; color: var(--text-muted); font-size: 20px; cursor: pointer; transition: 0.2s; }
+        .close-modal-btn:hover { color: #fff; transform: scale(1.1); }
+        
+        .card-avatar { width: 110px; height: 110px; border-radius: 50%; border: 3px solid var(--primary); margin: 0 auto 20px auto; overflow: hidden; background: #1e1e24; box-shadow: 0 0 15px rgba(229, 9, 20, 0.4); }
         .card-avatar img { width: 100%; height: 100%; object-fit: cover; }
-        .card-name { font-size: 20px; font-weight: 700; margin-bottom: 4px; color: #fff; }
-        .card-sub { font-size: 13px; color: var(--primary); font-weight: 600; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; }
-        .social-links-container { display: flex; flex-direction: column; gap: 10px; width: 100%; }
-        .social-btn { display: flex; align-items: center; justify-content: center; gap: 12px; width: 100%; padding: 12px; border-radius: 8px; border: none; font-size: 14px; font-weight: 600; text-decoration: none; color: #fff; transition: 0.2s; }
-        .btn-facebook { background: #1877f2; } .btn-facebook:hover { background: #145dbd; transform: translateY(-2px); }
-        .btn-whatsapp { background: #25d366; } .btn-whatsapp:hover { background: #1da851; transform: translateY(-2px); }
+        
+        .card-name { font-size: 22px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 4px; color: #fff; }
+        .card-sub { font-size: 13px; color: var(--primary); font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 25px; }
+        
+        .social-links-container { display: flex; flex-direction: column; gap: 12px; width: 100%; }
+        .social-btn { display: flex; align-items: center; justify-content: center; gap: 10px; width: 100%; padding: 14px; border-radius: 10px; border: none; font-size: 15px; font-weight: 700; text-decoration: none; color: #fff; transition: all 0.25s ease; }
+        .btn-facebook { background: #1877f2; } .btn-facebook:hover { background: #145dbd; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(24,119,242,0.4); }
+        .btn-whatsapp { background: #12d261; } .btn-whatsapp:hover { background: #0ea64d; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(18,210,97,0.4); }
 
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
         .loading-screen { position: fixed; top:0; left:0; width:100%; height:100%; background: var(--bg-dark); display: flex; flex-direction: column; justify-content: center; align-items: center; z-index: 99999; }
     </style>
 </head>
@@ -128,15 +136,15 @@
         <h2>Booting Database Configuration Matrix...</h2>
     </div>
 
-    <!-- PROFILE MODAL DASHBOARD -->
-    <div id="profileModal" class="profile-modal-overlay hidden">
+    <!-- PROFILE MODAL DASHBOARD (Auto Opens on Launch) -->
+    <div id="profileModal" class="profile-modal-overlay">
         <div class="profile-card">
             <button class="close-modal-btn" onclick="toggleProfileModal()"><i class="fa-solid fa-xmark"></i></button>
             <div class="card-avatar">
-                <img id="usrCardImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+                <img id="usrCardImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Avatar">
             </div>
-            <div class="card-name" id="usrCardName">Loading Name...</div>
-            <div class="card-sub" id="usrCardBio">Loading Bio...</div>
+            <div class="card-name" id="usrCardName">FOV HRIDOY</div>
+            <div class="card-sub" id="usrCardBio">WELCOME</div>
             
             <div class="social-links-container">
                 <a id="usrFbLink" href="#" target="_blank" class="social-btn btn-facebook">
@@ -156,7 +164,7 @@
             <div class="nav-right-zone">
                 <span style="font-size: 13px; color: var(--text-muted);"><i class="fa-solid fa-shield-halved" style="color: #2ecc71;"></i> Matrix Stabilized</span>
                 <button class="profile-trigger-btn" onclick="toggleProfileModal()">
-                    <img id="navAvatarImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png">
+                    <img id="navAvatarImg" src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Profile">
                 </button>
             </div>
         </div>
@@ -164,20 +172,20 @@
         <div class="main-content">
             <div class="player-panel">
                 <!-- Video Core Wrapper Trigger -->
-                <div id="videoContainer" class="video-wrapper show-ui">
+                <div id="videoContainer" class="video-wrapper show-ui" onclick="toggleMobileOverlay(event)" ondblclick="handlePlayerDoubleClick(event)">
                     
-                    <!-- 🌌 Transparent Top Bar Servers -->
+                    <!-- Transparent Top Bar Servers -->
                     <div class="server-overlay-zone" id="serverOverlay"></div>
 
                     <!-- Direct Video Engine Render -->
-                    <video id="hlsPlayer" autoplay playsinline></video>
+                    <video id="hlsPlayer" autoplay playsinline muted></video>
                     
-                    <!-- 🕹️ Player Controls Bar Component -->
-                    <div class="player-controls-bar">
+                    <!-- Player Controls Bar Component -->
+                    <div class="player-controls-bar" onclick="event.stopPropagation();" ondblclick="event.stopPropagation();">
                         <div class="controls-left"><div class="live-badge"><span class="live-dot"></span>LIVE</div></div>
                         <div class="controls-right">
-                            <button class="control-btn" id="muteBtn" onclick="toggleMute(event)"><i class="fa-solid fa-volume-high"></i></button>
-                            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="1" oninput="changeVolume(this.value)" onclick="event.stopPropagation()">
+                            <button class="control-btn" id="muteBtn" onclick="toggleMute(event)"><i class="fa-solid fa-volume-xmark"></i></button>
+                            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.1" value="0" oninput="changeVolume(this.value)" onclick="event.stopPropagation()">
                             <button class="control-btn" onclick="toggleFullScreen(event)"><i class="fa-solid fa-expand"></i></button>
                         </div>
                     </div>
@@ -193,7 +201,7 @@
 
     <script>
         const firebaseConfig = {
-            apiKey: "AIzaSyC8KiPISiDtpT0_vsL1HRF_oZwiqPExse0",
+            apiKey: "AIzaSyC8KiPISiDpT0_vsL1HRF_oZwiqPExse0",
             authDomain: "ff-tournament-efff1.firebaseapp.com",
             databaseURL: "https://ff-tournament-efff1-default-rtdb.asia-southeast1.firebasedatabase.app",
             projectId: "ff-tournament-efff1",
@@ -213,18 +221,22 @@
         window.addEventListener('DOMContentLoaded', () => {
             database.ref('iptv_config').on('value', (snapshot) => {
                 const data = snapshot.val();
-                if(data && data.host && data.username && data.password) {
-                    host = data.host; user = data.username; pass = data.password;
+                if(data) {
+                    host = data.host || ""; 
+                    user = data.username || ""; 
+                    pass = data.password || "";
                     document.getElementById('loadingOverlay').classList.add('hidden');
-                    loadChannelsAndAutoPlay(); 
+                    if (host && user && pass) { loadChannelsAndAutoPlay(); }
+                } else {
+                    document.getElementById('loadingOverlay').classList.add('hidden');
                 }
             });
 
             database.ref('admin_profile').on('value', (snapshot) => {
                 const profile = snapshot.val();
                 if(profile) {
-                    document.getElementById('usrCardName').innerText = profile.name || "It's Hridoy";
-                    document.getElementById('usrCardBio').innerText = profile.bio || "Administrator";
+                    document.getElementById('usrCardName').innerText = profile.name || "FOV HRIDOY";
+                    document.getElementById('usrCardBio').innerText = profile.bio || "WELCOME";
                     document.getElementById('usrFbLink').href = profile.facebook || "#";
                     document.getElementById('usrWaLink').href = profile.whatsapp ? `https://wa.me/${profile.whatsapp}` : "#";
                     
@@ -234,35 +246,35 @@
                 }
             });
 
-            // 🚀 AUTOMATED YOUTUBE CONTROLS TRACKING ENGINE
-            // Fires on Mouse Move (PC) or Screen Taps/Touches (Mobile)
             ['mousemove', 'touchstart', 'click'].forEach(evtName => {
                 wrapper.addEventListener(evtName, resetInactivityTimer);
             });
-            resetInactivityTimer(); // Launch active countdown initially
+            resetInactivityTimer();
         });
 
         function resetInactivityTimer() {
             wrapper.classList.remove('hide-ui');
-            wrapper.classList.add('show-ui'); // Show interfaces seamlessly
-            
+            wrapper.classList.add('show-ui'); 
             clearTimeout(inactivityTimeout);
-            // Lock countdown tracker for exactly 3 seconds (3000ms)
             inactivityTimeout = setTimeout(() => {
                 wrapper.classList.remove('show-ui');
-                wrapper.classList.add('hide-ui'); // Completely hide elements & cursor
+                wrapper.classList.add('hide-ui'); 
             }, 3000);
         }
 
         async function loadChannelsAndAutoPlay() {
-            const url = `${host}/player_api.php?username=${user}&password=${pass}&action=get_live_streams`;
             const overlayZone = document.getElementById('serverOverlay');
+            if(!host || !user || !pass) return;
+
+            const url = `${host}/player_api.php?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&action=get_live_streams`;
+            
             try {
                 const res = await fetch(url);
+                if (!res.ok) throw new Error("Handshake failed");
                 const rawChannels = await res.json();
                 
-                let filtered = rawChannels.filter(chan => chan.name && chan.name.toLowerCase().includes('fifa'));
-                let topTwoChannels = filtered.slice(0, 2);
+                let allChannels = Array.isArray(rawChannels) ? rawChannels : [];
+                let topTwoChannels = allChannels.slice(0, 20);
                 
                 overlayZone.innerHTML = "";
                 
@@ -280,13 +292,12 @@
                     `;
                     
                     node.onclick = function(event) {
-                        event.stopPropagation(); // Restricts UI reset logic collisions
+                        event.stopPropagation(); 
                         document.querySelectorAll('.server-card-node').forEach(e => e.classList.remove('active'));
                         this.classList.add('active');
-                        playStream(chan.stream_id, `Server 0${serverNum} - ${chan.name}`);
+                        playStream(chan.stream_id, `Server 0${serverNum} - ${chan.name}`, false);
                         resetInactivityTimer();
                     };
-                    
                     overlayZone.appendChild(node);
                 });
 
@@ -294,58 +305,69 @@
                     const firstChan = topTwoChannels[0];
                     const firstNode = document.getElementById(`srvNode-${firstChan.stream_id}`);
                     if(firstNode) firstNode.classList.add('active');
-                    playStream(firstChan.stream_id, `Server 01 - ${firstChan.name}`);
+                    playStream(firstChan.stream_id, `Server 01 - ${firstChan.name}`, true);
                 } else {
                     overlayZone.innerHTML = "<div style='color:#aaa; font-size:13px;'>No Active Live Servers Found.</div>";
                 }
-            } catch(e) { overlayZone.innerHTML = "<div style='color:red;'>Failed to handshake matrix feeds.</div>"; }
+            } catch(e) { 
+                overlayZone.innerHTML = "<div style='color:red; font-size:13px;'>Failed to handshake matrix feeds.</div>"; 
+            }
         }
 
-        function playStream(streamId, streamLabel) {
+        function playStream(streamId, streamLabel, isInitialAutoplay) {
             const video = document.getElementById('hlsPlayer');
             document.getElementById('playingTitle').innerText = "Streaming: " + streamLabel;
             const streamUrl = `${host}/live/${user}/${pass}/${streamId}.m3u8`;
 
             if (hlsInstance) hlsInstance.destroy();
+
+            if(isInitialAutoplay) {
+                video.muted = true;
+            }
+
             if (Hls.isSupported()) {
                 hlsInstance = new Hls({ maxMaxBufferLength: 10, lowLatencyMode: true });
-                hlsInstance.loadSource(streamUrl); hlsInstance.attachMedia(video);
-                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => video.play());
+                hlsInstance.loadSource(streamUrl); 
+                hlsInstance.attachMedia(video);
+                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play().catch(err => console.log("Autoplay context rule applied."));
+                });
             } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = streamUrl; video.play();
+                video.src = streamUrl; 
+                video.play().catch(err => console.log("iOS Fallback active."));
             }
         }
 
+        function toggleMobileOverlay(event) { resetInactivityTimer(); }
+        function handlePlayerDoubleClick(event) {
+            event.preventDefault();
+            if (!document.fullscreenElement) wrapper.requestFullscreen().catch(e => console.log(e));
+            else document.exitFullscreen();
+            resetInactivityTimer();
+        }
         function toggleMute(e) {
             e.stopPropagation();
             const video = document.getElementById('hlsPlayer');
             const btn = document.getElementById('muteBtn');
             const slider = document.getElementById('volumeSlider');
-            if(video.muted) {
-                video.muted = false; btn.innerHTML = '<i class="fa-solid fa-volume-high"></i>'; slider.value = video.volume;
-            } else {
-                video.muted = true; btn.innerHTML = '<i class="fa-solid fa-volume-xmark"></i>'; slider.value = 0;
-            }
-            resetInactivityTimer();
+            video.muted = !video.muted;
+            btn.innerHTML = video.muted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+            slider.value = video.muted ? 0 : (video.volume == 0 ? 0.5 : video.volume);
+            if(!video.muted && video.volume == 0) video.volume = 0.5;
         }
-
         function changeVolume(val) {
             const video = document.getElementById('hlsPlayer');
             const btn = document.getElementById('muteBtn');
-            video.volume = val; video.muted = (val == 0);
+            video.volume = val; 
+            video.muted = (val == 0);
             btn.innerHTML = val == 0 ? '<i class="fa-solid fa-volume-xmark"></i>' : (val > 0.5 ? '<i class="fa-solid fa-volume-high"></i>' : '<i class="fa-solid fa-volume-low"></i>');
         }
-
         function toggleFullScreen(e) {
             e.stopPropagation();
-            if (!document.fullscreenElement) wrapper.requestFullscreen().catch(err => console.log(err));
+            if (!document.fullscreenElement) wrapper.requestFullscreen().catch(e => console.log(e));
             else document.exitFullscreen();
-            resetInactivityTimer();
         }
-
-        function toggleProfileModal() {
-            document.getElementById('profileModal').classList.toggle('hidden');
-        }
+        function toggleProfileModal() { document.getElementById('profileModal').classList.toggle('hidden'); }
     </script>
 </body>
 </html>
