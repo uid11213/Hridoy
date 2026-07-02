@@ -267,9 +267,13 @@
             if(!host || !user || !pass) return;
 
             const url = `${host}/player_api.php?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&action=get_live_streams`;
+            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
             
             try {
-                const res = await fetch(url);
+                let res = await fetch(url).catch(() => null);
+                if (!res || !res.ok) {
+                    res = await fetch(proxyUrl);
+                }
                 if (!res.ok) throw new Error("Handshake failed");
                 const rawChannels = await res.json();
                 
@@ -310,7 +314,8 @@
                     overlayZone.innerHTML = "<div style='color:#aaa; font-size:13px;'>No Active Live Servers Found.</div>";
                 }
             } catch(e) { 
-                overlayZone.innerHTML = "<div style='color:red; font-size:13px;'>Failed to handshake matrix feeds.</div>"; 
+                console.error("Matrix feed error:", e);
+                overlayZone.innerHTML = "<div style='color:red; font-size:13px;'>Failed to handshake matrix feeds. Check host/credentials or try a different server.</div>"; 
             }
         }
 
@@ -320,22 +325,48 @@
             const streamUrl = `${host}/live/${user}/${pass}/${streamId}.m3u8`;
 
             if (hlsInstance) hlsInstance.destroy();
+            video.removeAttribute('src');
 
             if(isInitialAutoplay) {
                 video.muted = true;
             }
 
-            if (Hls.isSupported()) {
-                hlsInstance = new Hls({ maxMaxBufferLength: 10, lowLatencyMode: true });
-                hlsInstance.loadSource(streamUrl); 
-                hlsInstance.attachMedia(video);
-                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-                    video.play().catch(err => console.log("Autoplay context rule applied."));
-                });
-            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                video.src = streamUrl; 
-                video.play().catch(err => console.log("iOS Fallback active."));
-            }
+            const tryPlay = (url, useProxy) => {
+                if (Hls.isSupported()) {
+                    const config = { maxMaxBufferLength: 10, lowLatencyMode: true };
+                    if (useProxy) {
+                        class CorsProxyLoader {
+                            constructor(cfg) { this.loader = new Hls.DefaultConfig.loader(cfg); }
+                            load(ctx, cfg, cb) {
+                                ctx.url = `https://corsproxy.io/?${encodeURIComponent(ctx.url)}`;
+                                this.loader.load(ctx, cfg, cb);
+                            }
+                            abort() { this.loader.abort(); }
+                            destroy() { this.loader.destroy(); }
+                            get stats() { return this.loader.stats; }
+                        }
+                        config.loader = CorsProxyLoader;
+                    }
+                    hlsInstance = new Hls(config);
+                    hlsInstance.loadSource(url);
+                    hlsInstance.attachMedia(video);
+                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                        video.play().catch(err => console.log("Autoplay blocked:", err));
+                    });
+                    hlsInstance.on(Hls.Events.ERROR, (evt, data) => {
+                        if (data.fatal && !useProxy) {
+                            hlsInstance.destroy();
+                            hlsInstance = null;
+                            tryPlay(url, true);
+                        }
+                    });
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = url;
+                    video.play().catch(err => console.log("iOS Fallback active."));
+                }
+            };
+
+            tryPlay(streamUrl, false);
         }
 
         function toggleMobileOverlay(event) { resetInactivityTimer(); }
