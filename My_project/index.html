@@ -262,19 +262,32 @@
             }, 3000);
         }
 
+        function normalizeHost(h) {
+            h = h.trim();
+            if (!h.startsWith('http://') && !h.startsWith('https://')) h = 'http://' + h;
+            return h.replace(/\/+$/, '');
+        }
+
         async function loadChannelsAndAutoPlay() {
             const overlayZone = document.getElementById('serverOverlay');
             if(!host || !user || !pass) return;
 
+            host = normalizeHost(host);
             const url = `${host}/player_api.php?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&action=get_live_streams`;
-            const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(url)}`;
+            const proxyUrls = [
+                `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
+                `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
+            ];
             
             try {
                 let res = await fetch(url).catch(() => null);
                 if (!res || !res.ok) {
-                    res = await fetch(proxyUrl);
+                    for (const pUrl of proxyUrls) {
+                        res = await fetch(pUrl).catch(() => null);
+                        if (res && res.ok) break;
+                    }
                 }
-                if (!res.ok) throw new Error("Handshake failed");
+                if (!res || !res.ok) throw new Error("Handshake failed");
                 const rawChannels = await res.json();
                 
                 let allChannels = Array.isArray(rawChannels) ? rawChannels : [];
@@ -315,7 +328,7 @@
                 }
             } catch(e) { 
                 console.error("Matrix feed error:", e);
-                overlayZone.innerHTML = "<div style='color:red; font-size:13px;'>Failed to handshake matrix feeds. Check host/credentials or try a different server.</div>"; 
+                overlayZone.innerHTML = `<div style='color:red; font-size:13px;'>Failed to handshake matrix feeds. Check host/credentials in admin panel.<br>Host: ${host}</div>`; 
             }
         }
 
