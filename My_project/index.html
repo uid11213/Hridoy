@@ -273,19 +273,24 @@
             if(!host || !user || !pass) return;
 
             host = normalizeHost(host);
-            const url = `${host}/player_api.php?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&action=get_live_streams`;
-            const proxyUrls = [
-                `https://corsproxy.io/?url=${encodeURIComponent(url)}`,
-                `https://api.allorigins.win/raw?url=${encodeURIComponent(url)}`
-            ];
-            
+            const apiPath = `/player_api.php?username=${encodeURIComponent(user)}&password=${encodeURIComponent(pass)}&action=get_live_streams`;
+            const urlsToTry = [];
+
+            // 1. Direct HTTP URL
+            urlsToTry.push(`${host}${apiPath}`);
+
+            // 2. CORS proxy fallback
+            if (host.startsWith('http://') || host.startsWith('https://')) {
+                const directUrl = `${host}${apiPath}`;
+                urlsToTry.push(`https://proxy.cors.sh/${directUrl}`);
+                urlsToTry.push(`https://api.allorigins.win/raw?url=${encodeURIComponent(directUrl)}`);
+            }
+
             try {
-                let res = await fetch(url).catch(() => null);
-                if (!res || !res.ok) {
-                    for (const pUrl of proxyUrls) {
-                        res = await fetch(pUrl).catch(() => null);
-                        if (res && res.ok) break;
-                    }
+                let res = null;
+                for (const tryUrl of urlsToTry) {
+                    res = await fetch(tryUrl, { mode: 'cors' }).catch(() => null);
+                    if (res && res.ok) break;
                 }
                 if (!res || !res.ok) throw new Error("Handshake failed");
                 const rawChannels = await res.json();
@@ -332,54 +337,52 @@
             }
         }
 
-        function playStream(streamId, streamLabel, isInitialAutoplay) {
+        function tryPlayStream(streamUrl, streamLabel, isInitialAutoplay, useProxy) {
             const video = document.getElementById('hlsPlayer');
             document.getElementById('playingTitle').innerText = "Streaming: " + streamLabel;
-            const streamUrl = `${host}/live/${user}/${pass}/${streamId}.m3u8`;
 
             if (hlsInstance) hlsInstance.destroy();
             video.removeAttribute('src');
 
-            if(isInitialAutoplay) {
-                video.muted = true;
-            }
-
-            const tryPlay = (url, useProxy) => {
-                if (Hls.isSupported()) {
-                    const config = { maxMaxBufferLength: 10, lowLatencyMode: true };
-                    if (useProxy) {
-                        class CorsProxyLoader {
-                            constructor(cfg) { this.loader = new Hls.DefaultConfig.loader(cfg); }
-                            load(ctx, cfg, cb) {
-                                ctx.url = `https://corsproxy.io/?${encodeURIComponent(ctx.url)}`;
-                                this.loader.load(ctx, cfg, cb);
-                            }
-                            abort() { this.loader.abort(); }
-                            destroy() { this.loader.destroy(); }
-                            get stats() { return this.loader.stats; }
+            if (Hls.isSupported()) {
+                const config = { maxMaxBufferLength: 10, lowLatencyMode: true };
+                if (useProxy) {
+                    config.loader = class {
+                        constructor(cfg) { this.loader = new Hls.DefaultConfig.loader(cfg); }
+                        load(ctx, cfg, cb) {
+                            ctx.url = `https://proxy.cors.sh/${ctx.url}`;
+                            this.loader.load(ctx, cfg, cb);
                         }
-                        config.loader = CorsProxyLoader;
-                    }
-                    hlsInstance = new Hls(config);
-                    hlsInstance.loadSource(url);
-                    hlsInstance.attachMedia(video);
-                    hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-                        video.play().catch(err => console.log("Autoplay blocked:", err));
-                    });
-                    hlsInstance.on(Hls.Events.ERROR, (evt, data) => {
-                        if (data.fatal && !useProxy) {
-                            hlsInstance.destroy();
-                            hlsInstance = null;
-                            tryPlay(url, true);
-                        }
-                    });
-                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
-                    video.src = url;
-                    video.play().catch(err => console.log("iOS Fallback active."));
+                        abort() { this.loader.abort(); }
+                        destroy() { this.loader.destroy(); }
+                        get stats() { return this.loader.stats; }
+                    };
                 }
-            };
+                hlsInstance = new Hls(config);
+                hlsInstance.loadSource(streamUrl);
+                hlsInstance.attachMedia(video);
+                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play().catch(err => console.log("Autoplay blocked:", err));
+                });
+                hlsInstance.on(Hls.Events.ERROR, (evt, data) => {
+                    if (data.fatal && data.type === Hls.ErrorTypes.NETWORK_ERROR && !useProxy) {
+                        hlsInstance.destroy();
+                        hlsInstance = null;
+                        tryPlayStream(streamUrl, streamLabel, isInitialAutoplay, true);
+                    }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = useProxy ? `https://proxy.cors.sh/${streamUrl}` : streamUrl;
+                video.play().catch(err => console.log("iOS Fallback active."));
+            }
+        }
 
-            tryPlay(streamUrl, false);
+        function playStream(streamId, streamLabel, isInitialAutoplay) {
+            const video = document.getElementById('hlsPlayer');
+            const streamUrl = `${host}/live/${user}/${pass}/${streamId}.m3u8`;
+
+            if(isInitialAutoplay) video.muted = true;
+            tryPlayStream(streamUrl, streamLabel, isInitialAutoplay, false);
         }
 
         function toggleMobileOverlay(event) { resetInactivityTimer(); }
